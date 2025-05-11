@@ -1,10 +1,41 @@
 @use 'modulo';
 @use 'mixins';
+@use 'media-queries';
+@import '@fortawesome/fontawesome-free/css/all.min.css';
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+// Estilos menú hamburguesa 
+.menu-hamburguesa {
+    display: flex;
+    background-color: modulo.$color-primario;
+    height: 10vh;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem 0.5rem 1.5rem;
+
+    .menu-hamburguesa-ayuda {
+        #boton-ajustes {
+            margin-right: 0.8rem;
+        }
+    }
+
+    .btn-menu {
+        @include mixins.botones-menu;
+    }
+
+    #boton-hamburguesa, #hamburguesa-ajustes, #hamburguesa-logout {
+        @include mixins.iconos-panel;
+        transition: color 0.6s ease-in-out;
+
+        &:hover {
+            color: modulo.$color-secundario;
+        }
+    }
 }
 
 // Estilos del sidebar 
@@ -14,7 +45,14 @@
     flex-direction: column;
     justify-content:space-between;
     width: 20%;
-    height: 98vh;
+    height: 100vh;
+    font-family: 'Nunito';
+    font-weight: 600;
+
+    @include media-queries.tablet {
+        width: 40%;
+        height: 90vh;
+    }
   
     .sidebar-contenidos {
 
@@ -22,12 +60,25 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 1.5rem 1rem 0 1rem;
+            margin: 0 1rem 0 1rem;
             padding: 0.8rem 0.8rem 0 0.8rem;
 
+            @include media-queries.tablet {
+               margin: 0;
+               padding: 0;
+            }
+  
             .img-logo-foodies {
-                width: 80%;
+                width: 75%;
                 height: auto;
+
+                @include media-queries.tablet {
+                    margin: 0;
+                    width: 50%;
+                    height: auto;
+                    display: flex;
+                    justify-self: center;
+                }
             }
         } 
         ul {
@@ -39,6 +90,11 @@
                 margin-bottom: 0.5rem;
                 overflow: hidden;
                 transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, transform 0.5s ease-in-out;
+
+                @include media-queries.tablet {
+                    padding-bottom: 0.8rem;
+                    margin-bottom: 0.2rem;
+                }
                
                 a {
                     @include mixins.sidebar-enlace;
@@ -52,6 +108,12 @@
                     &:hover, &.activo {
                         background-color: modulo.$color-botones;
                         color: modulo.$color-primario;
+                        font-weight: bold;
+                    }
+
+                    @include media-queries.tablet {
+                        padding-top: 0.8rem;
+                        padding-bottom: 0.8rem;
                     }
                 }
             }

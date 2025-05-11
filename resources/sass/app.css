@@ -1,7 +1,32 @@
+@import '@fortawesome/fontawesome-free/css/all.min.css';
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.menu-hamburguesa {
+  display: flex;
+  background-color: #2c3143;
+  height: 10vh;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem 0.5rem 1.5rem;
+}
+.menu-hamburguesa .menu-hamburguesa-ayuda #boton-ajustes {
+  margin-right: 0.8rem;
+}
+.menu-hamburguesa .btn-menu {
+  background: none;
+  border: none;
+}
+.menu-hamburguesa #boton-hamburguesa, .menu-hamburguesa #hamburguesa-ajustes, .menu-hamburguesa #hamburguesa-logout {
+  font-size: 1.8rem;
+  color: #f27d16;
+  transition: color 0.6s ease-in-out;
+}
+.menu-hamburguesa #boton-hamburguesa:hover, .menu-hamburguesa #hamburguesa-ajustes:hover, .menu-hamburguesa #hamburguesa-logout:hover {
+  color: #fcfef3;
 }
 
 .sidebar {
@@ -10,18 +35,41 @@
   flex-direction: column;
   justify-content: space-between;
   width: 20%;
-  height: 98vh;
+  height: 100vh;
+  font-family: "Nunito";
+  font-weight: 600;
+}
+@media screen and (max-width: 992px) {
+  .sidebar {
+    width: 40%;
+    height: 90vh;
+  }
 }
 .sidebar .sidebar-contenidos .logo-foodies {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 1.5rem 1rem 0 1rem;
+  margin: 0 1rem 0 1rem;
   padding: 0.8rem 0.8rem 0 0.8rem;
 }
+@media screen and (max-width: 992px) {
+  .sidebar .sidebar-contenidos .logo-foodies {
+    margin: 0;
+    padding: 0;
+  }
+}
 .sidebar .sidebar-contenidos .logo-foodies .img-logo-foodies {
-  width: 80%;
+  width: 75%;
   height: auto;
+}
+@media screen and (max-width: 992px) {
+  .sidebar .sidebar-contenidos .logo-foodies .img-logo-foodies {
+    margin: 0;
+    width: 50%;
+    height: auto;
+    display: flex;
+    justify-self: center;
+  }
 }
 .sidebar .sidebar-contenidos ul {
   list-style-type: none;
@@ -32,6 +80,12 @@
   margin-bottom: 0.5rem;
   overflow: hidden;
   transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+@media screen and (max-width: 992px) {
+  .sidebar .sidebar-contenidos ul li {
+    padding-bottom: 0.8rem;
+    margin-bottom: 0.2rem;
+  }
 }
 .sidebar .sidebar-contenidos ul li a {
   color: #fcfef3;
@@ -47,6 +101,13 @@
 .sidebar .sidebar-contenidos ul li a:hover, .sidebar .sidebar-contenidos ul li a.activo {
   background-color: #ffb136;
   color: #2c3143;
+  font-weight: bold;
+}
+@media screen and (max-width: 992px) {
+  .sidebar .sidebar-contenidos ul li a {
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+  }
 }
 .sidebar .sidebar-parametros ul {
   list-style-type: none;

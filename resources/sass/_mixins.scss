@@ -5,3 +5,13 @@
     padding-left:40px;
     text-decoration: none;
 }
+
+@mixin botones-menu {
+    background: none;
+    border: none;
+}
+
+@mixin iconos-panel {
+    font-size: 1.8rem;
+    color: modulo.$iconos;
+}
