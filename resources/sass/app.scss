@@ -18,6 +18,10 @@
     align-items: center;
     padding: 1rem 1.5rem 0.5rem 1.5rem;
 
+    @include media-queries.pantalla-grande {
+        display: none;
+    }
+
     .menu-hamburguesa-ayuda {
         #boton-ajustes {
             margin-right: 0.8rem;
@@ -48,6 +52,13 @@
     height: 100vh;
     font-family: 'Nunito';
     font-weight: 600;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+
+    @include media-queries.pantalla-grande {
+        transform: translate(0);
+    }
 
     @include media-queries.tablet {
         width: 40%;
@@ -141,3 +152,6 @@
     }
 }
 
+.sidebar.visible {
+    transform: translate(0);
+}

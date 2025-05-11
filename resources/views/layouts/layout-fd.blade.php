@@ -7,12 +7,12 @@
     <title>@yield('title', 'Foodies')</title>
     <meta name="description" content="@yield('description', 'Social Network for foodies')">
     <link rel="icon" type="image/png" href="{{ asset('images/logo-favicon.png') }}">
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
    @include('partials.sidebar')
    <main>
     @yield('content')
    </main>
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </body>
 </html>
