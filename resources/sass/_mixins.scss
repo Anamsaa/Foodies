@@ -1,0 +1,7 @@
+@use 'modulo'; 
+
+@mixin sidebar-enlace {
+    color: modulo.$color-secundario;
+    padding-left:40px;
+    text-decoration: none;
+}
