@@ -1,7 +1,7 @@
-@use 'modulo';
-@use 'mixins';
-@use 'media-queries';
-@import '@fortawesome/fontawesome-free/css/all.min.css';
+@use "modulo";
+@use "mixins";
+@use "media-queries";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
 
 * {
     margin: 0;
@@ -9,149 +9,207 @@
     box-sizing: border-box;
 }
 
-// Estilos menú hamburguesa 
-.menu-hamburguesa {
+// Estilo general de los componentes
+.componentes-principales {
     display: flex;
-    background-color: modulo.$color-primario;
-    height: 10vh;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 1.5rem 0.5rem 1.5rem;
-
-    @include media-queries.pantalla-grande {
-        display: none;
-    }
-
-    .menu-hamburguesa-ayuda {
-        #boton-ajustes {
-            margin-right: 0.8rem;
-        }
-    }
-
-    .btn-menu {
-        @include mixins.botones-menu;
-    }
-
-    #boton-hamburguesa, #hamburguesa-ajustes, #hamburguesa-logout {
-        @include mixins.iconos-panel;
-        transition: color 0.6s ease-in-out;
-
-        &:hover {
-            color: modulo.$color-secundario;
-        }
-    }
-}
-
-// Estilos del sidebar 
-.sidebar {
-    background-color: modulo.$color-primario;
-    display: flex; 
-    flex-direction: column;
-    justify-content:space-between;
-    width: 20%;
-    height: 100vh;
-    font-family: 'Nunito';
-    font-weight: 600;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
-    z-index: 1000;
-
-    @include media-queries.pantalla-grande {
-        transform: translate(0);
-    }
 
     @include media-queries.tablet {
-        width: 40%;
-        height: 90vh;
+        flex-direction: column;
     }
-  
-    .sidebar-contenidos {
 
-        .logo-foodies {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 1rem 0 1rem;
-            padding: 0.8rem 0.8rem 0 0.8rem;
+    @include media-queries.mobile {
+        flex-direction: column;
+    }
 
-            @include media-queries.tablet {
-               margin: 0;
-               padding: 0;
+    // Estilos menú hamburguesa
+    .menu-hamburguesa {
+        display: flex;
+        background-color: modulo.$color-primario;
+        height: 10vh;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.5rem 0.5rem 1.5rem;
+
+        @include media-queries.pantalla-grande {
+            display: none;
+        }
+
+        .menu-hamburguesa-ayuda {
+            #boton-ajustes {
+                margin-right: 0.8rem;
             }
-  
-            .img-logo-foodies {
-                width: 75%;
-                height: auto;
+        }
+
+        .btn-menu {
+            @include mixins.botones-menu;
+        }
+
+        #boton-hamburguesa,
+        #hamburguesa-ajustes,
+        #hamburguesa-logout {
+            @include mixins.iconos-panel;
+            transition: color 0.6s ease-in-out;
+
+            &:hover {
+                color: modulo.$color-secundario;
+            }
+        }
+    }
+
+    // Estilos del sidebar
+    .sidebar {
+        background-color: modulo.$color-primario;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 20%;
+        height: 100vh;
+        font-family: "Nunito";
+        font-weight: 600;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        z-index: 1000;
+
+        @include media-queries.pantalla-grande {
+            transform: translate(0);
+        }
+
+        .sidebar-contenidos {
+            .logo-foodies {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0 1rem 0 1rem;
+                padding: 0.8rem 0.8rem 0 0.8rem;
 
                 @include media-queries.tablet {
                     margin: 0;
-                    width: 50%;
+                    padding: 0;
+                }
+
+                .img-logo-foodies {
+                    width: 75%;
                     height: auto;
-                    display: flex;
-                    justify-self: center;
-                }
-            }
-        } 
-        ul {
-            list-style-type: none;
-            padding-top: 0.5rem;
-
-            li {
-                padding: 0rem 0rem 1.2rem 0rem;
-                margin-bottom: 0.5rem;
-                overflow: hidden;
-                transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, transform 0.5s ease-in-out;
-
-                @include media-queries.tablet {
-                    padding-bottom: 0.8rem;
-                    margin-bottom: 0.2rem;
-                }
-               
-                a {
-                    @include mixins.sidebar-enlace;
-                    width: 80%;
-                    // Los <a> por defecto traen un display de tipo inline 
-                    display: block; 
-                    padding-top: 1rem;
-                    padding-bottom: 1rem;
-                    border-top-right-radius: 50px;
-                    border-bottom-right-radius: 50px;
-                    &:hover, &.activo {
-                        background-color: modulo.$color-botones;
-                        color: modulo.$color-primario;
-                        font-weight: bold;
-                    }
 
                     @include media-queries.tablet {
-                        padding-top: 0.8rem;
+                        margin: 0;
+                        width: 50%;
+                        height: auto;
+                        display: flex;
+                        justify-self: center;
+                    }
+                }
+            }
+            ul {
+                list-style-type: none;
+                padding-top: 0.5rem;
+
+                li {
+                    padding: 0rem 0rem 1.2rem 0rem;
+                    margin-bottom: 0.5rem;
+                    overflow: hidden;
+                    transition: background-color 0.5s ease-in-out,
+                        color 0.5s ease-in-out, transform 0.5s ease-in-out;
+
+                    @include media-queries.tablet {
                         padding-bottom: 0.8rem;
+                        margin-bottom: 0.2rem;
+                    }
+
+                    a {
+                        @include mixins.sidebar-enlace;
+                        width: 80%;
+                        // Los <a> por defecto traen un display de tipo inline
+                        display: block;
+                        padding-top: 1rem;
+                        padding-bottom: 1rem;
+                        border-top-right-radius: 50px;
+                        border-bottom-right-radius: 50px;
+                        &:hover,
+                        &.activo {
+                            background-color: modulo.$color-botones;
+                            color: modulo.$color-primario;
+                            font-weight: bold;
+                        }
+
+                        @include media-queries.tablet {
+                            padding-top: 0.8rem;
+                            padding-bottom: 0.8rem;
+                        }
                     }
                 }
             }
         }
-        
-    }
 
-    .sidebar-parametros {
-        ul {
-             list-style-type: none;
-            padding-top: 1rem;
-            li {
-                padding-bottom: 1rem;
-                a {
-                    @include mixins.sidebar-enlace;
-                    &:hover {
-                        color: modulo.$iconos;
-                        font-weight: 500;
-                        text-decoration: underline;
-                        text-decoration-color: modulo.$iconos;
+        .sidebar-parametros {
+            ul {
+                list-style-type: none;
+                padding-top: 1rem;
+                li {
+                    padding-bottom: 1rem;
+                    a {
+                        @include mixins.sidebar-enlace;
+                        &:hover {
+                            color: modulo.$iconos;
+                            font-weight: 500;
+                            text-decoration: underline;
+                            text-decoration-color: modulo.$iconos;
+                        }
                     }
                 }
             }
         }
     }
-}
 
-.sidebar.visible {
-    transform: translate(0);
+    .sidebar.visible {
+        width: 40%;
+        transform: translate(0);
+
+        @include media-queries.mobile {
+            width: 50%;
+            height: 90vh;
+        }
+    }
+
+    // Estilos del main
+    main {
+        background-color: modulo.$background;
+        height: 100vh;
+        // Panel de control
+        .panel-de-control {
+            position: fixed;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+
+            .panel-control-ayuda {
+                display: flex;
+                justify-content: flex-end;
+                width: 90%;
+                height: 70px;
+                background-color: modulo.$color-primario;
+                border-bottom-left-radius: 30px;
+                border-bottom-right-radius: 30px;
+
+                .btn-panel {
+                    @include mixins.botones-menu;
+                }
+
+                #panel-ajustes,
+                #panel-logout {
+                    font-size: 25px;
+                    color: modulo.$color-secundario;
+                    padding-right: 0.8rem;
+                }
+            }
+
+            @include media-queries.tablet {
+                display: none;
+            }
+
+            @include media-queries.mobile {
+                display: none;
+            }
+        }
+    }
 }
