@@ -3,6 +3,7 @@
 @use "media-queries";
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 
+
 * {
     margin: 0;
     padding: 0;
@@ -12,6 +13,9 @@
 // Estilo general de los componentes
 .componentes-principales {
     display: flex;
+    box-sizing: border-box;
+     //últimos cambios 
+     position: relative;
 
     @include media-queries.tablet {
         flex-direction: column;
@@ -29,6 +33,26 @@
         justify-content: space-between;
         align-items: center;
         padding: 1rem 1.5rem 0.5rem 1.5rem;
+
+        @include media-queries.tablet {
+            // últimos cambios 
+            // por qué al volverse fijo se desconfigura todo?
+            position: fixed;
+            top: 0; 
+            left: 0;
+            right: 0; 
+            z-index: 1100;
+        }
+
+        @include media-queries.mobile {
+            // últimos cambios 
+            position: fixed;
+            top: 0; 
+            left: 0;
+            right: 0; 
+            z-index: 1100;
+        }
+       
 
         @include media-queries.pantalla-grande {
             display: none;
@@ -62,16 +86,31 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        width: 20%;
+        width: 22%;
         height: 100vh;
         font-family: "Nunito";
         font-weight: 600;
         transform: translateX(-100%);
         transition: transform 0.3s ease-in-out;
         z-index: 1000;
+        //últimos cambios 
+        position: fixed;
 
+        // queries del sidebar 
         @include media-queries.pantalla-grande {
             transform: translate(0);
+        }
+
+        @include media-queries.mobile {
+            top: 0; 
+            height: 92vh;
+            position: absolute;
+        }
+
+        @include media-queries.tablet {
+            top: 0; 
+            height: 92vh;
+            position: absolute;
         }
 
         .sidebar-contenidos {
@@ -164,29 +203,44 @@
     .sidebar.visible {
         width: 40%;
         transform: translate(0);
-
-        @include media-queries.mobile {
-            width: 50%;
-            height: 90vh;
-        }
+        //último cambio
+        top: 10vh; 
+        // últimos cambios 
+        position: fixed;
     }
 
     // Estilos del main
     main {
         background-color: modulo.$background;
-        height: 100vh;
+        width: 78%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        // últimos cambios 
+        margin-left: 22%;
+       
+
+        @include media-queries.tablet {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        @include media-queries.mobile {
+            margin-left: 0;
+            width: 100%;
+        }
+       
         // Panel de control
         .panel-de-control {
-            position: fixed;
             display: flex;
             justify-content: center;
-            width: 100%;
-
+            width: 90%;
+        
             .panel-control-ayuda {
                 display: flex;
                 justify-content: flex-end;
-                width: 90%;
-                height: 70px;
+                width: 100%;
+                height: 80px;
                 background-color: modulo.$color-primario;
                 border-bottom-left-radius: 30px;
                 border-bottom-right-radius: 30px;
@@ -197,9 +251,13 @@
 
                 #panel-ajustes,
                 #panel-logout {
-                    font-size: 25px;
+                    font-size: 28px;
                     color: modulo.$color-secundario;
-                    padding-right: 0.8rem;
+                    padding-right: 1.2rem;
+
+                    &:hover {
+                        color: modulo.$iconos;
+                    }
                 }
             }
 
@@ -210,6 +268,16 @@
             @include media-queries.mobile {
                 display: none;
             }
+        }
+
+        .contenidos {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            width: 90%;
+            height: auto;
+            background-color: red;
+            font-size: 60px;
+
         }
     }
 }
