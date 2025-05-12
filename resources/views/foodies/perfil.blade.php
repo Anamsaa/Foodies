@@ -1,4 +1,5 @@
 @extends('layouts.layout-fd')
-@section('title', 'Perfil')
-@section('description', 'Únete a la comunidad de apasionados por la cocina. Comparte tus platos, sigue a otros foodies y vive la experiencia gastronómica online.')
+@section('title', 'Ajustes')
+@section('description', 'Configura tu perfil y conecta con otras personas.')
 @section('content')
+@endsection

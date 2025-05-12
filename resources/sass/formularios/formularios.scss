@@ -1,0 +1,78 @@
+@use "../modulo";
+@use "../mixins";
+@use "../media-queries";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background:
+        url('/public/images/background_patron_foodies.png');
+    background-repeat: repeat;
+    background-size: 500px 500px;
+    font-family: 'Nunito';
+
+    .background-formulario {
+        width: 100%;
+        height: auto;
+        background-color: rgba(252, 254, 243, 0.7);
+
+        .contenedor-registro-usuario {
+        background-color: modulo.$color-secundario;
+        border: 2px solid modulo.$iconos;
+        border-radius: 20px;
+        margin: 2rem;
+        padding:40px;
+
+            .titulo-formulario-usuario {
+                font-family: 'Nunito';
+                padding-bottom: 20px;
+            }
+
+            .contenedor-formulario {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 1rem;
+
+                label {
+                    font-weight: bolder;
+                    color: modulo.$color-texto;
+                    margin-bottom: 0.5rem;
+                }
+
+                input, select, textarea {
+                    border: 0;
+                    border-radius: 5px;
+                    background-color: #E6E8DF ;
+                }
+
+                input[type="text"], input[type="date"], select{
+                    padding: 1.2rem;
+                    height: 2rem;
+                }
+            }
+
+            .contenedor-imagenes {
+                display: flex;
+                gap: 30px;
+
+                .contenedor-formulario {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                input[type="file"] {
+                    background-color: E6E8DF;
+                    height: 80px;
+                }
+            }
+        }
+    }
+
+    
+    
+}

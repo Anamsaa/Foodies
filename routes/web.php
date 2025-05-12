@@ -18,4 +18,5 @@ Route::view('seguidos', 'foodies.seguidos')->name('seguidos');
 Route::view('red-de-sabores', 'foodies.red')->name('red');
 Route::view('ajustes', 'foodies.ajustes')->name('ajustes');
 Route::view('log-out', 'foodies.logout')->name('logout');
+Route::view('registro', 'formularios.registro-usuario')->name('usuarios');
 

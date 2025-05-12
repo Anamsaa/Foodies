@@ -1,4 +1,5 @@
 @extends('layouts.layout-fd')
 @section('title', 'Red de sabores')
-@section('description', 'Únete a la comunidad de apasionados por la cocina. Comparte tus platos, sigue a otros foodies y vive la experiencia gastronómica online.')
+@section('description', 'Encuentra nuevos amigos y explora nuevos restaurantes.')
 @section('content')
+@endsection

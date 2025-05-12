@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    <title>Document</title>
-</head>
-<body>
-    Usted cerró sesión mi linda
-      @include('partials.sidebar')
-</body>
-</html>
+@extends('layouts.layout-fd')
+@section('title', 'Cerrar Sesión')
+@section('description', 'Siempre eres bienvenido en foodies, te esperamos de nuevo.')
+@section('content')
+@endsection

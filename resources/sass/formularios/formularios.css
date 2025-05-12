@@ -1,0 +1,60 @@
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: url("/public/images/background_patron_foodies.png");
+  background-repeat: repeat;
+  background-size: 500px 500px;
+  font-family: "Nunito";
+}
+body .background-formulario {
+  width: 100%;
+  height: auto;
+  background-color: rgba(252, 254, 243, 0.7);
+}
+body .background-formulario .contenedor-registro-usuario {
+  background-color: #fcfef3;
+  border: 2px solid #f27d16;
+  border-radius: 20px;
+  margin: 2rem;
+  padding: 40px;
+}
+body .background-formulario .contenedor-registro-usuario .titulo-formulario-usuario {
+  font-family: "Nunito";
+  padding-bottom: 20px;
+}
+body .background-formulario .contenedor-registro-usuario .contenedor-formulario {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+body .background-formulario .contenedor-registro-usuario .contenedor-formulario label {
+  font-weight: bolder;
+  color: #4e515a;
+  margin-bottom: 0.5rem;
+}
+body .background-formulario .contenedor-registro-usuario .contenedor-formulario input, body .background-formulario .contenedor-registro-usuario .contenedor-formulario select, body .background-formulario .contenedor-registro-usuario .contenedor-formulario textarea {
+  border: 0;
+  border-radius: 5px;
+  background-color: #E6E8DF;
+}
+body .background-formulario .contenedor-registro-usuario .contenedor-formulario input[type=text], body .background-formulario .contenedor-registro-usuario .contenedor-formulario input[type=date], body .background-formulario .contenedor-registro-usuario .contenedor-formulario select {
+  padding: 1.2rem;
+  height: 2rem;
+}
+body .background-formulario .contenedor-registro-usuario .contenedor-imagenes {
+  display: flex;
+  gap: 30px;
+}
+body .background-formulario .contenedor-registro-usuario .contenedor-imagenes .contenedor-formulario {
+  display: flex;
+  flex-direction: column;
+}
+body .background-formulario .contenedor-registro-usuario .contenedor-imagenes input[type=file] {
+  background-color: E6E8DF;
+  height: 80px;
+}/*# sourceMappingURL=formularios.css.map */
