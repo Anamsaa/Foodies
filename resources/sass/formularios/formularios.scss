@@ -30,6 +30,10 @@ body {
         width: 90%;
         padding: 2rem;
 
+        @include media-queries.mobile {
+            width: 100%;
+        }
+
         /* Estilo formulario usuarios */
         #formulario-usuarios {
             height: 100%;
@@ -41,8 +45,8 @@ body {
                 padding: 1.3rem 2rem 1.3rem 2rem;
 
                 .titulo-formulario-usuario {
-                    font-family: "Nunito";
                     padding-bottom: 20px;
+                    @include mixins.titulo-vistas;
                 }
 
                 form {
@@ -53,11 +57,34 @@ body {
                         display: grid;
                         grid-template-columns: 30% 70%;
                         column-gap: 3rem;
-                        width: 80%;
+                        width: 90%;
+
+                        @include media-queries.tablet {
+                            width: 100%;
+                            grid-template-columns: 1fr;
+                        }
+
+                        @include media-queries.mobile {
+                            width: 100%;
+                            grid-template-columns: 1fr;
+                        }
 
                         .column {
                             display: flex;
                             flex-direction: column;
+                            width: 100%;
+                        }
+
+                        .select-content {
+                            position: relative;
+
+                            i {
+                                pointer-events: none;
+                                display: block;
+                                position: absolute;
+                                right: 20px;
+                                top: 60%;
+                            }
                         }
 
                         .contenedor-formulario {
@@ -65,7 +92,8 @@ body {
                             flex-direction: column;
                             margin-bottom: 0.6rem;
 
-                            label {
+                            label,
+                            .titulo-imagen {
                                 font-weight: bolder;
                                 color: modulo.$color-texto;
                                 margin-bottom: 0.3rem;
@@ -77,6 +105,15 @@ body {
                                 border: 0;
                                 border-radius: 5px;
                                 background-color: modulo.$input-background;
+                                width: 100%;
+
+                                @include media-queries.tablet {
+                                    width: 100%;
+                                }
+
+                                @include media-queries.mobile {
+                                    width: 100%;
+                                }
                             }
 
                             input[type="text"],
@@ -86,34 +123,112 @@ body {
                                 height: 2rem;
                             }
 
+                            // Personalización flecha desplegable
+
+                            select {
+                                cursor: pointer;
+                                appearance: none;
+                                -webkit-appearance: none;
+                                -moz-appearance: none;
+                            }
+
+                            select::-ms-expand {
+                                display: none;
+                            }
+
                             .comidas-favoritas {
                                 display: grid;
                                 grid-template-columns: 1fr 1fr 1fr;
                                 column-gap: 1rem;
+
+                                @include media-queries.tablet {
+                                    width: 100%;
+                                    row-gap: 1rem;
+                                    grid-template-columns: 1fr;
+                                }
+
+                                @include media-queries.mobile {
+                                    row-gap: 1rem;
+                                    width: 100%;
+                                    grid-template-columns: 1fr;
+                                }
                             }
                         }
-
+                        
                         .contenedor-imagenes {
                             display: flex;
-                            gap: 30px;
+                            width: 80%;
+                            height: auto;
+                            gap: 10px;
 
-                            .contenedor-formulario {
-                                display: flex;
+                            @include media-queries.mobile {
                                 flex-direction: column;
+                                width: 40%;
                             }
 
-                            input[type="file"] {
-                                background-color: modulo.$input-background;;
-                                height: 80px;
+                            // Estilos de carga de imágenes
+                            .cargar-imagenes {
+                                width: 100%;
+
+                                .titulo-imagen {
+                                    width: 100%;
+                                }
+
+                                .upload-box {
+                                    aspect-ratio: 1 / 1;
+                                    max-width: 150px;
+                                    background-color: modulo.$input-background;
+                                    padding: 1rem;
+                                    display: flex;
+                                    flex-direction: column;
+                                    align-items: center;
+                                    justify-content: center;
+                                    text-align: center;
+                                    cursor: pointer;
+                                    transition: background-color 0.3s ease,
+                                        border-color 0.3s ease;
+                                }
+
+                                @include media-queries.mobile {
+                                    aspect-ratio: 1 / 1;
+                                }
+
+                                i {
+                                    font-size: 40px;
+                                    font-weight: bold;
+                                    margin-bottom: 0.2rem;
+                                }
+
+                                &:hover {
+                                    border-color: modulo.$color-botones;
+                                }
+
+                                &.highlight {
+                                    border-color: modulo.$color-botones;
+                                    background-color: modulo.$color-primario;
+                                }
+
+                                input[type="file"] {
+                                    display: none;
+                                }
                             }
                         }
                     }
 
+                    // Estilos botón del formulario
                     .button-formulario {
                         padding: 0;
                         display: flex;
                         justify-content: end;
                         width: 100%;
+
+                        @include media-queries.tablet {
+                            justify-content: center;
+                        }
+
+                        @include media-queries.mobile {
+                            justify-content: center;
+                        }
 
                         .button-usuarios-formulario {
                             border: none;

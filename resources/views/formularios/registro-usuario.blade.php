@@ -23,23 +23,26 @@
                         <label for="fnacimiento">Fecha de nacimiento: </label>
                         <input type="date" id="fnacimiento" name="fnacimiento" required>
                     </div>
-                    <div class="contenedor-formulario">
+                    <div class="contenedor-formulario select-content">
                         <label for="pais">País: </label>
                         <select name="pais" id="pais">
                             <option value=""></option>
                         </select>
+                        <i class="fa-solid fa-caret-down"></i>
                     </div>
-                    <div class="contenedor-formulario">
+                    <div class="contenedor-formulario select-content">
                         <label for="region">Región: </label>
                         <select name="region" id="region">
                             <option value=""></option>
                         </select>
+                        <i class="fa-solid fa-caret-down"></i>
                     </div>
-                    <div class="contenedor-formulario">
+                    <div class="contenedor-formulario select-content">
                         <label for="ciudad">Ciudad: </label>
                         <select name="region" id="region">
                             <option value=""></option>
                         </select>
+                        <i class="fa-solid fa-caret-down"></i>
                     </div>
                 </div>
 
@@ -58,13 +61,21 @@
                     </div>  
 
                     <div class="contenedor-imagenes">
-                        <div class="contenedor-formulario">
-                            <label for="imagen-perfil">Escoge una foto de perfil</label>
-                            <input type="file" name="imagen-perfil">
+                        <div class="contenedor-formulario cargar-imagenes">
+                            <span class="titulo-imagen">Escoge una foto de perfil</span>
+                            <label for="imagen-perfil" class="upload-box" id="drop-area">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Arrastra una imagen o haz click</span>
+                                <input type="file" name="imagen-perfil" id="imagen-perfil" accept=".jpg, .jpeg, .png, .webp">
+                            </label>
                         </div>
-                        <div class="contenedor-formulario">
-                            <label for="imagen-portada">Escoge una foto de portada</label>
-                            <input type="file" name="imagen-portada">
+                        <div class="contenedor-formulario cargar-imagenes">
+                            <span class="titulo-imagen">Escoge una foto de portada</span>
+                            <label for="imagen-portada" class="upload-box" id="drop-area-portada">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Arrastra una imagen o haz click</span>
+                                <input type="file" name="imagen-portada" id="imagen-portada" accept=".jpg, .jpeg, .png, .webp">
+                            </label>
                         </div>
                     </div>
                 </div>
