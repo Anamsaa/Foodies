@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'geoapi' => [
+        'key' => env('GEOAPI_KEY'),
+        'base_url'=> 'https://apiv1.geoapi.es/'
+    ]
 ];

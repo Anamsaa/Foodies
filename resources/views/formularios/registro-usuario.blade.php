@@ -24,14 +24,17 @@
                         <input type="date" id="fnacimiento" name="fnacimiento" required>
                     </div>
                     <div class="contenedor-formulario select-content">
-                        <label for="pais">País: </label>
+                        <label for="pais">Comunidad Autónoma: </label>
                         <select name="pais" id="pais">
                             <option value=""></option>
+                            @foreach ($regions as $region)
+                                <option value="{{ $region->id }}">{{ $region->nombre }}</option>
+                            @endforeach
                         </select>
                         <i class="fa-solid fa-caret-down"></i>
                     </div>
                     <div class="contenedor-formulario select-content">
-                        <label for="region">Región: </label>
+                        <label for="region">Provincia: </label>
                         <select name="region" id="region">
                             <option value=""></option>
                         </select>
