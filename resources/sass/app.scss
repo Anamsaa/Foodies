@@ -295,6 +295,14 @@
             justify-content: center;
             align-items: center;
 
+            @include media-queries.tablet {
+               min-height: auto;
+            }
+
+            @include media-queries.mobile {
+                 min-height: auto;
+            }
+
             .image-logo {
                 display: flex;
                 align-items: center;
@@ -318,11 +326,13 @@
             @include media-queries.tablet {
                 flex-direction: column;
                 align-items: center;
+                height: auto;
             }
 
             @include media-queries.mobile {
                 flex-direction: column;
                 align-items: center;
+                height: auto;
             }
 
             .fondo-formulario {
@@ -340,8 +350,10 @@
                     background-color: transparent;
                     flex-direction: column;
                     align-items: center;
+                    justify-content: center;
                     text-align: center;
-                    margin-right: 0px;
+                    margin: 0;
+                    padding: 0rem 0.8rem 0.8rem 0.8rem;
                     width: 55%;
                 }
 
@@ -349,9 +361,10 @@
                     background-color: transparent;
                     flex-direction: column;
                     align-items: center;
-                    align-items: center;
+                    justify-content: center;
                     text-align: center;
-                    margin-right: 0px;
+                    margin: 0;
+                    padding: 0rem 0.8rem 0.8rem 0.8rem;
                     width: 55%;
                 }
 
@@ -365,18 +378,22 @@
                     }
 
                     @include media-queries.mobile {
+                        padding: 0;
                         width: 100%;
                     }
                 }
             }
 
             .contenedor-formulario {
-                background-color: modulo.$color-secundario;
+                background-image: url(/public/images/Fondos-formularios-fd/Fondo_formularios_1.png);
+                background-size: 400px 400px;
                 width: 22%;
                 border-radius: 30px;
                 display: flex;
+                flex-direction: column;
                 justify-content: center;
-                padding: 1.5rem;
+                align-items: center;
+                padding: 1.5rem 2rem;
 
                 @include media-queries.tablet {
                     flex-direction: column;
@@ -396,6 +413,56 @@
                 .titulo-fondo-formulario {
                     font-weight: 800;
                     font-size: 28px;
+                    color: modulo.$iconos;
+                }
+
+                .formulario-lr {
+                    width: 100%;
+                    .formulario-login-users {
+                        display: flex;
+                        flex-direction: column;
+                        padding-bottom: 0.5rem;
+
+                        label {
+                            font-weight: bolder;
+                            color: modulo.$color-texto;
+                            margin-bottom: 0.3rem;
+                            text-align: start;
+                        }
+
+                        input {
+                            border: 0;
+                            border-radius: 5px;
+                            background-color: modulo.$input-background;
+                            width: 100%;
+                            padding: 0.5rem;
+                            height: 2rem;
+                            width: 100%;
+                        }
+                    }
+
+                    .button-formulario {
+                        margin-top: 1rem;
+                        display: flex;
+                        justify-self: center;
+                        @include mixins.botones-formularios;
+                    }
+                }
+            }
+
+            // Configuraciones para los logins 
+            .contenedor-login {
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+
+                @include media-queries.tablet {
+                    padding-top: 3rem;
+                    padding-bottom: 3rem;
+                }
+
+                @include media-queries.mobile {
+                    padding-top: 6rem;
+                    padding-bottom: 6rem;
                 }
             }
         }
@@ -407,6 +474,22 @@
             justify-content: center;
             align-items: center;
             text-align: center;
+
+            .redireccion-restaurantes {
+                p {
+                    font-size: 1rem;
+                }
+
+                .enlace-restaurantes {
+                    text-decoration: none;
+                    color: modulo.$iconos;
+                    font-weight: 800;
+
+                    &:hover {
+                        text-decoration: underline modulo.$iconos 2px;
+                    }
+                }
+            }
         }
     }
 }

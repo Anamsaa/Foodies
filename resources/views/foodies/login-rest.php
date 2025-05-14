@@ -1,0 +1,23 @@
+@extends('layouts.layout-login-register')
+@section('title', 'Iniciar Sesión')
+@section('description', 'Bienvenido de nuevo, inicia sesión en nuestra Red Social y mantente al tanto de las novedades.')
+@section('titulo', 'Welcome again foodie Host :)')
+@section('titulo-section', 'Iniciar Sesión')
+
+@section('formulario')
+
+<form action="" class="formulario-lr">
+    <div class="formulario-login-users">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email">
+    </div>
+    <div class="formulario-login-users">
+        <label for="password">Contraseña</label>
+        <input type="password" name="password" id="password">
+    </div>
+    <button type="submit" class="button-formulario">Regístrate</button>
+</form>
+
+@endsection
+@section('Invitacion', '¿Tienes un negocio dedicado a la restauración?')
+@section('enlace-creacion-perfil', '{{  }}')

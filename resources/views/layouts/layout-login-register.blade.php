@@ -14,6 +14,7 @@
     <header>
         <div class="image-logo">
             <img src="{{ asset('images/logo-foodies.png') }}" alt="Logo Red Social Foodies">
+            @yield('restaurant-title-img')
         </div>
     </header>
     <section class="background-section">
@@ -22,19 +23,15 @@
                 <h3>@yield('titulo', 'Bienvenido')</h3>
             </div>
         </div>
-        <div class="contenedor-formulario">    
+        <div class="contenedor-formulario contenedor-login">    
             <h3 class="titulo-fondo-formulario">@yield('titulo-section')</h3>
-            @yield('formulario')
-            {{-- <form action="">
-                @csrf
-            <button type="submit">@yield('buttton-form', 'Enviar')</button> 
-            </form>--}}  
+            @yield('formulario')  
         </div>
     </section>
     <footer>
         <div class="redireccion-restaurantes">
-            <p>¿Tienes un negocio dedicado a la restauración?</p>
-            <p>Crea tu perfil<a href="">aquí</a></p>
+            <p>@yield('Invitacion')</p>
+            <p>Crea tu perfil<a class="enlace-restaurantes" href="@yield('enlace-creacion-perfil')"> aquí</a></p>
         </div>
     </footer>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])

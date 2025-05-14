@@ -13,8 +13,8 @@ Route::view('seguidos', 'foodies.seguidos')->name('seguidos');
 Route::view('red-de-sabores', 'foodies.red')->name('red');
 Route::view('ajustes', 'foodies.ajustes')->name('ajustes');
 Route::view('log-out', 'foodies.logout')->name('logout');
-Route::view('log-in', 'foodies.login')->name('login');
-Route::view('registro', 'foodies.register')->name('register');
+Route::view('log-in-user', 'foodies.login-user')->name('login');
+Route::view('registro', 'foodies.register-user')->name('register');
 Route::view('creacion-perfil-restaurante', 'formularios.registro-restaurantes')->name('creacion-restaurantes');
 Route::view('creacion-perfil-restaurante-2', 'formularios.registro-restaurantes-2')->name('creacion-restaurantes-2');
 

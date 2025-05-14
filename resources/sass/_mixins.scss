@@ -27,3 +27,13 @@
         font-size: 16px;
     }
 }
+
+@mixin botones-formularios {
+    border: none;
+    background-color: modulo.$color-botones;
+    font-family: modulo.$tipografia-foodies;
+    font-weight: 800;
+    font-size: 18px;
+    padding: 0.8rem;
+    border-radius: 10px;
+}

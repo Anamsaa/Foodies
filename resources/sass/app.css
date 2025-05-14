@@ -282,6 +282,16 @@
   justify-content: center;
   align-items: center;
 }
+@media screen and (max-width: 992px) {
+  .layout-login-register .layout-inicio header {
+    min-height: auto;
+  }
+}
+@media screen and (max-width: 576px) {
+  .layout-login-register .layout-inicio header {
+    min-height: auto;
+  }
+}
 .layout-login-register .layout-inicio header .image-logo {
   display: flex;
   align-items: center;
@@ -303,12 +313,14 @@
   .layout-login-register .layout-inicio .background-section {
     flex-direction: column;
     align-items: center;
+    height: auto;
   }
 }
 @media screen and (max-width: 576px) {
   .layout-login-register .layout-inicio .background-section {
     flex-direction: column;
     align-items: center;
+    height: auto;
   }
 }
 .layout-login-register .layout-inicio .background-section .fondo-formulario {
@@ -327,8 +339,10 @@
     background-color: transparent;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-align: center;
-    margin-right: 0px;
+    margin: 0;
+    padding: 0rem 0.8rem 0.8rem 0.8rem;
     width: 55%;
   }
 }
@@ -337,9 +351,10 @@
     background-color: transparent;
     flex-direction: column;
     align-items: center;
-    align-items: center;
+    justify-content: center;
     text-align: center;
-    margin-right: 0px;
+    margin: 0;
+    padding: 0rem 0.8rem 0.8rem 0.8rem;
     width: 55%;
   }
 }
@@ -355,16 +370,20 @@
 }
 @media screen and (max-width: 576px) {
   .layout-login-register .layout-inicio .background-section .fondo-formulario .titulo-bienvenida h3 {
+    padding: 0;
     width: 100%;
   }
 }
 .layout-login-register .layout-inicio .background-section .contenedor-formulario {
-  background-color: #fcfef3;
+  background-image: url(/public/images/Fondos-formularios-fd/Fondo_formularios_1.png);
+  background-size: 400px 400px;
   width: 22%;
   border-radius: 30px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  padding: 1.5rem;
+  align-items: center;
+  padding: 1.5rem 2rem;
 }
 @media screen and (max-width: 992px) {
   .layout-login-register .layout-inicio .background-section .contenedor-formulario {
@@ -386,6 +405,58 @@
 .layout-login-register .layout-inicio .background-section .contenedor-formulario .titulo-fondo-formulario {
   font-weight: 800;
   font-size: 28px;
+  color: #f27d16;
+}
+.layout-login-register .layout-inicio .background-section .contenedor-formulario .formulario-lr {
+  width: 100%;
+}
+.layout-login-register .layout-inicio .background-section .contenedor-formulario .formulario-lr .formulario-login-users {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0.5rem;
+}
+.layout-login-register .layout-inicio .background-section .contenedor-formulario .formulario-lr .formulario-login-users label {
+  font-weight: bolder;
+  color: #4e515a;
+  margin-bottom: 0.3rem;
+  text-align: start;
+}
+.layout-login-register .layout-inicio .background-section .contenedor-formulario .formulario-lr .formulario-login-users input {
+  border: 0;
+  border-radius: 5px;
+  background-color: #e6e8df;
+  width: 100%;
+  padding: 0.5rem;
+  height: 2rem;
+  width: 100%;
+}
+.layout-login-register .layout-inicio .background-section .contenedor-formulario .formulario-lr .button-formulario {
+  margin-top: 1rem;
+  display: flex;
+  justify-self: center;
+  border: none;
+  background-color: #ffb136;
+  font-family: "Nunito", "Arial";
+  font-weight: 800;
+  font-size: 18px;
+  padding: 0.8rem;
+  border-radius: 10px;
+}
+.layout-login-register .layout-inicio .background-section .contenedor-login {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+@media screen and (max-width: 992px) {
+  .layout-login-register .layout-inicio .background-section .contenedor-login {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+}
+@media screen and (max-width: 576px) {
+  .layout-login-register .layout-inicio .background-section .contenedor-login {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
 }
 .layout-login-register .layout-inicio footer {
   height: 12vh;
@@ -394,4 +465,16 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+.layout-login-register .layout-inicio footer .redireccion-restaurantes p {
+  font-size: 1rem;
+}
+.layout-login-register .layout-inicio footer .redireccion-restaurantes .enlace-restaurantes {
+  text-decoration: none;
+  color: #f27d16;
+  font-weight: 800;
+}
+.layout-login-register .layout-inicio footer .redireccion-restaurantes .enlace-restaurantes:hover {
+  -webkit-text-decoration: underline #f27d16 2px;
+          text-decoration: underline #f27d16 2px;
 }/*# sourceMappingURL=app.css.map */
