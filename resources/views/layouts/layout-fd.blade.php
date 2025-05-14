@@ -10,7 +10,7 @@
     {{-- Favicon --}}
     <link rel="icon" type="image/png" href="{{ asset('images/logo-favicon.png') }}">
     {{-- Habilitar Turbo en todas las vistas --}}
-    <script type="module" src="{{ asset('js/libs/turbo.js') }}" defer></script>
+    {{-- <script type="module" src="{{ asset('js/turbo.js') }}" defer></script> --}}
 </head>
 <body>
     <div class="componentes-principales">
@@ -27,10 +27,10 @@
                 </div>
             </div>
             <div class="contenidos">
-                <turbo-frame id="page-content">
+                <!-- <turbo-frame id="page-content"> -->
                     <p>Hola estoy probando</p>
                     @yield('content')
-                </turbo-frame>
+                <!-- </turbo-frame> -->
             </div>
         </main>
     </div>

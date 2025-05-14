@@ -10,13 +10,15 @@
     {{-- Favicon --}}
     <link rel="icon" type="image/png" href="{{ asset('images/logo-favicon.png') }}">
     {{-- Habilitar Turbo en todas las vistas --}}
-    <script type="module" src="{{ asset('js/libs/turbo.js') }}" defer></script>
+    {{-- <script type="module" src="{{ asset('js/turbo.js') }}" defer></script> --}}
 </head>
 <body>
     <div class="background-formulario">
-         <turbo-frame id="formulario-usuarios">
-            @yield('contenido-formulario')
-         </turbo-frame>
+         <!-- <turbo-frame id="formulario-usuarios"> -->
+            <div class="formulario-usuarios">
+                 @yield('contenido-formulario')
+            </div>
+         <!-- </turbo-frame> -->
     </div>
     @vite(['resources/sass/formularios/formularios.scss', 'resources/js/app.js'])
 </body>

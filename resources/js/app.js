@@ -1,23 +1,29 @@
 import './bootstrap';
 import './elements/turbo-echo-stream-tag';
 import './libs';
-import '@hotwired/turbo';
+// import * as Turbo from '@hotwired/turbo';
+// window.Turbo = Turbo;
+// Turbo.start();
+
 import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 Alpine.start();
 
-document.addEventListener('turbo:load', () => {
+document.addEventListener('DOMContentLoaded', () => {
 
     dragAndDrop("drop-area","imagen-perfil");
     const btnHamburguesa = document.getElementById('boton-hamburguesa');
     console.log(btnHamburguesa);
     const sidebar = document.querySelector('.sidebar');
 
-    btnHamburguesa.addEventListener('click', () => {
-        sidebar.classList.toggle('visible');
-    })
-})
+    if (btnHamburguesa && sidebar) {
+        btnHamburguesa.addEventListener('click', () => {
+            sidebar.classList.toggle('visible');
+        });
+    }
+    
+});
 
 // Drag & Drop Formularios 
 
@@ -25,45 +31,47 @@ function dragAndDrop(dropAreaId, inputFileId) {
     const dropArea = document.getElementById(dropAreaId);
     const inputFile = document.getElementById(inputFileId);
 
+    // Si no existe ninguno, se sale de la función
     if (!dropArea || !inputFile) return;
 
     // Guardamos el contenido original para restaurarlo si se elimina la imagen
     const originalContent = dropArea.innerHTML;
 
-    // Crear imagen de vista previa y botón eliminar
-    const preview = document.createElement("img");
-    preview.style.maxWidth = "100%";
-    preview.style.maxHeight = "100%";
-    preview.style.objectFit = "cover";
-    preview.style.borderRadius = "10px";
-
+    // Crear botón eliminar
     const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Eliminar";
+    deleteBtn.textContent = "X";
     deleteBtn.type = "button";
-    deleteBtn.style.marginTop = "10px";
-    deleteBtn.style.padding = "0.4rem 0.8rem";
-    deleteBtn.style.backgroundColor = "#e74c3c";
+    deleteBtn.style.position = "absolute";
+    deleteBtn.style.top = "5px";
+    deleteBtn.style.right = "5px";
+    deleteBtn.style.borderRadius = "30px";
+    deleteBtn.style.padding = "5px 8px";
+    deleteBtn.style.backgroundColor = "#4e515a";
     deleteBtn.style.color = "white";
     deleteBtn.style.border = "none";
-    deleteBtn.style.borderRadius = "5px";
     deleteBtn.style.cursor = "pointer";
+    deleteBtn.style.zIndex = "10";
 
     // Restaurar contenido original
     function restoreOriginal() {
+        dropArea.style.backgroundImage = "";
         dropArea.innerHTML = originalContent;
         dropArea.classList.remove("highlight");
         inputFile.value = "";
-        attachEvents(); // volver a enlazar eventos tras restaurar
+        attachEvents(); // Volver a enlazar eventos tras restaurar
     }
 
     // Mostrar la imagen
     function showPreview(file) {
         const reader = new FileReader();
         reader.onload = function (e) {
-            preview.src = e.target.result;
-            dropArea.innerHTML = ''; // limpiar contenido
-            dropArea.appendChild(preview);
-            dropArea.appendChild(deleteBtn);
+            dropArea.style.backgroundImage = `url(${e.target.result})`;
+            dropArea.style.backgroundSize = "cover";
+            dropArea.style.position = "relative";
+            dropArea.style.backgroundPosition = "center";
+            dropArea.style.backgroundRepeat = "no-repeat";
+            dropArea.innerHTML = ""; // Limpiar contenido anterior
+            dropArea.appendChild(deleteBtn); // Agregar botón eliminar
         };
         reader.readAsDataURL(file);
     }
@@ -86,6 +94,7 @@ function dragAndDrop(dropAreaId, inputFileId) {
 
         // Drop de imagen
         dropArea.addEventListener("drop", e => {
+            e.preventDefault();
             const file = e.dataTransfer.files[0];
             if (file && file.type.startsWith("image/")) {
                 inputFile.files = e.dataTransfer.files;
@@ -106,14 +115,18 @@ function dragAndDrop(dropAreaId, inputFileId) {
     });
 
     // Botón eliminar
-    deleteBtn.addEventListener("click", restoreOriginal);
+    deleteBtn.addEventListener("click", e => {
+         e.preventDefault();
+        restoreOriginal()
+    });
 
     // Iniciar eventos
     attachEvents();
 }
 
 
-document.addEventListener('turbo:load', function() {
+
+document.addEventListener('DOMContentLoaded', function() {
     // Aquí va tu lógica de cargar provincias y ciudades
     const comunidadSelect = document.getElementById('comunidad-autonoma');
     const provinciaSelect = document.getElementById('provincia');
@@ -123,13 +136,14 @@ document.addEventListener('turbo:load', function() {
 
     comunidadSelect.addEventListener('change', function () {
         const regionId = this.value;
+        console.log(regionId);
 
         provinciaSelect.innerHTML = '<option value=""></option>';
         ciudadSelect.innerHTML = '<option value=""></option>';
 
         if (!regionId) return;
 
-        fetch('/api/provinces/${regionId}')
+        fetch(`/api/provinces/${regionId}`)
             .then(res => res.json())
             .then(provinces => {
                 console.log(provinces);
@@ -148,7 +162,7 @@ document.addEventListener('turbo:load', function() {
 
         if (!provinceId) return;
 
-        fetch('/api/cities/${provinceId}')
+        fetch(`/api/cities/${provinceId}`)
             .then(res => res.json())
             .then(cities => {
                 cities.forEach(city => {
@@ -160,3 +174,45 @@ document.addEventListener('turbo:load', function() {
             });
     });
 });
+
+
+// Tipos de restaurantes 
+
+const tiposDeRestaurantes = [
+    "Restaurante de comida rápida",
+    "Restaurante casual",
+    "Restaurante de lujo",
+    "Buffet",
+    "Bistro",
+    "Brasserie",
+    "Cafetería",
+    "Diner americano",
+    "Restaurante temático",
+    "Steakhouse",
+    "Restaurante vegetariano/vegano",
+    "Restaurante gourmet",
+    "Restaurante de alta cocina",
+    "Trattoria (italiano)",
+    "Restaurante asiático (chino, japonés, coreano, tailandés, etc.)",
+    "Restaurante mexicano",
+    "Restaurante mediterráneo",
+    "Restaurante fusión",
+    "Restaurante de tapas",
+    "Restaurante de mariscos",
+    "Churrasquería",
+    "Restaurante de cocina molecular",
+    "Restaurante de barbacoa",
+    "Gastropub",
+    "Restaurante de sushi",
+    "Restaurante de comida casera",
+    "Food truck",
+    "Restaurante de comida saludable",
+    "Restaurante buffet libre",
+    "Restaurante de autoservicio",
+    "Restaurante familiar",
+    "Restaurante de cocina experimental",
+    "Restaurante con espectáculo",
+    "Restaurante de cocina regional",
+    "Cervezería con restaurante",
+    "Restaurante de desayuno y brunch"
+];

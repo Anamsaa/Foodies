@@ -34,20 +34,20 @@
 
         @include media-queries.tablet {
             position: fixed;
-            top: 0; 
+            top: 0;
             left: 0;
-            right: 0; 
+            right: 0;
             z-index: 1100;
         }
 
         @include media-queries.mobile {
             position: fixed;
-            top: 0; 
+            top: 0;
             left: 0;
-            right: 0; 
+            right: 0;
             z-index: 1100;
         }
-       
+
         @include media-queries.pantalla-grande {
             display: none;
         }
@@ -90,19 +90,19 @@
         z-index: 1000;
         position: fixed;
 
-        // queries del sidebar 
+        // queries del sidebar
         @include media-queries.pantalla-grande {
             transform: translate(0);
         }
 
         @include media-queries.mobile {
-            top: 0; 
+            top: 0;
             height: 92vh;
             position: absolute;
         }
 
         @include media-queries.tablet {
-            top: 0; 
+            top: 0;
             height: 92vh;
             position: absolute;
         }
@@ -197,7 +197,7 @@
     .sidebar.visible {
         width: 40%;
         transform: translate(0);
-        top: 10vh; 
+        top: 10vh;
         position: fixed;
     }
 
@@ -209,7 +209,6 @@
         flex-direction: column;
         align-items: center;
         margin-left: 22%;
-       
 
         @include media-queries.tablet {
             margin-left: 0;
@@ -222,13 +221,13 @@
             margin-top: 10vh;
             width: 100%;
         }
-       
+
         // Panel de control
         .panel-de-control {
             display: flex;
             justify-content: center;
             width: 90%;
-        
+
             .panel-control-ayuda {
                 display: flex;
                 justify-content: flex-end;
@@ -270,7 +269,144 @@
             height: auto;
             background-color: red;
             font-size: 60px;
+        }
+    }
+}
 
+// Estilos de Login y Register
+.layout-login-register {
+    background-image: url(/public/images/background_patron_foodies.png);
+    background-repeat: repeat;
+    background-size: 500px 500px;
+
+    .layout-inicio {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(252, 254, 243, 0.7);
+        min-height: 100vh;
+        font-family: "Nunito", "Arial";
+
+        header {
+            height: 12vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .image-logo {
+                display: flex;
+                align-items: center;
+                height: 100px;
+                width: 180px;
+
+                img {
+                    width: 100%;
+                }
+            }
+        }
+
+        .background-section {
+            background-color: modulo.$color-primario;
+            height: 76vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 2rem 1rem;
+
+            @include media-queries.tablet {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            @include media-queries.mobile {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .fondo-formulario {
+                background-color: modulo.$color-fondo-formulario;
+                width: 22%;
+                border-radius: 30px;
+                display: flex;
+                align-items: end;
+                margin-top: 0.5rem;
+                margin-bottom: 0.5rem;
+                margin-right: -40px;
+                padding: 1.5rem;
+
+                @include media-queries.tablet {
+                    background-color: transparent;
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                    margin-right: 0px;
+                    width: 55%;
+                }
+
+                @include media-queries.mobile {
+                    background-color: transparent;
+                    flex-direction: column;
+                    align-items: center;
+                    align-items: center;
+                    text-align: center;
+                    margin-right: 0px;
+                    width: 55%;
+                }
+
+                .titulo-bienvenida h3 {
+                    font-size: 22px;
+                    width: 40%;
+                    color: modulo.$color-secundario;
+
+                    @include media-queries.tablet {
+                        width: 100%;
+                    }
+
+                    @include media-queries.mobile {
+                        width: 100%;
+                    }
+                }
+            }
+
+            .contenedor-formulario {
+                background-color: modulo.$color-secundario;
+                width: 22%;
+                border-radius: 30px;
+                display: flex;
+                justify-content: center;
+                padding: 1.5rem;
+
+                @include media-queries.tablet {
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                    width: 50%;
+                }
+
+                @include media-queries.mobile {
+                    flex-direction: column;
+                    align-items: center;
+                    align-items: center;
+                    text-align: center;
+                    width: 70%;
+                }
+
+                .titulo-fondo-formulario {
+                    font-weight: 800;
+                    font-size: 28px;
+                }
+            }
+        }
+
+        footer {
+            height: 12vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
         }
     }
 }

@@ -1,13 +1,7 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UbicacionController;
 use Illuminate\Support\Facades\Route;
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 
 // Definción de rutas de la red social
 
@@ -19,6 +13,15 @@ Route::view('seguidos', 'foodies.seguidos')->name('seguidos');
 Route::view('red-de-sabores', 'foodies.red')->name('red');
 Route::view('ajustes', 'foodies.ajustes')->name('ajustes');
 Route::view('log-out', 'foodies.logout')->name('logout');
+Route::view('log-in', 'foodies.login')->name('login');
+Route::view('registro', 'foodies.register')->name('register');
+Route::view('creacion-perfil-restaurante', 'formularios.registro-restaurantes')->name('creacion-restaurantes');
+Route::view('creacion-perfil-restaurante-2', 'formularios.registro-restaurantes-2')->name('creacion-restaurantes-2');
 
 Route::get('creacion-perfil', [UbicacionController::class, 'cargarRegiones'])->name('crear-perfil');
+
+// Definicion de rutas para establecer conexión con archivos JSON
+Route::get('/api/provinces/{regionId}', [UbicacionController::class, 'getProvinces']);
+Route::get('/api/cities/{provinceId}', [UbicacionController::class, 'getCities']);
+
 

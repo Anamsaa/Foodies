@@ -3,5 +3,7 @@
 use App\Http\Controllers\UbicacionController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/provinces/{regionId}', [UbicacionController::class, 'getProvinces']);
-Route::get('/cities/{provinceId}', [UbicacionController::class, 'getCities']);
+Route::prefix('api')->group(function () {
+    Route::get('/provinces/{regionId}', [UbicacionController::class, 'getProvinces']);
+    Route::get('/cities/{provinceId}', [UbicacionController::class, 'getCities']);
+});

@@ -5,56 +5,281 @@
   box-sizing: border-box;
 }
 
-body {
+html {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
   background: url("/public/images/background_patron_foodies.png");
   background-repeat: repeat;
   background-size: 500px 500px;
-  font-family: "Nunito";
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(252, 254, 243, 0.7);
+  min-height: 100vh;
+  font-family: "Nunito", "Arial";
 }
 body .background-formulario {
-  width: 100%;
-  height: auto;
-  background-color: rgba(252, 254, 243, 0.7);
+  width: 90%;
+  padding: 2rem;
+  /* Estilo formulario usuarios */
 }
-body .background-formulario .contenedor-registro-usuario {
+@media screen and (max-width: 576px) {
+  body .background-formulario {
+    width: 100%;
+  }
+}
+body .background-formulario .formulario-usuarios {
+  height: 100%;
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante {
   background-color: #fcfef3;
   border: 2px solid #f27d16;
   border-radius: 20px;
-  margin: 2rem;
-  padding: 40px;
+  padding: 1.3rem 2rem 1.3rem 2rem;
 }
-body .background-formulario .contenedor-registro-usuario .titulo-formulario-usuario {
-  font-family: "Nunito";
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario .titulo-formulario-usuario, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante .titulo-formulario-usuario {
+  padding-bottom: 20px;
+  font-family: "Nunito", "Arial";
+  font-weight: 800;
+  font-size: 20px;
+  color: #28313c;
+}
+@media screen and (max-width: 576px) {
+  body .background-formulario .formulario-usuarios .contenedor-registro-usuario .titulo-formulario-usuario, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante .titulo-formulario-usuario {
+    font-size: 16px;
+  }
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario .titulo-formulario-restaurante, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante .titulo-formulario-restaurante {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding-bottom: 20px;
 }
-body .background-formulario .contenedor-registro-usuario .contenedor-formulario {
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario .titulo-formulario-restaurante .indice, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante .titulo-formulario-restaurante .indice {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario .titulo-formulario-restaurante .indice .pagina, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante .titulo-formulario-restaurante .indice .pagina {
+  background-color: #E9EAE1;
+  border-radius: 50px;
+  padding: 1.5rem 1rem;
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario .titulo-formulario-restaurante .indice .pagina p, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante .titulo-formulario-restaurante .indice .pagina p {
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: 4px;
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form {
   display: flex;
   flex-direction: column;
-  margin-bottom: 1rem;
 }
-body .background-formulario .contenedor-registro-usuario .contenedor-formulario label {
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  -moz-column-gap: 3rem;
+       column-gap: 3rem;
+  width: 90%;
+}
+@media screen and (max-width: 992px) {
+  body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid {
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
+}
+@media screen and (max-width: 576px) {
+  body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid {
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .column, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .column {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .select-content, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .select-content {
+  position: relative;
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .select-content i, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .select-content i {
+  pointer-events: none;
+  display: block;
+  position: absolute;
+  right: 20px;
+  size: 5px;
+  top: 60%;
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.6rem;
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario label,
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario .titulo-imagen, body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario p, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario label,
+body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario .titulo-imagen, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario p {
   font-weight: bolder;
   color: #4e515a;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
 }
-body .background-formulario .contenedor-registro-usuario .contenedor-formulario input, body .background-formulario .contenedor-registro-usuario .contenedor-formulario select, body .background-formulario .contenedor-registro-usuario .contenedor-formulario textarea {
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario input,
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario select,
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario textarea, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario input,
+body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario select,
+body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario textarea {
   border: 0;
   border-radius: 5px;
-  background-color: #E6E8DF;
+  background-color: #e6e8df;
+  width: 100%;
 }
-body .background-formulario .contenedor-registro-usuario .contenedor-formulario input[type=text], body .background-formulario .contenedor-registro-usuario .contenedor-formulario input[type=date], body .background-formulario .contenedor-registro-usuario .contenedor-formulario select {
-  padding: 1.2rem;
+@media screen and (max-width: 992px) {
+  body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario input,
+  body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario select,
+  body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario textarea, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario input,
+  body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario select,
+  body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario textarea {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 576px) {
+  body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario input,
+  body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario select,
+  body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario textarea, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario input,
+  body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario select,
+  body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario textarea {
+    width: 100%;
+  }
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario input[type=text],
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario input[type=date],
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario select, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario input[type=text],
+body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario input[type=date],
+body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario select {
+  padding: 0.5rem;
   height: 2rem;
 }
-body .background-formulario .contenedor-registro-usuario .contenedor-imagenes {
-  display: flex;
-  gap: 30px;
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario select, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario select {
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
-body .background-formulario .contenedor-registro-usuario .contenedor-imagenes .contenedor-formulario {
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario select::-ms-expand, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario select::-ms-expand {
+  display: none;
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario .comidas-favoritas, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario .comidas-favoritas {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  -moz-column-gap: 1rem;
+       column-gap: 1rem;
+}
+@media screen and (max-width: 992px) {
+  body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario .comidas-favoritas, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario .comidas-favoritas {
+    width: 100%;
+    row-gap: 1rem;
+    grid-template-columns: 1fr;
+  }
+}
+@media screen and (max-width: 576px) {
+  body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario .comidas-favoritas, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario .comidas-favoritas {
+    row-gap: 1rem;
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario .choose-days, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario .choose-days {
+  display: flex;
+  margin-bottom: 0.2rem;
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario .choose-days input, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario .choose-days input {
+  display: inline-block;
+  width: 10%;
+}
+@media screen and (min-width: 992px) {
+  body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-formulario .choose-days label, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-formulario .choose-days label {
+    padding-left: 0.5rem;
+  }
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-imagenes, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-imagenes {
+  display: flex;
+  width: 80%;
+  height: auto;
+  gap: 10px;
+}
+@media screen and (max-width: 576px) {
+  body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-imagenes, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-imagenes {
+    flex-direction: column;
+    width: 40%;
+  }
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-imagenes .cargar-imagenes, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-imagenes .cargar-imagenes {
+  width: 100%;
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-imagenes .cargar-imagenes .titulo-imagen, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-imagenes .cargar-imagenes .titulo-imagen {
+  width: 100%;
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-imagenes .cargar-imagenes .upload-box, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-imagenes .cargar-imagenes .upload-box {
+  aspect-ratio: 1/1;
+  max-width: 150px;
+  background-color: #e6e8df;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
-body .background-formulario .contenedor-registro-usuario .contenedor-imagenes input[type=file] {
-  background-color: E6E8DF;
-  height: 80px;
+@media screen and (max-width: 576px) {
+  body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-imagenes .cargar-imagenes, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-imagenes .cargar-imagenes {
+    aspect-ratio: 1/1;
+  }
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-imagenes .cargar-imagenes i, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-imagenes .cargar-imagenes i {
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 0.2rem;
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-imagenes .cargar-imagenes:hover, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-imagenes .cargar-imagenes:hover {
+  border-color: #ffb136;
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-imagenes .cargar-imagenes.highlight, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-imagenes .cargar-imagenes.highlight {
+  border-color: #ffb136;
+  background-color: #2c3143;
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .grid .contenedor-imagenes .cargar-imagenes input[type=file], body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .grid .contenedor-imagenes .cargar-imagenes input[type=file] {
+  display: none;
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .button-formulario, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .button-formulario {
+  padding: 0;
+  display: flex;
+  justify-content: end;
+  width: 100%;
+}
+@media screen and (max-width: 992px) {
+  body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .button-formulario, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .button-formulario {
+    justify-content: center;
+  }
+}
+@media screen and (max-width: 576px) {
+  body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .button-formulario, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .button-formulario {
+    justify-content: center;
+  }
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .button-formulario .button-usuarios-formulario, body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .button-formulario .button-restaurantes-formulario, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .button-formulario .button-usuarios-formulario, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .button-formulario .button-restaurantes-formulario {
+  border: none;
+  background-color: #ffb136;
+  font-family: "Nunito", "Arial";
+  font-weight: 800;
+  font-size: 18px;
+  padding: 0.8rem;
+  border-radius: 10px;
+}
+body .background-formulario .formulario-usuarios .contenedor-registro-usuario form .parte-2, body .background-formulario .formulario-usuarios .contenedor-registro-restaurante form .parte-2 {
+  display: flex;
+  justify-content: space-between;
 }/*# sourceMappingURL=formularios.css.map */

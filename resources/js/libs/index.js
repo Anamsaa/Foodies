@@ -1,1 +1,1 @@
-import './turbo';
+import '../../../public/js/turbo';

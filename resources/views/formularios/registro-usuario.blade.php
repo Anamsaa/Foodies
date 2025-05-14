@@ -27,7 +27,7 @@
                     <div class="contenedor-formulario select-content">
                         <label for="comunidad-autonoma">Comunidad Autónoma: </label>
                         <select name="comunidad-autonoma" id="comunidad-autonoma">
-                            <option value="">Selecciona tu Comunidad</option>
+                            <option value="">Seleccione su Comunidad</option>
                             @foreach ($regions as $region)
                                 <option value="{{ $region->id }}">{{ $region->nombre }}</option>
                             @endforeach
@@ -37,14 +37,14 @@
                     <div class="contenedor-formulario select-content">
                         <label for="provincia">Provincia: </label>
                         <select name="provincia" id="provincia">
-                            <option value=""></option>
+                            <option value="">Seleccione su Provincia</option>
                         </select>
                         <i class="fa-solid fa-caret-down"></i>
                     </div>
                     <div class="contenedor-formulario select-content">
                         <label for="ciudad">Ciudad: </label>
                         <select name="ciudad" id="ciudad">
-                            <option value=""></option>
+                            <option value="">Seleccione su Ciudad</option>
                         </select>
                         <i class="fa-solid fa-caret-down"></i>
                     </div>

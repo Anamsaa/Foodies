@@ -35,10 +35,10 @@ body {
         }
 
         /* Estilo formulario usuarios */
-        #formulario-usuarios {
+        .formulario-usuarios {
             height: 100%;
 
-            .contenedor-registro-usuario {
+            .contenedor-registro-usuario, .contenedor-registro-restaurante {
                 background-color: modulo.$color-secundario;
                 border: 2px solid modulo.$iconos;
                 border-radius: 20px;
@@ -47,6 +47,30 @@ body {
                 .titulo-formulario-usuario {
                     padding-bottom: 20px;
                     @include mixins.titulo-vistas;
+                }
+
+                .titulo-formulario-restaurante {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding-bottom: 20px;
+
+                    .indice {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        .pagina {
+                            background-color: modulo.$color-indice;
+                            border-radius: 50px;
+                            padding: 1.5rem 1rem;
+
+                            p {
+                                font-size: 25px;
+                                font-weight: 800;
+                                letter-spacing: 4px;
+                            }
+                        }
+                    }
                 }
 
                 form {
@@ -83,6 +107,7 @@ body {
                                 display: block;
                                 position: absolute;
                                 right: 20px;
+                                size: 5px;
                                 top: 60%;
                             }
                         }
@@ -93,7 +118,7 @@ body {
                             margin-bottom: 0.6rem;
 
                             label,
-                            .titulo-imagen {
+                            .titulo-imagen, p {
                                 font-weight: bolder;
                                 color: modulo.$color-texto;
                                 margin-bottom: 0.3rem;
@@ -119,7 +144,7 @@ body {
                             input[type="text"],
                             input[type="date"],
                             select {
-                                padding: 1.2rem;
+                                padding: 0.5rem;
                                 height: 2rem;
                             }
 
@@ -152,6 +177,23 @@ body {
                                     width: 100%;
                                     grid-template-columns: 1fr;
                                 }
+                            }
+
+                            .choose-days {
+                                display: flex;
+                                margin-bottom: 0.2rem;
+
+                                input {
+                                    display: inline-block;
+                                    width: 10%;
+                                }
+
+                                label {
+                                    @include media-queries.pantalla-grande {
+                                        padding-left: 0.5rem;
+                                    }
+                                }
+
                             }
                         }
 
@@ -230,7 +272,7 @@ body {
                             justify-content: center;
                         }
 
-                        .button-usuarios-formulario {
+                        .button-usuarios-formulario, .button-restaurantes-formulario {
                             border: none;
                             background-color: modulo.$color-botones;
                             font-family: modulo.$tipografia-foodies;
@@ -239,6 +281,11 @@ body {
                             padding: 0.8rem;
                             border-radius: 10px;
                         }
+                    }
+
+                    .parte-2 {
+                        display: flex;
+                        justify-content: space-between;
                     }
                 }
             }
