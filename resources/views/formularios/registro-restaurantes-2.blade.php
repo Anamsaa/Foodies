@@ -8,7 +8,7 @@
         <div class="titulo-formulario-restaurante">
             <h1>Creación de perfil - restaurantes</h1>
         </div>
-        <form action="">
+        <form action="" method="POST" enctype="multipart/form-data" data-turbo="false">
             <div class="grid">
                 <div class="column">
                     <div class="contenedor-formulario">

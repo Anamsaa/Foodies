@@ -10,4 +10,21 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+
+    build: {
+        rollupOptions: {
+            input: {
+                turbo: 'resources/assets/js/libs/turbo.js'
+            },
+            output: {
+                dir: 'public/js/libs',
+                format: 'es'
+            }
+        }
+    }
+    // resolve: {
+    //     alias: {
+    //         '@hotwired/turbo': 'node_modules/@hotwired/turbo'
+    //     }
+    // }
 });

@@ -1,13 +1,13 @@
 import './bootstrap';
-
+import './elements/turbo-echo-stream-tag';
+import './libs';
+import '@hotwired/turbo';
 import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
-
 Alpine.start();
 
-
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('turbo:load', () => {
 
     dragAndDrop("drop-area","imagen-perfil");
     const btnHamburguesa = document.getElementById('boton-hamburguesa');
@@ -113,42 +113,50 @@ function dragAndDrop(dropAreaId, inputFileId) {
 }
 
 
-// Carga de información en select Anidados 
+document.addEventListener('turbo:load', function() {
+    // Aquí va tu lógica de cargar provincias y ciudades
+    const comunidadSelect = document.getElementById('comunidad-autonoma');
+    const provinciaSelect = document.getElementById('provincia');
+    const ciudadSelect = document.getElementById('ciudad');
 
-document.addEventListener('DOMContentLoaded', function() {
-        // Cargar provincias según la región seleccionada
-        document.getElementById('pais').addEventListener('change', function() {
-            var regionId = this.value;
-            
-            fetch(`/api/provinces/${regionId}`)
-                .then(response => response.json())
-                .then(provinces => {
-                    var provinceSelect = document.getElementById('region');
-                    provinceSelect.innerHTML = '<option value=""></option>'; // Limpiar opciones previas
-                    provinces.forEach(province => {
-                        var option = document.createElement('option');
-                        option.value = province.id;
-                        option.textContent = province.nombre;
-                        provinceSelect.appendChild(option);
-                    });
-                });
-        });
+    if (!comunidadSelect || !provinciaSelect || !ciudadSelect) return;
 
-        // Cargar ciudades según la provincia seleccionada
-        document.getElementById('region').addEventListener('change', function() {
-            var provinceId = this.value;
-            
-            fetch(`/api/cities/${provinceId}`)
-                .then(response => response.json())
-                .then(cities => {
-                    var citySelect = document.getElementById('ciudad');
-                    citySelect.innerHTML = '<option value=""></option>'; // Limpiar opciones previas
-                    cities.forEach(city => {
-                        var option = document.createElement('option');
-                        option.value = city.id;
-                        option.textContent = city.nombre;
-                        citySelect.appendChild(option);
-                    });
+    comunidadSelect.addEventListener('change', function () {
+        const regionId = this.value;
+
+        provinciaSelect.innerHTML = '<option value=""></option>';
+        ciudadSelect.innerHTML = '<option value=""></option>';
+
+        if (!regionId) return;
+
+        fetch('/api/provinces/${regionId}')
+            .then(res => res.json())
+            .then(provinces => {
+                console.log(provinces);
+                provinces.forEach(province => {
+                    const option = document.createElement('option');
+                    option.value = province.id;
+                    option.textContent = province.nombre;
+                    provinciaSelect.appendChild(option);
                 });
-        });
+            });
+    });
+
+    provinciaSelect.addEventListener('change', function () {
+        const provinceId = this.value;
+        ciudadSelect.innerHTML = '<option value=""></option>';
+
+        if (!provinceId) return;
+
+        fetch('/api/cities/${provinceId}')
+            .then(res => res.json())
+            .then(cities => {
+                cities.forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city.id;
+                    option.textContent = city.nombre;
+                    ciudadSelect.appendChild(option);
+                });
+            });
+    });
 });

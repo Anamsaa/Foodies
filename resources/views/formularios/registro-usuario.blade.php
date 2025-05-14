@@ -8,7 +8,8 @@
         <div class="titulo-formulario-usuario">
             <h1>Creación de perfil</h1>
         </div>
-        <form action="">
+        <form action="{{ route('crear-perfil') }}" method="POST" enctype="multipart/form-data" data-turbo="false">
+            @csrf
             <div class="grid">
                 <div class="column">
                     <div class="contenedor-formulario">
@@ -24,9 +25,9 @@
                         <input type="date" id="fnacimiento" name="fnacimiento" required>
                     </div>
                     <div class="contenedor-formulario select-content">
-                        <label for="pais">Comunidad Autónoma: </label>
-                        <select name="pais" id="pais">
-                            <option value=""></option>
+                        <label for="comunidad-autonoma">Comunidad Autónoma: </label>
+                        <select name="comunidad-autonoma" id="comunidad-autonoma">
+                            <option value="">Selecciona tu Comunidad</option>
                             @foreach ($regions as $region)
                                 <option value="{{ $region->id }}">{{ $region->nombre }}</option>
                             @endforeach
@@ -34,15 +35,15 @@
                         <i class="fa-solid fa-caret-down"></i>
                     </div>
                     <div class="contenedor-formulario select-content">
-                        <label for="region">Provincia: </label>
-                        <select name="region" id="region">
+                        <label for="provincia">Provincia: </label>
+                        <select name="provincia" id="provincia">
                             <option value=""></option>
                         </select>
                         <i class="fa-solid fa-caret-down"></i>
                     </div>
                     <div class="contenedor-formulario select-content">
                         <label for="ciudad">Ciudad: </label>
-                        <select name="region" id="region">
+                        <select name="ciudad" id="ciudad">
                             <option value=""></option>
                         </select>
                         <i class="fa-solid fa-caret-down"></i>

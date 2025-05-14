@@ -10,7 +10,7 @@
     {{-- Favicon --}}
     <link rel="icon" type="image/png" href="{{ asset('images/logo-favicon.png') }}">
     {{-- Habilitar Turbo en todas las vistas --}}
-    <script type="module" src="{{ asset('js/turbo.js') }}" defer></script>
+    <script type="module" src="{{ asset('js/libs/turbo.js') }}" defer></script>
 </head>
 <body>
     <div class="componentes-principales">
