@@ -276,7 +276,7 @@
   font-family: "Nunito", "Arial";
 }
 .layout-login-register .layout-inicio header {
-  height: 12vh;
+  height: 15vh;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -294,16 +294,25 @@
 }
 .layout-login-register .layout-inicio header .image-logo {
   display: flex;
+  flex-direction: column;
   align-items: center;
   height: 100px;
-  width: 180px;
+  width: 170px;
 }
 .layout-login-register .layout-inicio header .image-logo img {
   width: 100%;
 }
+.layout-login-register .layout-inicio header .image-logo .especificacion {
+  color: #f27d16;
+  font-weight: 800;
+  font-size: 13px;
+  width: 100%;
+  padding-left: 3.5rem;
+  margin-top: -10px;
+}
 .layout-login-register .layout-inicio .background-section {
   background-color: #2c3143;
-  height: 76vh;
+  height: 73vh;
   width: 100%;
   display: flex;
   justify-content: center;

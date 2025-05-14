@@ -1,4 +1,4 @@
-@extends('layouts.layout-login-register')
+@extends('layouts.layout-login')
 @section('title', 'Iniciar Sesión')
 @section('description', 'Bienvenido de nuevo, inicia sesión en nuestra Red Social y mantente al tanto de las novedades.')
 @section('titulo', 'Welcome again foodie :)')
@@ -19,5 +19,5 @@
 </form>
 
 @endsection
-@section('Invitacion', '¿Tienes un negocio dedicado a la restauración?')
+@section('Invitacion', '¿Aún no te has registrado?')
 @section('enlace-creacion-perfil', '{{  }}')

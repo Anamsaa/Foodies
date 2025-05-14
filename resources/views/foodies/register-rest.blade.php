@@ -1,9 +1,11 @@
-@extends('layouts.layout-login-register')
+@extends('layouts.layout-register')
 @section('title', 'Regístrate')
 @section('description', 'Regístrate e impulsa a tu restaurante, creando una cuenta en nuestra red social.')
 @section('titulo', 'Nuevo por aquí ¡Impulsa tu negocio!')
 @section('titulo-section', 'Regístrate')
-
+@section('restaurant-title-img')
+<p class="especificacion">for restaurants</p>
+@endsection
 @section('formulario')
 
 <form action="" class="formulario-lr">
@@ -27,5 +29,5 @@
 </form>
 
 @endsection
-@section('Invitacion', '¿Tienes un negocio dedicado a la restauración?')
+@section('Invitacion', 'Ya tienes una cuenta, inicia sesión')
 @section('enlace-creacion-perfil', '{{  }}')

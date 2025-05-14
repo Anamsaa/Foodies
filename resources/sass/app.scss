@@ -289,11 +289,12 @@
         font-family: "Nunito", "Arial";
 
         header {
-            height: 12vh;
+            height: 15vh;
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
+           
 
             @include media-queries.tablet {
                min-height: auto;
@@ -305,19 +306,30 @@
 
             .image-logo {
                 display: flex;
+                flex-direction: column;
                 align-items: center;
                 height: 100px;
-                width: 180px;
+                width: 170px;
 
                 img {
                     width: 100%;
+                }
+
+                .especificacion {
+                    color: modulo.$iconos;
+                    font-weight: 800;
+                    font-size: 13px;
+                    width: 100%;
+                    padding-left: 3.5rem;
+
+                    margin-top: -10px;
                 }
             }
         }
 
         .background-section {
             background-color: modulo.$color-primario;
-            height: 76vh;
+            height: 73vh;
             width: 100%;
             display: flex;
             justify-content: center;

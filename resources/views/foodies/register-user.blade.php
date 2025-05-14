@@ -1,4 +1,4 @@
-@extends('layouts.layout-login-register')
+@extends('layouts.layout-register')
 @section('title', 'Regístrate')
 @section('description', 'Regístrate y haz nuevos amigos en Foodies, la red social para comer y conocer gente.')
 @section('titulo', 'Nuevo por aquí ¡Únete!')
