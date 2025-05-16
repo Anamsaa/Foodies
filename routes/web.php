@@ -19,7 +19,6 @@ Route::view('login-restaurante', 'foodies.login-rest')->name('login-restaurante'
 Route::view('registro-restaurante', 'foodies.register-rest')->name('register-restaurante');
 Route::view('creacion-perfil-restaurante', 'formularios.registro-restaurantes')->name('creacion-restaurantes');
 Route::view('creacion-perfil-restaurante-2', 'formularios.registro-restaurantes-2')->name('creacion-restaurantes-2');
-
 Route::get('creacion-perfil', [UbicacionController::class, 'cargarRegiones'])->name('crear-perfil');
 
 // Definicion de rutas para establecer conexión con archivos JSON

@@ -23,7 +23,7 @@
 </div>
 
 {{-- Ejemplo de como se usa @foreach dentro de una vista para pasar datos desde el controlador--}}
-
+<!-- 
 @foreach($posts as $post)
     <x-post 
         :profilePic="$post->user->profile_pic"
@@ -37,4 +37,4 @@
         :likes="$post->likes"
         :comments="$post->comments"
 />
-@endforeach
+@endforeach -->
