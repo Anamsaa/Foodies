@@ -13,7 +13,7 @@
 <body class="layout-inicio">
     <header>
         <div class="image-logo">
-            <img src="{{ asset('images/logo-foodies.png') }}" alt="Logo Red Social Foodies">
+            <a href="{{ route('landing') }}"><img src="{{ asset('images/logo-foodies.png') }}" alt="Logo Red Social Foodies"></a>
             @yield('restaurant-title-img')
         </div>
     </header>
