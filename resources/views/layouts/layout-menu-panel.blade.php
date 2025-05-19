@@ -18,10 +18,10 @@
         <main>
             <div class="panel-de-control">
                 <div class="panel-control-ayuda">
-                    <a class="btn-panel" aria-label="Abrir ajustes" href="{{ route('ajustes') }}"><i id="panel-ajustes" class="fa-solid fa-gear"></i></a>
+                    <a class="btn-panel" aria-label="Abrir ajustes" href="{{ route('ajustes.user') }}"><i id="panel-ajustes" class="fa-solid fa-gear"></i></a>
                 
                     {{--Para procesar la petición de tipo POST al hacer logout, se debe abrir un formulario oculto--}}
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
+                    <form id="logout-form" action="{{ route('logout.user') }}" method="POST" style="display:none;">
                         @csrf
                     </form>
                 

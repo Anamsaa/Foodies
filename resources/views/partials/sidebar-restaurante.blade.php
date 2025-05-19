@@ -24,8 +24,8 @@
     </div>
     <div class="sidebar-parametros">
         <ul>
-            <li><a href="{{ route('ajustes') }}">Ajustes</a></li>
-            <li><a href="{{ route('logout') }}">Cerrar Sesión</a></li>
+            <li><a href="{{ route('ajustes.restaurante') }}">Ajustes</a></li>
+            <li><a href="{{ route('logout.restaurant') }}">Cerrar Sesión</a></li>
         </ul>
     </div>
 </nav>

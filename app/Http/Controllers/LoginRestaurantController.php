@@ -33,6 +33,9 @@ class LoginRestaurantController extends Controller
         //hola@prueba.test
         //12345678
 
+        $request->session()->regenerate();
+
+
         return redirect()->route('dashboard.restaurant');
     }
 }

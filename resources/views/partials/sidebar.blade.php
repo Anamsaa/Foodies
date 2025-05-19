@@ -18,17 +18,17 @@
             <img class="img-logo-foodies" src="{{ asset('/images/logo-foodies.png') }}" alt="Logo foodies">
         </div>
         <ul>
-            <li><a href="{{ route('principal') }}" class="{{ request()->routeIs('principal') ? 'activo' : '' }}">Principal</a></li>
-            <li><a href="{{ route('perfil') }}" class="{{ request()->routeIs('perfil') ? 'activo' : '' }}">Perfil</a></li>
-            <li><a href="{{ route('eventos') }}" class="{{ request()->routeIs('eventos') ? 'activo' : '' }}">Eventos Culinarios</a></li>
-            <li><a href="{{ route('seguidos') }}" class="{{ request()->routeIs('seguidos') ? 'activo' : '' }}">Seguidos</a></li>
-            <li><a href="{{ route('red') }}" class="{{ request()->routeIs('red') ? 'activo' : '' }}">Red de Sabores</a></li>
+            <li><a href="{{ route('dashboard.user') }}" class="{{ request()->routeIs('principal') ? 'activo' : '' }}">Principal</a></li>
+            <li><a href="{{ route('perfil.user') }}" class="{{ request()->routeIs('perfil') ? 'activo' : '' }}">Perfil</a></li>
+            <li><a href="{{ route('eventos.user') }}" class="{{ request()->routeIs('eventos') ? 'activo' : '' }}">Eventos Culinarios</a></li>
+            <li><a href="{{ route('seguidos.user') }}" class="{{ request()->routeIs('seguidos') ? 'activo' : '' }}">Seguidos</a></li>
+            <li><a href="{{ route('red.user') }}" class="{{ request()->routeIs('red') ? 'activo' : '' }}">Red de Sabores</a></li>
         </ul>
     </div>
     <div class="sidebar-parametros">
         <ul>
-            <li><a href="/ajustes">Ajustes</a></li>
-            <li><a href="/log-out">Cerrar Sesión</a></li>
+            <li><a href="{{ route('ajustes.user') }}">Ajustes</a></li>
+            <li><a href="{{ route('logout.user') }}">Cerrar Sesión</a></li>
         </ul>
     </div>
 </nav>

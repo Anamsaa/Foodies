@@ -7,17 +7,18 @@ use Illuminate\Http\Request;
 
 class AuthenticateCustom extends Middleware
 {
-    protected function rediretTo(Request $request) {
-       if (! $request->expectsJson() ){
-         if($request->is('restaurant/*')) {
+    protected function redirectTo(Request $request): ?string
+{
+    if (! $request->expectsJson()) {
+        if ($request->is('restaurant/*')) {
             return route('login.restaurant');
-         }
-       }
+        }
 
-       if ($request->is('user/*')) {
+        if ($request->is('user/*')) {
             return route('login.user');
-       }
-
-       return route('welcome');
+        }
     }
+
+    return null;
+}
 }
