@@ -19,7 +19,7 @@
         </div>
         <ul>
             <li><a href="{{ route('dashboard.restaurant') }}" class="{{ request()->routeIs('principal') ? 'activo' : '' }}">Principal</a></li>
-            <li><a href="{{ route('perfil-rest') }}" class="{{ request()->routeIs('perfil') ? 'activo' : '' }}">Perfil</a></li>
+            <li><a href="{{ route('perfil.restaurante') }}" class="{{ request()->routeIs('perfil') ? 'activo' : '' }}">Perfil</a></li>
         </ul>
     </div>
     <div class="sidebar-parametros">

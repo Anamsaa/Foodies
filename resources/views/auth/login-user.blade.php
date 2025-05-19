@@ -3,7 +3,6 @@
 @section('description', 'Bienvenido de nuevo, inicia sesión en nuestra Red Social y mantente al tanto de las novedades.')
 @section('titulo', 'Welcome again foodie :)')
 @section('titulo-section', 'Iniciar Sesión')
-
 @section('formulario')
 
 @if (session('success'))

@@ -35,11 +35,16 @@ return [
     |
     */
 
+    // Permite definir cómo se autentica un usuario y con qué configuración de sesión
     'guards' => [
-        'web' => [
+        'user' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'users', //personas
         ],
+        'restaurant' => [
+            'driver' => 'session', 
+            'provider' => 'restaurants', //restaurantes 
+        ]
     ],
 
     /*
@@ -59,6 +64,7 @@ return [
     |
     */
 
+    // Especifican qué modelo de BBDD usar para autenticar
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
@@ -66,7 +72,13 @@ return [
             'model' => App\Models\Account::class,
             //'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
-
+        'restaurants' => [
+            'driver' => 'eloquent',
+            // Causa de la duplicidad de clases detectado por PHP
+            'model' => App\Models\Account::class,
+            //'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+        
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -93,12 +105,19 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
-            'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
+        'accounts' => [
+            'provider' => 'accounts', 
+            'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
         ],
+        
+        // 'users' => [
+        //     'provider' => 'users',
+        //     'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
+        //     'expire' => 60,
+        //     'throttle' => 60,
+        // ],
     ],
 
     /*
