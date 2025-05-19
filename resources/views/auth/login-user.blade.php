@@ -26,4 +26,4 @@
 
 @endsection
 @section('Invitacion', '¿Aún no te has registrado?')
-@section('enlace-creacion-perfil', route('register.user'));
+@section('enlace-creacion-perfil', route('register.user'))

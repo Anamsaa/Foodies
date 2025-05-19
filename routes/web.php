@@ -10,9 +10,10 @@ use App\Http\Controllers\UbicacionController;
 use Illuminate\Support\Facades\Route;
 
 // DEFINICIÓN DE RUTAS DE LA RED SOCIAL
-
 Route::get('creacion-perfil-user', [UbicacionController::class, 'cargarRegiones'])->name('crear-perfil');
 
+
+Route::get('/', fn()=>view('landing'))->name('landing');
 # --------------------------------------------------------------------------------------------------------------------------------------------------------
 
 // RUTAS DE USUARIO PERSONA

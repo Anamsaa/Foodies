@@ -505,3 +505,121 @@
         }
     }
 }
+
+// Diseño Landing 
+
+
+.landing-body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    display: grid;
+    min-height: 100dvh;
+    grid-template-rows: auto 1fr auto;
+    background-color: modulo.$background;
+    font-family: modulo.$tipografia-foodies;
+
+
+    .landing-bar {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: modulo.$color-primario;
+        padding: 0.5rem 8rem;
+
+        .landing-logo-bar {
+            a {
+                img {
+                    height: 80px;
+                }
+            }
+        }
+        .landing-texto-bar {
+            a {
+                text-decoration: none;
+                color: modulo.$iconos;
+                font-weight: 700;
+                // background-color: modulo.$color-botones;
+                // padding: 1rem;
+                // border-radius: 10px;
+            }
+
+            .inicio-sesion {
+                margin-right: 1rem;
+            }
+
+            
+        }
+    }
+
+    .landing-main {
+        display: flex;
+        flex-direction: row;
+        padding: 0rem 5rem;
+       
+
+        .texto-main {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 3rem;
+
+            .slogan-main {
+                font-family:"Quicksand";
+                font-size: 100px;
+                font-weight: bold;
+                //-webkit-text-stroke: 1px modulo.$iconos;
+                width: 80%;
+                color: modulo.$color-primario;
+
+                .enfasis {
+                    font-family: "Courgette";
+                    color: modulo.$iconos;
+                }
+            }
+
+            .description-main {
+                font-size: 20px;
+                width: 80%;
+                font-weight: 600;
+                color: modulo.$color-primario;
+            }
+        }
+        .ilustracion-main {
+            width: 50%;
+            display: flex;
+            align-items: center;
+
+            img {
+                height: 100%;
+            }
+        }
+    }
+
+    .landing-footer {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        padding: 2rem 2rem;
+        text-align: center;
+        background-color: modulo.$color-primario;
+
+        div {
+            p {
+                color: modulo.$color-secundario;
+
+                a {
+                    text-decoration: none;
+                    color: modulo.$color-secundario;
+
+                    &:hover {
+                        color: modulo.$color-botones;
+                    }
+                }
+            }
+        }
+    }
+}

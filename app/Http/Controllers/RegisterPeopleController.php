@@ -31,6 +31,6 @@ class RegisterPeopleController extends Controller
         //hola@prueba.test
         //12345678
 
-        return redirect()->route('login-user')->with('success', 'Registro exitoso. Ahora puedes Iniciar Sesión');
+        return redirect()->route('login.user')->with('success', 'Registro exitoso. Ahora puedes Iniciar Sesión');
     }
 }
