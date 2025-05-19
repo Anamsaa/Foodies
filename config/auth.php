@@ -62,7 +62,9 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            // Causa de la duplicidad de clases detectado por PHP
+            'model' => App\Models\Account::class,
+            //'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
 
         // 'users' => [

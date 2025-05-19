@@ -31,7 +31,7 @@
     <footer>
         <div class="redireccion-restaurantes">
             <p>@yield('Invitacion')</p>
-            <p>Haz click<a class="enlace-restaurantes" href="@yield('enlace-creacion-perfil')"> aquí</a></p>
+            <p>Haz click<a class="enlace-restaurantes" href="@yield('inicio-sesion')"> aquí</a></p>
         </div>
     </footer>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])

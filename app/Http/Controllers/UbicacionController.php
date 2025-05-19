@@ -19,6 +19,6 @@ class UbicacionController extends Controller
 
     public function cargarRegiones() {
         $regions = Region::all();
-        return view('formularios.registro-usuario', compact('regions'));
+        return view('personas.creation-user', compact('regions'));
     }
 }
