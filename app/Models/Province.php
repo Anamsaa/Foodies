@@ -5,6 +5,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Province extends Model
 {
@@ -13,13 +14,13 @@ class Province extends Model
     protected $table = 'provinces';
     protected $fillable = ['codigo', 'nombre', 'region_id'];
 
-    // Defino la relación con la tabla "Region"
     public function region() {
         return $this->belongsTo(Region::class);
     }
-
-    // Defino la relación con la tabla "City"
     public function cities() {
         return $this->hasMany(City::class);
+    }
+    public function profiles() : HasMany {
+        return $this->hasMany(Profile::class);
     }
 }

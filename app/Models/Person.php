@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Person extends Model
 {
@@ -17,5 +18,8 @@ class Person extends Model
 
     public function profile() : BelongsTo {
         return $this->belongsTo(Profile::class);
+    }
+    public function eventParticipations(): HasMany {
+        return $this->hasMany(EventParticipation::class);
     }
 }

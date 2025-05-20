@@ -19,4 +19,11 @@ class Restaurant extends Model
     public function profile() : BelongsTo {
         return $this->belongsTo(Profile::class);
     }
+    public function reviews() {
+        return $this->hasMany(Review::class);
+    }
+    public function culinaryEvent() {
+        return $this->hasMany(CulinaryEvent::class, 'post_id');
+    }
+
 }
