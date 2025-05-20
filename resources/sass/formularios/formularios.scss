@@ -22,7 +22,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(252, 254, 243, 0.7);
+    background-color: modulo.$background-transparencia;
     min-height: 100vh;
     font-family: modulo.$tipografia-foodies;
 

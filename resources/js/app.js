@@ -1,6 +1,6 @@
-import './bootstrap';
-import './elements/turbo-echo-stream-tag';
-import './libs';
+// import './bootstrap';
+// import './elements/turbo-echo-stream-tag';
+// import './libs';
 // import * as Turbo from '@hotwired/turbo';
 // window.Turbo = Turbo;
 // Turbo.start();
@@ -10,8 +10,9 @@ import Alpine from 'alpinejs';
 window.Alpine = Alpine;
 Alpine.start();
 
-document.addEventListener('DOMContentLoaded', () => {
 
+console.log('se ejecuta el js'); 
+document.addEventListener('DOMContentLoaded', () => {
     dragAndDrop("drop-area","imagen-perfil");
     const btnHamburguesa = document.getElementById('boton-hamburguesa');
     console.log(btnHamburguesa);
@@ -22,9 +23,30 @@ document.addEventListener('DOMContentLoaded', () => {
             sidebar.classList.toggle('visible');
         });
     }
-    
 });
 
+function incializarMenuLanding() {
+    // Menu lateral del landing 
+    const hamburguesaLanding = document.getElementById("boton-hamburguesa-landing");
+    const botonCerrarLanding = document.getElementById("boton-cerrar-landing"); 
+    const menuLateralLanding = document.getElementById("menu-lateral-landing");
+
+    if (hamburguesaLanding && botonCerrarLanding && menuLateralLanding) {
+        hamburguesaLanding.addEventListener('click', () => {
+            console.log('Doy click');
+            menuLateralLanding.classList.remove("oculto");
+            menuLateralLanding.classList.add("visible");
+        });
+
+        botonCerrarLanding.addEventListener('click', () => {
+            menuLateralLanding.classList.remove("visible");
+            menuLateralLanding.classList.add("oculto");
+        });
+        console.log('Entra a la función');
+    }  
+}
+
+document.addEventListener('DOMContentLoaded', incializarMenuLanding);
 // Drag & Drop Formularios 
 
 function dragAndDrop(dropAreaId, inputFileId) {

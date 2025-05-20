@@ -18,14 +18,37 @@
         </div>
         <div class="landing-texto-bar">
             <a class="inicio-sesion" href="{{ route('login.user') }}">Iniciar Sesión</a>
-            <a href="{{ route('register.user') }}">Regístrate</a>
+            <a class="registro-negocio" href="{{ route('register.restaurant') }}">Tengo un negocio</a>
+        </div>
+
+        {{-- Menú hamburguesa landing --}}
+        <div class="menu-hamburguesa-landing">
+            <button id="boton-hamburguesa-landing" class="btn-menu" aria-label="Abrir menú">
+                <i id="hamburguesa-icon-landing" class="fas fa-bars"></i>
+            </button>
         </div>
     </nav>
+
+
+    {{-- Menú lateral emergente  --}}
+    <div class="menu-emergente-landing oculto" id="menu-lateral-landing">
+        <button id="boton-cerrar-landing" class="btn-menu" aria-label="Cerrar menú lateral">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <ul class="opciones-menu-landing">
+            <li class="apartados-landing"><a href="{{ route('login.user') }}">Iniciar Sesión</a></li>
+            <li class="apartados-landing"><a href="{{ route('register.restaurant') }}">Tengo un negocio</a></li>
+        </ul>
+    </div>
+
+
     <main class="landing-main">
         <div class="texto-main">
-            <p class="slogan-main">find a <span class="enfasis">friend</span>, find a <span class="enfasis">meal</span>.</p>
-            <p class="description-main">La red social para conectar con personas reales a través de la comida.
-            Comparte experiencias, apoya restaurantes locales y construye nuevas amistades.</p>
+            <p class="slogan-main">find a <span class="enfasis">friend</span>,find a <span class="enfasis">meal</span>.</p>
+            <p class="description-main">¡Bienvenido a <b>Foodies</b>! la red social para conectar con personas reales a través de la comida.
+            Comparte experiencias, crea eventos culinarios, apoya restaurantes locales y construye nuevas amistades.</p>
+            <a class="boton-main" href="{{ route('register.user') }}">Únete</a>
         </div>
         <div class="ilustracion-main">
             <img src="{{ asset('images/ilustracion_personas_comiendo.svg') }}" alt="Ilustración de pareja comiendo">
@@ -33,9 +56,9 @@
     </main>
     <footer class="landing-footer">
         <div>
-            <p>&copy; 2025 Foodies. Developed by Ana Saavedra.</p>
+            <p>&copy; 2025 Foodies. Developed by <a href="https://github.com/Anamsaa" target="_blank" rel="noopener noreferrer">Ana Saavedra</a></p>
             <p>Ilustración por <a href="https://storyset.com/together" class="underline text-blue-400" target="_blank" rel="noopener noreferrer">Storyset</a></p>
-            <p>TFG Daw</p>
+            <p>TFG DAW</p>
         </div>
     </footer>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
