@@ -25,7 +25,7 @@
     <div class="sidebar-parametros">
         <ul>
             <li><a href="{{ route('ajustes.restaurante') }}">Ajustes</a></li>
-            <li><a href="{{ route('logout.restaurant') }}">Cerrar Sesión</a></li>
+            <li><a href="#" onclick="event.preventDefault(); document.getElementById('logout-form-rest').submit();">Cerrar Sesión</a></li>
         </ul>
     </div>
 </nav>

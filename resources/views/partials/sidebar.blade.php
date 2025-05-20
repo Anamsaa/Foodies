@@ -28,7 +28,13 @@
     <div class="sidebar-parametros">
         <ul>
             <li><a href="{{ route('ajustes.user') }}">Ajustes</a></li>
-            <li><a href="{{ route('logout.user') }}">Cerrar Sesión</a></li>
+
+               <!-- {{--Para procesar la petición de tipo POST al hacer logout, se debe abrir un formulario oculto--}}
+            <form id="logout-form" action="{{ route('logout.user') }}" method="POST" style="display:none;">
+                @csrf
+            </form> -->
+
+            <li><a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a></li>
         </ul>
     </div>
 </nav>

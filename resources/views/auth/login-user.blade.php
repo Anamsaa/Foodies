@@ -21,7 +21,7 @@
         <label for="password">Contraseña</label>
         <input type="password" name="password" id="password">
     </div>
-    <button type="submit" class="button-formulario">Regístrate</button>
+    <button type="submit" class="button-formulario">Iniciar Sesión</button>
 </form>
 
 @endsection
