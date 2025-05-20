@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginRestaurantController;
 use App\Http\Controllers\LogoutRestaurantController;
 use App\Http\Controllers\LoginPeopleController;
 use App\Http\Controllers\LogoutPeopleController;
+use App\Http\Controllers\RestaurantProfileController;
 use App\Http\Controllers\UbicacionController;
 use Illuminate\Support\Facades\Route;
 
@@ -58,13 +59,27 @@ Route::prefix('restaurant')->group(function () {
     Route::get('login', fn() => view('auth.login-rest'))->name('login.restaurant');
     Route::post('login', [LoginRestaurantController::class, 'login'])->name('login.restaurant');
 
+    // Pruebas de formularios: 
+    Route::get('crear-perfil', fn() => view('restaurantes.creation-rest'))->name('crear.perfil.restaurante');
+
     // Rutas privadas (Requieren de autentificación de parte de los usuarios)
     Route::middleware(['auth:restaurant', 'prevent-back-history'])->group(function() {
         Route::get('dashboard', fn() => view('restaurantes.principal'))->name('dashboard.restaurant');
         Route::get('perfil', fn() => view('restaurantes.perfil'))->name('perfil.restaurante');
         Route::get('ajustes', fn() => view('restaurantes.ajustes'))->name('ajustes.restaurante');
-        Route::get('crear-perfil', fn() => view('restaurantes.creation-rest'))->name('crear.perfil.restaurante');
-        Route::get('crear-perfil-2', fn() => view('restaurantes.creation-rest-2'))->name('crear.perfil.restaurante.2');
+
+        // Creación del perfil de restaurnate en 2 pasos 
+
+        ### 1 paso 
+        Route::get('crear-perfil-restaurante', [RestaurantProfileController::class, 'showStep1'])->name('crear-perfil.restaurante');
+        Route::post('crear-perfil-restaurante', [RestaurantProfileController::class, 'saveStep1'])->name('crear-perfil.restaurante.guardar');
+
+        ### 2 paso 
+        Route::get('crear-perfil-restaurante-2', [RestaurantProfileController::class, 'showStep2'])->name('crear-perfil.restaurante-2');
+        Route::post('crear-perfil-restaurante-2', [RestaurantProfileController::class, 'saveStep2']);
+
+        //Route::get('crear-perfil', fn() => view('restaurantes.creation-rest'))->name('crear.perfil.restaurante');
+        //Route::get('crear-perfil-2', fn() => view('restaurantes.creation-rest-2'))->name('crear.perfil.restaurante.2');
         Route::post('logout', [LogoutRestaurantController::class, 'logout'])->name('logout.restaurant');
     });
 });

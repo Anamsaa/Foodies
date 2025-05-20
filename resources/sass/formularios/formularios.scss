@@ -231,6 +231,38 @@ body {
                                     border-color 0.3s ease;
                                 }
 
+                                .preview-imagen {
+                                    position: relative;
+                                    width: 100%;
+                                    aspect-ratio: 1 / 1;
+                                    max-width: 150px;
+                                    background-color: modulo.$input-background;
+                                    overflow: hidden;
+                            
+
+                                    img {
+                                        width: 100%;
+                                        max-height: auto;
+                                        object-fit: cover;
+                                        display: block;
+                                    }
+                                }
+
+                                .btn-eliminar {
+                                    position: absolute;
+                                    top: 5px;
+                                    right: 5px;
+                                    border-radius: 30px;
+                                    background-color: #4e515a;
+                                    padding: 5px 8px;
+                                    color: white;
+                                    border: none;
+                                    cursor: pointer;
+                                    z-index: 10;
+                                }
+
+
+
                                 @include media-queries.mobile {
                                     aspect-ratio: 1 / 1;
                                 }
@@ -243,11 +275,6 @@ body {
 
                                 &:hover {
                                     border-color: modulo.$color-botones;
-                                }
-
-                                &.highlight {
-                                    border-color: modulo.$color-botones;
-                                    background-color: modulo.$color-primario;
                                 }
 
                                 input[type="file"] {
