@@ -22,15 +22,15 @@
                 <div class="column">
                     <div class="contenedor-formulario">
                         <label for="nombre">Nombres: </label>
-                        <input type="text" id="nombre" name="nombre" placeholder="Ej: Julian" required>
+                        <input type="text" id="nombre" name="nombre" placeholder="Ej: Julian" value="{{ old('nombre') }}" required>
                     </div>
                     <div class="contenedor-formulario">
                         <label for="apellidos">Apellidos: </label>
-                        <input type="text" id="apellidos" name="apellidos" placeholder="Ej: Moreno" required>
+                        <input type="text" id="apellidos" name="apellidos" value="{{ old('apellidos') }}" placeholder="Ej: Moreno" required>
                     </div>
                     <div class="contenedor-formulario">
                         <label for="fnacimiento">Fecha de nacimiento: </label>
-                        <input type="date" id="fnacimiento" name="fnacimiento" required>
+                        <input type="date" id="fnacimiento" name="fnacimiento" value="{{ old('fnacimiento') }}" required>
                     </div>
                     <div class="contenedor-formulario select-content">
                         <label for="comunidad-autonoma">Comunidad Autónoma: </label>
@@ -61,7 +61,7 @@
                 <div class="column">
                     <div class="contenedor-formulario">
                         <label for="descripcion-usuario">Da una breve descripción de ti</label>
-                        <textarea name="descripcion-usuario" id="descripcion-usuario" rows="6" cols="50"></textarea>
+                        <textarea name="descripcion-usuario" id="descripcion-usuario" rows="6" cols="50">{{ old('descripcion-usuario') }}</textarea>
                     </div>  
                 </div>
             </div>
