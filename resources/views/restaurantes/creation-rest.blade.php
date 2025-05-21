@@ -39,35 +39,6 @@
                                 <label for="{{ strtolower($dia) }}">{{ $dia }}</label>
                             </div>
                         @endforeach
-
-                        <!-- <div class="choose-days">
-                            <input type="checkbox" id="lunes" name="dias_apertura[]" value="Lunes" {{ old('lunes', session('restaurant_step1.lunes')) ? 'checked' : '' }}>
-                            <label for="lunes">Lunes</label>
-                        </div>
-                        <div class="choose-days">
-                            <input type="checkbox" id="martes" name="dias_apertura[]" value="Martes" {{ old('martes', session('restaurant_step1.martes')) ? 'checked' : '' }}>
-                            <label for="martes">Martes</label>
-                        </div>
-                        <div class="choose-days">
-                            <input type="checkbox" id="miercoles" name="dias_apertura[]" value="Miércoles" {{ old('miercoles', session('restaurant_step1.miercoles')) ? 'checked' : '' }}>
-                            <label for="miercoles">Miércoles</label>
-                        </div>
-                        <div class="choose-days">
-                            <input type="checkbox" id="jueves" name="dias_apertura[]" value="Jueves" {{ old('jueves', session('restaurant_step1.jueves')) ? 'checked' : '' }}>
-                            <label for="jueves">Jueves</label>
-                        </div>
-                        <div class="choose-days">
-                            <input type="checkbox" id="viernes" name="dias_apertura[]" value="Viernes" {{ old('viernes', session('restaurant_step1.viernes')) ? 'checked' : '' }}>
-                            <label for="viernes">Viernes</label>
-                        </div>
-                        <div class="choose-days">
-                            <input type="checkbox" id="sabado" name="dias_apertura[]" value="Sábado" {{ old('sabado', session('restaurant_step1.sabado')) ? 'checked' : '' }}>
-                            <label for="sabado">Sábado</label>
-                        </div>
-                        <div class="choose-days">
-                            <input type="checkbox" id="domingo" name="dias_apertura[]" value="Domingo" {{ old('domingo', session('restaurant_step1.domingo')) ? 'checked' : '' }}>
-                            <label for="domingo">Domingo</label>
-                        </div> -->
                     </div>
                 </div>
                 <div class="column">

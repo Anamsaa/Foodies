@@ -183,11 +183,103 @@ function incializarMenuLanding() {
 //     contenedor.appendChild(nuevoLabel);
 // }
 
+
+
+//Cargar datos de ubicación 
+
+// document.addEventListener('DOMContentLoaded', function () {
+//     const comunidadSelect = document.getElementById('comunidad-autonoma');
+//     const provinciaSelect = document.getElementById('provincia');
+//     const ciudadSelect = document.getElementById('ciudad');
+
+//     if (!comunidadSelect || !provinciaSelect || !ciudadSelect) return;
+
+//     const comunidadSelected = comunidadSelect.dataset.selected;
+//     const provinciaSelected = provinciaSelect.dataset.selected;
+//     const ciudadSelected = ciudadSelect.dataset.selected;
+
+//     // Lógica de carga de provincias
+//     if (comunidadSelected) {
+//         comunidadSelect.value = comunidadSelected;
+
+//         fetch(`/api/provinces/${comunidadSelected}`)
+//             .then(res => res.json())
+//             .then(provinces => {
+//                 provinciaSelect.innerHTML = '<option value="">Seleccione su Provincia</option>';
+//                 provinces.forEach(province => {
+//                     const option = document.createElement('option');
+//                     option.value = province.id;
+//                     option.textContent = province.nombre;
+//                     provinciaSelect.appendChild(option);
+//                 });
+
+//                 if (provinciaSelected) {
+//                     provinciaSelect.value = provinciaSelected;
+
+//                     fetch(`/api/cities/${provinciaSelected}`)
+//                         .then(res => res.json())
+//                         .then(cities => {
+//                             ciudadSelect.innerHTML = '<option value="">Seleccione su Ciudad</option>';
+//                             cities.forEach(city => {
+//                                 const option = document.createElement('option');
+//                                 option.value = city.id;
+//                                 option.textContent = city.nombre;
+//                                 ciudadSelect.appendChild(option);
+//                             });
+
+//                             if (ciudadSelected) {
+//                                 ciudadSelect.value = ciudadSelected;
+//                             }
+//                         });
+//                 }
+//             });
+//     }
+
+//     // Eventos para cambios manuales
+//     comunidadSelect.addEventListener('change', function () {
+//         const regionId = this.value;
+//         provinciaSelect.innerHTML = '<option value=""></option>';
+//         ciudadSelect.innerHTML = '<option value=""></option>';
+
+//         if (!regionId) return;
+
+//         fetch(`/api/provinces/${regionId}`)
+//             .then(res => res.json())
+//             .then(provinces => {
+//                 provinces.forEach(province => {
+//                     const option = document.createElement('option');
+//                     option.value = province.id;
+//                     option.textContent = province.nombre;
+//                     provinciaSelect.appendChild(option);
+//                 });
+//             });
+//     });
+
+//     provinciaSelect.addEventListener('change', function () {
+//         const provinceId = this.value;
+//         ciudadSelect.innerHTML = '<option value=""></option>';
+
+//         if (!provinceId) return;
+
+//         fetch(`/api/cities/${provinceId}`)
+//             .then(res => res.json())
+//             .then(cities => {
+//                 cities.forEach(city => {
+//                     const option = document.createElement('option');
+//                     option.value = city.id;
+//                     option.textContent = city.nombre;
+//                     ciudadSelect.appendChild(option);
+//                 });
+//             });
+//     });
+// });
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Aquí va tu lógica de cargar provincias y ciudades
     const comunidadSelect = document.getElementById('comunidad-autonoma');
-    console.log(comunidadSelect);
+    //console.log(comunidadSelect);
     const provinciaSelect = document.getElementById('provincia');
     const ciudadSelect = document.getElementById('ciudad');
 
@@ -195,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     comunidadSelect.addEventListener('change', function () {
         const regionId = this.value;
-        console.log(regionId);
+        //console.log(regionId);
 
         provinciaSelect.innerHTML = '<option value=""></option>';
         ciudadSelect.innerHTML = '<option value=""></option>';

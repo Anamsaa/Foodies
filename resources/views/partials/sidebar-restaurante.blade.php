@@ -4,10 +4,10 @@
         </button>
         <div class="menu-hamburguesa-ayuda">
             <button id="boton-ajustes" class="btn-menu" aria-label="Abrir ajustes">
-                <i id="hamburguesa-ajustes" class="fa-solid fa-gear"></i>
+                <a href="{{ route('ajustes.restaurante') }}"><i id="hamburguesa-ajustes" class="fa-solid fa-gear"></i></a>
             </button>
             <button id="boton-logout" class="btn-menu" aria-label="Cerrar sesión">
-                <i id="hamburguesa-logout" class="fa-solid fa-right-from-bracket"></i>
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form-rest').submit();"><i id="hamburguesa-logout" class="fa-solid fa-right-from-bracket"></i></a>
             </button>
         </div>
 </div>

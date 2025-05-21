@@ -20,10 +20,6 @@
                 <div class="panel-control-ayuda">
                     <a class="btn-panel" aria-label="Abrir ajustes" href={{ route('ajustes.restaurante') }}><i id="panel-ajustes" class="fa-solid fa-gear"></i></a>
                 
-                    {{--Para procesar la petición de tipo POST al hacer logout, se debe abrir un formulario oculto--}}
-                    <form id="logout-form-rest" action="{{ route('logout.restaurant') }}" method="POST" style="display:none;">
-                       @csrf
-                    </form>
                 
                     <button id="panel-control-logout" class="btn-panel" aria-label="Cerrar sesión" onclick="event.preventDefault(); document.getElementById('logout-form-rest').submit();">
                         <i id="panel-logout" class="fa-solid fa-right-from-bracket"></i>
@@ -35,6 +31,10 @@
                     @yield('content')
             </div>
         </main>
+          {{--Para procesar la petición de tipo POST al hacer logout, se debe abrir un formulario oculto--}}
+        <form id="logout-form-rest" action="{{ route('logout.restaurant') }}" method="POST" style="display:none;">
+            @csrf
+        </form>
     </div>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </body>
