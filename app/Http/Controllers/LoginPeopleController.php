@@ -21,10 +21,6 @@ class LoginPeopleController extends Controller
                              ->where('type', 'user')
                              ->first();
 
-        // if (!$restaurant) {
-        //     return back()->withErrors(['email' => 'Esta cuenta no está registrada como restaurante.']);
-        // }
-
         if (!Hash::check($request->password, $user->password_hash)) {
              return back()->withErrors(['password' => 'Contraseña incorrecta.']);
         }
@@ -36,7 +32,12 @@ class LoginPeopleController extends Controller
 
         $request->session()->regenerate();
 
+        // Se verifica al hacer el login si el usuario ha creado un perfil.
+        if($user->profile){
+            return redirect()->intended(route('dashboard.user'));
+        }
 
-        return redirect()->route('dashboard.user');
+        // En caso contrario se lo redirige a la siguiente ruta: 
+        return redirect()->intended(route('crear-perfil.user'));
     }
 }

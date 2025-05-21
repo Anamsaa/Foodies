@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\Profile;
 use App\Models\Restaurant;
-use App\Models\Photo;
+// use App\Models\Photo;
 use App\Models\Region;
 use Exception;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
+// use Illuminate\Support\Facades\Storage;
 
 class RestaurantProfileController extends Controller
 {

@@ -4,10 +4,10 @@
         </button>
         <div class="menu-hamburguesa-ayuda">
             <button id="boton-ajustes" class="btn-menu" aria-label="Abrir ajustes">
-                <i id="hamburguesa-ajustes" class="fa-solid fa-gear"></i>
+                <a href="{{ route('ajustes.user') }}"><i id="hamburguesa-ajustes" class="fa-solid fa-gear"></i></a>
             </button>
             <button id="boton-logout" class="btn-menu" aria-label="Cerrar sesión">
-                <i id="hamburguesa-logout" class="fa-solid fa-right-from-bracket"></i>
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i id="hamburguesa-logout" class="fa-solid fa-right-from-bracket"></i></a>
             </button>
         </div>
 </div>
@@ -28,12 +28,6 @@
     <div class="sidebar-parametros">
         <ul>
             <li><a href="{{ route('ajustes.user') }}">Ajustes</a></li>
-
-               <!-- {{--Para procesar la petición de tipo POST al hacer logout, se debe abrir un formulario oculto--}}
-            <form id="logout-form" action="{{ route('logout.user') }}" method="POST" style="display:none;">
-                @csrf
-            </form> -->
-
             <li><a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a></li>
         </ul>
     </div>

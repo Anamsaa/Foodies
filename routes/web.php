@@ -7,6 +7,7 @@ use App\Http\Controllers\LogoutRestaurantController;
 use App\Http\Controllers\LoginPeopleController;
 use App\Http\Controllers\LogoutPeopleController;
 use App\Http\Controllers\RestaurantProfileController;
+use App\Http\Controllers\PeopleProfileController;
 use App\Http\Controllers\UbicacionController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,13 +30,13 @@ Route::prefix('user')->group(function () {
     Route::get('login', fn() => view('auth.login-user'))->name('login.user');
     Route::post('login', [LoginPeopleController::class, 'login'])->name('login.user');
 
-    // Pruebas de funcionamiento de creación de perfiles (rutas temporales):
-    Route::get('crear-perfil', fn() => view('personas.creation-user'))->name('crear.perfil.user');
-    Route::get('creacion-perfil-user', [UbicacionController::class, 'cargarRegiones'])->name('crear-perfil');
-
     // Rutas privadas (Requieren de autentificación de parte de los usuarios)
     Route::middleware(['auth:user', 'prevent-back-history'])->group(function() {
         Route::get('dashboard', fn() => view('personas.principal'))->name('dashboard.user');
+
+        // Creación de perfil para usarios 
+        Route::get('crear-perfil-restaurante', [PeopleProfileController::class, 'showForm'])->name('crear-perfil.user');
+        Route::post('crear-perfil-restaurante', [PeopleProfileController::class, 'guardarDatos'])->name('crear-perfil.guardar');
         Route::get('perfil', fn() => view('personas.perfil'))->name('perfil.user');
         Route::get('red-de-sabores', fn() => view('personas.perfil'))->name('red.user');
         Route::get('seguidos', fn() => view('personas.perfil'))->name('seguidos.user');
@@ -60,10 +61,6 @@ Route::prefix('restaurant')->group(function () {
     ## Login de restaurantes 
     Route::get('login', fn() => view('auth.login-rest'))->name('login.restaurant');
     Route::post('login', [LoginRestaurantController::class, 'login'])->name('login.restaurant');
-
-    // Pruebas de formularios (No son definitivas)
-    //Route::get('crear-perfil', fn() => view('restaurantes.creation-rest'))->name('crear.perfil.restaurante');
-    //Route::view('crear-perfil-restaurante-2', 'restaurantes.creation-rest-2')->name('crear-perfil.restaurante-2');
 
     // Rutas privadas (Requieren de autentificación de parte de los usuarios)
     Route::middleware(['auth:restaurant', 'prevent-back-history'])->group(function() {

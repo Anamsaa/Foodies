@@ -20,10 +20,6 @@ class LoginRestaurantController extends Controller
                              ->where('type', 'restaurant')
                              ->first();
 
-        // if (!$restaurant) {
-        //     return back()->withErrors(['email' => 'Esta cuenta no está registrada como restaurante.']);
-        // }
-
         if (!Hash::check($request->password, $restaurant->password_hash)) {
              return back()->withErrors(['password' => 'Contraseña incorrecta.']);
         }

@@ -12,7 +12,7 @@ class LogoutPeopleController extends Controller
         Auth::guard('user')->logout();
 
         $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        $request->session()->regenerateToken(); 
 
         // Redirección al login del restaurante 
         return redirect()->route('login.user');
