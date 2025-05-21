@@ -11,9 +11,8 @@ use App\Http\Controllers\UbicacionController;
 use Illuminate\Support\Facades\Route;
 
 // DEFINICIÓN DE RUTAS DE LA RED SOCIAL
-Route::get('creacion-perfil-user', [UbicacionController::class, 'cargarRegiones'])->name('crear-perfil');
 
-
+// RUTA AL DASHBOARD (Página principal de introducción)
 Route::get('/', fn()=>view('landing'))->name('landing');
 # --------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -30,6 +29,10 @@ Route::prefix('user')->group(function () {
     Route::get('login', fn() => view('auth.login-user'))->name('login.user');
     Route::post('login', [LoginPeopleController::class, 'login'])->name('login.user');
 
+    // Pruebas de funcionamiento de creación de perfiles (rutas temporales):
+    Route::get('crear-perfil', fn() => view('personas.creation-user'))->name('crear.perfil.user');
+    Route::get('creacion-perfil-user', [UbicacionController::class, 'cargarRegiones'])->name('crear-perfil');
+
     // Rutas privadas (Requieren de autentificación de parte de los usuarios)
     Route::middleware(['auth:user', 'prevent-back-history'])->group(function() {
         Route::get('dashboard', fn() => view('personas.principal'))->name('dashboard.user');
@@ -38,8 +41,7 @@ Route::prefix('user')->group(function () {
         Route::get('seguidos', fn() => view('personas.perfil'))->name('seguidos.user');
         Route::get('eventos-culinarios', fn() => view('personas.perfil'))->name('eventos.user');
         Route::get('ajustes', fn() => view('personas.ajustes'))->name('ajustes.user');
-        Route::get('crear-perfil', fn() => view('personas.creation-rest'))->name('crear.perfil.user');
-        Route::get('crear-perfil-2', fn() => view('personas.creation-rest-2'))->name('crear.perfil.user.2');
+        //Route::get('crear-perfil', fn() => view('personas.creation-user'))->name('crear.perfil.user');
         Route::post('logout', [LogoutPeopleController::class, 'logout'])->name('logout.user');
     });
 });
@@ -59,8 +61,9 @@ Route::prefix('restaurant')->group(function () {
     Route::get('login', fn() => view('auth.login-rest'))->name('login.restaurant');
     Route::post('login', [LoginRestaurantController::class, 'login'])->name('login.restaurant');
 
-    // Pruebas de formularios: 
-    Route::get('crear-perfil', fn() => view('restaurantes.creation-rest'))->name('crear.perfil.restaurante');
+    // Pruebas de formularios (No son definitivas)
+    //Route::get('crear-perfil', fn() => view('restaurantes.creation-rest'))->name('crear.perfil.restaurante');
+    //Route::view('crear-perfil-restaurante-2', 'restaurantes.creation-rest-2')->name('crear-perfil.restaurante-2');
 
     // Rutas privadas (Requieren de autentificación de parte de los usuarios)
     Route::middleware(['auth:restaurant', 'prevent-back-history'])->group(function() {
@@ -69,7 +72,6 @@ Route::prefix('restaurant')->group(function () {
         Route::get('ajustes', fn() => view('restaurantes.ajustes'))->name('ajustes.restaurante');
 
         // Creación del perfil de restaurnate en 2 pasos 
-
         ### 1 paso 
         Route::get('crear-perfil-restaurante', [RestaurantProfileController::class, 'showStep1'])->name('crear-perfil.restaurante');
         Route::post('crear-perfil-restaurante', [RestaurantProfileController::class, 'saveStep1'])->name('crear-perfil.restaurante.guardar');
@@ -78,8 +80,6 @@ Route::prefix('restaurant')->group(function () {
         Route::get('crear-perfil-restaurante-2', [RestaurantProfileController::class, 'showStep2'])->name('crear-perfil.restaurante-2');
         Route::post('crear-perfil-restaurante-2', [RestaurantProfileController::class, 'saveStep2']);
 
-        //Route::get('crear-perfil', fn() => view('restaurantes.creation-rest'))->name('crear.perfil.restaurante');
-        //Route::get('crear-perfil-2', fn() => view('restaurantes.creation-rest-2'))->name('crear.perfil.restaurante.2');
         Route::post('logout', [LogoutRestaurantController::class, 'logout'])->name('logout.restaurant');
     });
 });

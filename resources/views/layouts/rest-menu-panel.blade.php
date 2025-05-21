@@ -13,12 +13,6 @@
     {{-- <script type="module" src="{{ asset('js/turbo.js') }}" defer></script> --}}
 </head>
 <body>
-
-    {{-- @php
-        header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-        header("Cache-Control: post-check=0, pre-check=0", false);
-        header("Pragma: no-cache");
-    @endphp --}}
     <div class="componentes-principales">
         @include('partials.sidebar-restaurante')
         <main>
@@ -28,7 +22,7 @@
                 
                     {{--Para procesar la petición de tipo POST al hacer logout, se debe abrir un formulario oculto--}}
                     <form id="logout-form-rest" action="{{ route('logout.restaurant') }}" method="POST" style="display:none;">
-                        @csrfs
+                       @csrf
                     </form>
                 
                     <button id="panel-control-logout" class="btn-panel" aria-label="Cerrar sesión" onclick="event.preventDefault(); document.getElementById('logout-form-rest').submit();">
@@ -37,10 +31,8 @@
                 </div>
             </div>
             <div class="contenidos">
-                <!-- <turbo-frame id="page-content"> -->
                     <p>Hola estoy probando</p>
                     @yield('content')
-                <!-- </turbo-frame> -->
             </div>
         </main>
     </div>

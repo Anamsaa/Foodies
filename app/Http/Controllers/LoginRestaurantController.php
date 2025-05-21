@@ -35,7 +35,12 @@ class LoginRestaurantController extends Controller
 
         $request->session()->regenerate();
 
+        // Si la cuenta ya tiene un perfil de restaurante, lo envía directamente al dashboard
+        if ($restaurant->profile) {
+            return redirect()->intended(route('dashboard.restaurant'));
+        }
 
-        return redirect()->route('dashboard.restaurant');
+        // Sino lo redirige a la creación del perfil
+        return redirect()->intended(route('crear-perfil.restaurante'));
     }
 }

@@ -53,7 +53,7 @@ body {
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    padding-bottom: 20px;
+                    padding-bottom: 10px;
 
                     .indice {
                         display: flex;
@@ -71,6 +71,10 @@ body {
                             }
                         }
                     }
+                }
+
+                .titulo-contacto-2 {
+                    margin-bottom: 0.8rem;
                 }
 
                 form {
@@ -301,12 +305,24 @@ body {
 
                         .button-usuarios-formulario, .button-restaurantes-formulario {
                             @include mixins.botones-formularios;
+                            transform: color 0.5s ease-in-out;
+
+                            &:hover {
+                                color: modulo.$color-secundario;
+                                background-color: modulo.$iconos;
+                            }
                         }
                     }
 
                     .parte-2 {
                         display: flex;
                         justify-content: space-between;
+                        margin-top: 1rem;
+
+                        a {
+                            text-decoration: none;
+                            color: modulo.$color-primario;
+                        }
                     }
                 }
             }

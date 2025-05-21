@@ -10,9 +10,8 @@ import Alpine from 'alpinejs';
 window.Alpine = Alpine;
 Alpine.start();
 
-
-// console.log('se ejecuta el js'); 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('entra a la función');
     incializarMenuLanding();
     const btnHamburguesa = document.getElementById('boton-hamburguesa');
     console.log(btnHamburguesa);
@@ -79,6 +78,22 @@ document.addEventListener('DOMContentLoaded', () => {
     if (valorElegido) {
         tipoSelect.value = valorElegido;
     }
+
+    // Inicialización de carga de foto de perfil y portada en formularios
+    const inputPerfil = document.getElementById('imagen-perfil');
+    if (inputPerfil) {
+        inputPerfil.addEventListener('change', function () {
+            mostrarPreview(this, 'box-perfil', 'preview-perfil');
+        });
+    }
+
+    const inputPortada = document.getElementById('imagen-portada');
+    if (inputPortada) {
+        inputPortada.addEventListener('change', function () {
+            mostrarPreview(this, 'box-portada', 'preview-portada');
+        });
+    }
+
 });
 
 function incializarMenuLanding() {
@@ -102,84 +117,77 @@ function incializarMenuLanding() {
     }  
 }
 
-document.getElementById('imagen-perfil').addEventListener('change', function () {
-    mostrarPreview(this, 'box-perfil', 'preview-perfil');
-});
+// function mostrarPreview(input, contenedorId, previewId) {
+//     const file = input.files[0];
+//     const contenedor = document.getElementById(contenedorId);
 
-document.getElementById('imagen-portada').addEventListener('change', function () {
-    mostrarPreview(this, 'box-portada', 'preview-portada');
-});
+//     if(!file || !contenedor) return; 
 
-function mostrarPreview(input, contenedorId, previewId) {
-    const file = input.files[0];
-    const contenedor = document.getElementById(contenedorId);
+//     const lector = new FileReader(); 
+//     lector.onload = function (e) {
+//         const previewDiv = document.createElement('div'); 
+//         previewDiv.className = 'preview-imagen';
+//         previewDiv.id = previewId;
 
-    if(!file || !contenedor) return; 
+//         const img = document.createElement('img');
+//         img.src = e.target.result;
 
-    const lector = new FileReader(); 
-    lector.onload = function (e) {
-        const previewDiv = document.createElement('div'); 
-        previewDiv.className = 'preview-imagen';
-        previewDiv.id = previewId;
+//         const btn = document.createElement('button');
+//         btn.type = 'button';
+//         btn.className = 'btn-eliminar';
+//         btn.textContent = 'X';
+//         btn.onclick = function (event) {
+//             // Detener el comportamiento por defecto del input 
+//             event.preventDefault();
+//             eliminarImagen(input.id, contenedorId, previewId);
+//         };
 
-        const img = document.createElement('img');
-        img.src = e.target.result;
+//         previewDiv.appendChild(img);
+//         previewDiv.appendChild(btn);
 
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'btn-eliminar';
-        btn.textContent = 'X';
-        btn.onclick = function (event) {
-            // Detener el comportamiento por defecto del input 
-            event.preventDefault();
-            //event.stopInmediatePropagation();
-            eliminarImagen(input.id, contenedorId, previewId);
-        };
+//         // Limpiar y agregar
+//         contenedor.innerHTML = '';
+//         contenedor.appendChild(previewDiv);
+//     };
 
-        previewDiv.appendChild(img);
-        previewDiv.appendChild(btn);
+//     lector.readAsDataURL(file);
+// }
 
-        // Limpiar y agregar
-        contenedor.innerHTML = '';
-        contenedor.appendChild(previewDiv);
-    };
+// function eliminarImagen(inputId, contenedorId, previewId) {
+//     const contenedor = document.getElementById(contenedorId);
 
-    lector.readAsDataURL(file);
-}
+//     // Recrear manualmente todo el HTML original
+//     const nuevoLabel = document.createElement('label');
+//     nuevoLabel.setAttribute('for', inputId);
+//     nuevoLabel.className = 'upload-box';
+//     nuevoLabel.id = contenedorId;
 
-function eliminarImagen(inputId, contenedorId, previewId) {
-    const contenedor = document.getElementById(contenedorId);
+//     nuevoLabel.innerHTML = `
+//         <i class="fa-solid fa-plus"></i>
+//         <span>Haz click para seleccionar una imagen</span>
+//     `;
 
-    // Recrear manualmente todo el HTML original
-    const nuevoLabel = document.createElement('label');
-    nuevoLabel.setAttribute('for', inputId);
-    nuevoLabel.className = 'upload-box';
-    nuevoLabel.id = contenedorId;
+//     const nuevoInput = document.createElement('input');
+//     nuevoInput.type = 'file';
+//     nuevoInput.name = inputId.replace('imagen-', 'imagen-'); // usa mismo nombre
+//     nuevoInput.id = inputId;
+//     nuevoInput.accept = '.jpg, .jpeg, .png, .webp';
 
-    nuevoLabel.innerHTML = `
-        <i class="fa-solid fa-plus"></i>
-        <span>Haz click para seleccionar una imagen</span>
-    `;
+//     // Adjuntar evento para volver a mostrar preview
+//     nuevoInput.addEventListener('change', function () {
+//         mostrarPreview(this, contenedorId, previewId);
+//     });
 
-    const nuevoInput = document.createElement('input');
-    nuevoInput.type = 'file';
-    nuevoInput.name = inputId.replace('imagen-', 'imagen-'); // usa mismo nombre
-    nuevoInput.id = inputId;
-    nuevoInput.accept = '.jpg, .jpeg, .png, .webp';
-
-    // Adjuntar evento para volver a mostrar preview
-    nuevoInput.addEventListener('change', function () {
-        mostrarPreview(this, contenedorId, previewId);
-    });
-
-    nuevoLabel.appendChild(nuevoInput);
-    contenedor.innerHTML = ''; // limpiar el contenedor
-    contenedor.appendChild(nuevoLabel);
-}
+//     nuevoLabel.appendChild(nuevoInput);
+//     contenedor.innerHTML = ''; // limpiar el contenedor
+//     contenedor.appendChild(nuevoLabel);
+// }
 
 document.addEventListener('DOMContentLoaded', function() {
+    
     // Aquí va tu lógica de cargar provincias y ciudades
     const comunidadSelect = document.getElementById('comunidad-autonoma');
+    console.log(comunidadSelect);
     const provinciaSelect = document.getElementById('provincia');
     const ciudadSelect = document.getElementById('ciudad');
 
@@ -221,11 +229,45 @@ document.addEventListener('DOMContentLoaded', function() {
                     option.value = city.id;
                     option.textContent = city.nombre;
                     ciudadSelect.appendChild(option);
-                });
             });
+        });
     });
+
+
+    // Persistencia de datos en formularios 
+    if (comunidadSelect.dataset.selected) {
+        comunidadSelect.value = comunidadSelect.dataset.selected;
+        const regionId = comunidadSelect.value;
+
+        fetch(`/api/provinces/${regionId}`)
+            .then(res => res.json())
+            .then(provinces => {
+                provinciaSelect.innerHTML = '<option value="">Seleccione su Provincia</option>';
+                provinces.forEach(province => {
+                    const option = document.createElement('option');
+                    option.value = province.id;
+                    option.textContent = province.nombre;
+                    provinciaSelect.appendChild(option);
+                });
+
+                if (provinciaSelect.dataset.selected) {
+                    provinciaSelect.value = provinciaSelect.dataset.selected;
+                    fetch(`/api/cities/${provinciaSelect.value}`)
+                        .then(res => res.json())
+                        .then(cities => {
+                            ciudadSelect.innerHTML = '<option value="">Seleccione su Ciudad</option>';
+                            cities.forEach(city => {
+                                const option = document.createElement('option');
+                                option.value = city.id;
+                                option.textContent = city.nombre;
+                                ciudadSelect.appendChild(option);
+                            });
+                            if (ciudadSelect.dataset.selected) {
+                                ciudadSelect.value = ciudadSelect.dataset.selected;
+                            }
+                        });
+                }
+            });
+    }
 });
-
-
-
 

@@ -8,7 +8,7 @@
         <div class="titulo-formulario-usuario">
             <h1>Creación de perfil</h1>
         </div>
-        <form action="{{ route('crear-perfil') }}" method="POST" enctype="multipart/form-data" data-turbo="false">
+        <form action="{{ route('crear-perfil') }}" method="POST" enctype="multipart/form-data" data-turbo="false" data-contexto="persona">
             @csrf
             <div class="grid">
                 <div class="column">
@@ -28,9 +28,9 @@
                         <label for="comunidad-autonoma">Comunidad Autónoma: </label>
                         <select name="comunidad-autonoma" id="comunidad-autonoma">
                             <option value="">Seleccione su Comunidad</option>
-                            @foreach ($regions as $region)
+                            <!-- @foreach ($regions as $region)
                                 <option value="{{ $region->id }}">{{ $region->nombre }}</option>
-                            @endforeach
+                            @endforeach -->
                         </select>
                         <i class="fa-solid fa-caret-down"></i>
                     </div>
@@ -51,14 +51,6 @@
                 </div>
 
                 <div class="column">
-                    <div class="contenedor-formulario">
-                        <label for="comida">Escribe las 3 comidas que más te gusten: </label>
-                        <div class="comidas-favoritas">
-                            <input type="text" id="comida1" name="comida" required>
-                            <input type="text" id="comida2" name="comida" required>
-                            <input type="text" id="comida3" name="comida" required>
-                        </div>
-                    </div>  
                     <div class="contenedor-formulario">
                         <label for="descripcion-usuario">Da una breve descripción de ti</label>
                         <textarea name="descripcion-usuario" id="descripcion-usuario" rows="6" cols="50"></textarea>

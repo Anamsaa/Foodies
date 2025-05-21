@@ -13,9 +13,13 @@ class Restaurant extends Model
         'description',
         'address',
         'website',
-        'phone'
+        'phone',
+        'dias_apertura',
     ];
 
+    protected $casts = [
+        'dias_apertura' => 'array'
+    ];
     public function profile() : BelongsTo {
         return $this->belongsTo(Profile::class);
     }
