@@ -9,13 +9,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Photo extends Model
 {
     protected $fillable = ['url']; 
-    public function usedAsProfilePhoto() : hasMany {
+    public function usedAsProfilePhoto() : HasMany {
         return $this->hasMany(Profile::class, 'profile_photo_id');
     }
-    public function usedAsCoverPhoto() : hasMany {
+    public function usedAsCoverPhoto() : HasMany {
         return $this->hasMany(Profile::class, 'cover_photo_id');
     }
-    public function usedInPost() : hasMany {
+    public function usedInPost() : HasMany {
         return $this->hasMany(Post::class, 'photo_id');
     }
     public function getUrlAttribute($value) {

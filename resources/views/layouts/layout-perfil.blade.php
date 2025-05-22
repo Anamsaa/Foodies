@@ -9,8 +9,11 @@
     <meta name="description" content="@yield('description', 'Social Network for foodies')">
     {{-- Favicon --}}
     <link rel="icon" type="image/png" href="{{ asset('images/logo-favicon.png') }}">
+    {{-- Token CSFR --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     {{-- Habilitar Turbo en todas las vistas --}}
     {{-- <script type="module" src="{{ asset('js/turbo.js') }}" defer></script> --}}
+
 </head>
 <body>
     <div class="componentes-principales">
@@ -25,7 +28,38 @@
                     </button>
                 </div>
             </div>
+
+             <div class="header-profile" 
+                @if(auth('user')->user()->profile->coverPhoto)
+                style="background-image: url('{{ auth('user')->user()->profile->coverPhoto->url }}');"
+                @endif> 
+                <div class="header-profile-cover-name">
+                     {{-- Foto de portada --}}
+                    <label class="upload-cover">
+                        <i class="fa-solid fa-camera"></i>
+                        <input type="file" name="cover_photo" accept="image/**" hidden>
+                    </label>
+                    
+                    {{-- Nombre del usuario--}}
+                    <div class="nombre-header-profile">
+                        <h2>Nombre de ejemplo</h2>
+                    </div>
+                </div>
+
+                {{-- Foto de perfil --}}
+                <div class="picture-header-profile">
+                    <img id="profileImage" src="{{ auth('user')->user()->profile->profilePhoto->url ?? asset('images/default-profile.png') }}" alt="Imagen de perfil del usuario">
+                    <label class="upload-profile">
+                        <i class="fa-solid fa-camera"></i>
+                        <input type="file" name="profile_photo" accept="image/**" hidden>
+                    </label>
+                </div> 
+            </div>
+
             <div class="contenidos">
+                    <p>hola</p>
+               
+                
                 @yield('content')
             </div>
         </main>

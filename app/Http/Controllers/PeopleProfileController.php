@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
-use Illuminate\Support\Facades\Session;
+//use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+//use Illuminate\Support\Facades\Session;
 use App\Models\Profile;
 use App\Models\Person;
 use App\Models\Region;
+use App\Models\Photo;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -69,5 +70,40 @@ class PeopleProfileController extends Controller
             //Log::error('Error al crear perfil: ' . $e->getMessage());
             return back()->withErrors(['error' => 'No se pudo crear el perfil'.  $e->getMessage()])->withInput();
         }
+    }
+
+    public function actualizarFotos(Request $request) {
+        $perfil = auth('user')->user()->profile; 
+        $response = []; 
+
+        // Validar que el perfil existe 
+        if (!$perfil) {
+            return response()->json(['error' => 'Perfil no encontrado'], 404); 
+        }
+
+        // Subir la foto de perfil y crear un registro en la tabla "Photos"
+        if ($request->hasFile('profile_photo')) {
+            $path = $request->file('profile_photo')->store('profiles', 'public');
+            $photo = Photo::create(['url' => $path]); 
+
+            $perfil->profile_photo_id = $photo->id; 
+            $perfil->save(); 
+
+            $response['profile_photo_url'] = $photo->url;
+        }
+
+        // Subir la foto de portada
+        if ($request->hasFile('cover_photo')) {
+            $path = $request->file('cover_photo')->store('covers', 'public');
+            $photo = Photo::create(['url' => $path]); 
+
+            $perfil->cover_photo_id = $photo->id; 
+            $perfil->save(); 
+
+            $response['cover_photo_url'] = $photo->url;
+        }
+
+        return response()->json($response);
+
     }
 }

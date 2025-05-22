@@ -7,6 +7,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: modulo.$tipografia-foodies;
 }
 
 // Estilo general de los componentes
@@ -82,7 +83,7 @@
         justify-content: space-between;
         width: 22%;
         height: 100vh;
-        font-family: "Nunito";
+        //font-family: "Nunito";
         font-weight: 600;
         transform: translateX(-100%);
         transition: transform 0.3s ease-in-out;
@@ -263,6 +264,107 @@
 
             @include media-queries.mobile {
                 display: none;
+            }
+        }
+
+        .header-profile {
+            background-color: #fae4c6;
+            width: 90%;
+            height: 270px;
+            margin-top: 1rem;
+            border-radius: 30px;
+            border: 10px modulo.$color-secundario solid;
+            display: flex;
+            justify-content: space-between;
+            // Configuración de la imagen del background
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            //position: relative;
+
+            .header-profile-cover-name {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                .upload-cover {
+                    position: relative;
+
+                    i {
+                        position: absolute;
+                        top: 10px;
+                        left: 10px;
+                        font-size: 1.2rem;
+                        background-color: modulo.$input-background;
+                        border-radius: 50%;
+                        padding: 10px;
+                        z-index: 10;
+                        color: modulo.$color-fondo-formulario;
+                        cursor: pointer;
+                        transition: background-color 0.3s ease-in-out,
+                            color 0.2s ease-in-out;
+
+                        &:hover {
+                            background-color: modulo.$iconos;
+                            color: modulo.$color-secundario;
+                        }
+                    }
+                }
+
+                .nombre-header-profile {
+                    align-self: flex-end;
+                    padding: 1rem;
+                    background-color: modulo.$color-botones;
+                    border-radius: 20px;
+                    border: 10px modulo.$color-secundario solid;
+                    margin-bottom: -10px;
+                    margin-left: -10px;
+
+                    h2 {
+                        font-size: 32px;
+                    }
+                }
+            }
+
+            .picture-header-profile {
+                background-color: modulo.$iconos;
+                //align-self: center;
+                height: 150px;
+                border-radius: 200px;
+                padding: 7.5rem 0.5rem;
+                margin: 5px 10px;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                position: relative;
+
+                img {
+                    width: 100%;
+                }
+
+                .upload-profile {
+                    position: absolute;
+                    bottom: 10px;
+                    left: 40%;
+                    cursor: pointer;
+
+                    i {
+                        font-size: 1.2rem;
+                        background-color: modulo.$input-background;
+                        border-radius: 50%;
+                        padding: 10px;
+                        z-index: 10;
+                        color: modulo.$color-fondo-formulario;
+                        transition: background-color 0.3s ease-in-out,
+                            color 0.2s ease-in-out;
+
+                        &:hover {
+                            background-color: modulo.$color-primario;
+                            color: modulo.$color-secundario;
+                        }
+                    }
+                }
             }
         }
 
@@ -676,7 +778,6 @@
     .menu-emergente-landing.oculto {
         transform: translateX(100%);
     }
-    
 
     .landing-main {
         display: flex;

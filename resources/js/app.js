@@ -5,10 +5,16 @@
 // window.Turbo = Turbo;
 // Turbo.start();
 
+
+
 import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 Alpine.start();
+
+
+
+import './perfil';
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('entra a la función');
