@@ -276,7 +276,7 @@
             border: 10px modulo.$color-secundario solid;
             display: flex;
             justify-content: space-between;
-            // Configuración de la imagen del background
+            // Configuración de la imagen del fondo
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -329,18 +329,23 @@
             .picture-header-profile {
                 background-color: modulo.$iconos;
                 //align-self: center;
-                height: 150px;
-                border-radius: 200px;
-                padding: 7.5rem 0.5rem;
+                height: auto;
+                width: 255px;
+                border-radius: 50%;
+                //width: 100px;
+                //padding: 7.5rem 0.5rem;
                 margin: 5px 10px;
                 overflow: hidden;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
+                // display: flex;
+                // flex-direction: column;
+                // justify-content: center;
                 position: relative;
 
                 img {
                     width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: cover;
                 }
 
                 .upload-profile {
