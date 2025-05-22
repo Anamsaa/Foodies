@@ -19,6 +19,12 @@
     <div class="componentes-principales">
         @include('partials.sidebar')
         <main>
+
+            {{-- Verificar si el usuario que ingresa es dueño de ese perfil --}}
+            @php 
+                $esPropietario = auth('user')->user()->profile->id === $perfil->id;
+            @endphp
+
             <div class="panel-de-control">
                 <div class="panel-control-ayuda">
                     <a class="btn-panel" aria-label="Abrir ajustes" href="{{ route('ajustes.user') }}"><i id="panel-ajustes" class="fa-solid fa-gear"></i></a>
@@ -33,19 +39,24 @@
                 @if(auth('user')->user()->profile->coverPhoto)
                 style="background-image: url('{{ auth('user')->user()->profile->coverPhoto->url }}');"
                 @endif> 
+
                 <div class="header-profile-cover-name">
                      {{-- Foto de portada --}}
-                    <label class="upload-cover">
-                        <i class="fa-solid fa-camera"></i>
-                        <input type="file" name="cover_photo" accept="image/**" hidden>
-                    </label>
+                    @if($esPropietario)
+                        <label class="upload-cover">
+                            <i class="fa-solid fa-camera"></i>
+                            <input type="file" name="cover_photo" accept="image/**" hidden>
+                        </label>
+                    @endif
 
                     <div class="picture-header-profile mobile-version">
-                    <img id="profileImage" src="{{ auth('user')->user()->profile->profilePhoto->url ?? asset('images/default-profile.png') }}" alt="Imagen de perfil del usuario">
-                    <label class="upload-profile">
-                        <i class="fa-solid fa-camera"></i>
-                        <input type="file" name="profile_photo" accept="image/**" hidden>
-                    </label>
+                        <img id="profileImage" src="{{ auth('user')->user()->profile->profilePhoto->url ?? asset('images/default-profile.png') }}" alt="Imagen de perfil del usuario">
+                        @if($esPropietario)
+                            <label class="upload-profile">
+                                <i class="fa-solid fa-camera"></i>
+                                <input type="file" name="profile_photo" accept="image/**" hidden>
+                            </label>
+                        @endif
                     </div> 
                     
                     {{-- Nombre del usuario--}}
@@ -64,11 +75,37 @@
                 </div> 
             </div>
 
-            <div class="contenidos">
-                    <p>hola</p>
-                    <p>solo aparece en el perfil</p>
-                @yield('content')
+            <div class="estructura-perfil">
+                <div class="contenidos">
+                        <p>hola</p>
+                        <p>solo aparece en el perfil</p>
+                    {{-- Aquí es donde van los Posts que se generan dinámicamente --}}
+                    @yield('content')2
+                </div>
+                <div class="descripcion-user">
+                    <h3 class="descripcion-foodie-type">{{ $tipoFoodie }}</h3>
+                    <div class="numero-reviews">
+                        <div class="numero">
+                            <p>{{ $numeroReviews }}</p>
+                        </div>
+                        <p>reseñas</p>
+                    </div>
+                    <div class="localizacion-usuario">
+                        <i class="fa-solid fa-map-pin"></i>
+                        <p>{{ $ubicacion }}</p>
+                    </div>
+                    <p class="edad-descripcion">{{ $edad }} años </p>
+                    <div class="texto-descripcion">
+                        <p>{{ $description }}</p>
+                    </div>
+
+                    @if(!$esPropietario)
+                        {{-- Botón de seguimiento en caso de que el usuario aún no sea seguido --}}
+                        <button type="button" id="seguir" class="seguir">Seguir</button>
+                    @endif
+                </div>
             </div>
+            
         </main>
         {{--Para procesar la petición de tipo POST al hacer logout, se debe abrir un formulario oculto--}}
         <form id="logout-form" action="{{ route('logout.user') }}" method="POST" style="display:none;">

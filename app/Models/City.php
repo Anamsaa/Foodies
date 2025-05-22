@@ -21,4 +21,8 @@ class City extends Model
     public function profiles() : HasMany {
         return $this->hasMany(Profile::class);
     }
+
+    public function getNombreFormateadoAttribute() {
+        return mb_convert_case(mb_strtolower($this->nombre, 'UTF-8'), MB_CASE_TITLE, 'UTF-8');
+    }
 }

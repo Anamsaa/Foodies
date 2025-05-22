@@ -19,7 +19,7 @@
         </div>
         <ul>
             <li><a href="{{ route('dashboard.user') }}" class="{{ request()->routeIs('principal') ? 'activo' : '' }}">Principal</a></li>
-            <li><a href="{{ route('perfil.user') }}" class="{{ request()->routeIs('perfil') ? 'activo' : '' }}">Perfil</a></li>
+            <li><a href="{{ route('perfil.user')}}">Perfil</a></li>
             <li><a href="{{ route('eventos.user') }}" class="{{ request()->routeIs('eventos') ? 'activo' : '' }}">Eventos Culinarios</a></li>
             <li><a href="{{ route('seguidos.user') }}" class="{{ request()->routeIs('seguidos') ? 'activo' : '' }}">Seguidos</a></li>
             <li><a href="{{ route('red.user') }}" class="{{ request()->routeIs('red') ? 'activo' : '' }}">Red de Sabores</a></li>

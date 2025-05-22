@@ -41,7 +41,20 @@ Route::prefix('user')->group(function () {
         Route::get('crear-perfil-restaurante', [PeopleProfileController::class, 'showForm'])->name('crear-perfil.user');
         Route::post('crear-perfil-restaurante', [PeopleProfileController::class, 'guardarDatos'])->name('crear-perfil.guardar');
 
-        Route::get('perfil', fn() => view('personas.perfil'))->name('perfil.user');
+        ## Redirigir al perfil del usuario propietario
+        Route::get('perfil', [PeopleProfileController::class, 'verMiPerfil'])->name('perfil.user');
+         ## Redirigir al perfil de otros usuarios
+        Route::get('perfil/{profile}', [PeopleProfileController::class, 'verPerfilAjeno'])->name('perfil.ajeno');
+
+        ## Redirigir al perfil del propio usuario
+        // Route::get('perfil', function () {
+        //     $profileId = auth('user')->user()->profile->id; 
+        //     return redirect()->route('perfil.user', ['profile' => $profileId]);
+        // })->name('perfil.user.redirect');
+
+        //Route::get('perfil', [PeopleProfileController::class, 'cargarDescripcion'])->name('perfil.user');
+        ## Acceder a perfiles de otros usuarios 
+        //Route::get('perfil/{profile}', [PeopleProfileController::class, 'verPerfil'])->name('perfil.user');
         Route::get('red-de-sabores', fn() => view('personas.red'))->name('red.user');
         Route::get('seguidos', fn() => view('personas.seguidos'))->name('seguidos.user');
         Route::get('eventos-culinarios', fn() => view('personas.eventos'))->name('eventos.user');

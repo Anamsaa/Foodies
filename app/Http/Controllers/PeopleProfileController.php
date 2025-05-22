@@ -11,6 +11,8 @@ use App\Models\Region;
 use App\Models\Photo;
 use Exception;
 use Illuminate\Support\Facades\DB;
+## Librería que me permite trabajar con fechas
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
 
@@ -102,8 +104,100 @@ class PeopleProfileController extends Controller
 
             $response['cover_photo_url'] = $photo->url;
         }
-
         return response()->json($response);
-
     }
+
+    public function verMiPerfil(){
+        $user = auth('user')->user();
+        $perfil = $user->profile;
+
+        if (!$perfil || !$perfil->person) {
+            return redirect()->route('dashboard.user')
+                ->withErrors('Tu perfil no está completo.');
+        }
+
+        return $this->renderPerfil($perfil);
+    }
+
+    public function verPerfilAjeno(Profile $profile){
+        if (!$profile || !$profile->person) {
+            return redirect()->route('dashboard.user')
+                ->withErrors('Este usuario aún no ha completado su perfil.');
+        }
+
+        return $this->renderPerfil($profile);
+    }
+
+    private function renderPerfil(Profile $perfil){
+        $person = $perfil->person;
+        $description = $person->description;
+        $birthDate = $person->birth_date;
+        $edad = Carbon::parse($birthDate)->age;
+        $numeroReviews = $perfil->posts()->where('post_type', 'review')->count();
+
+        if ($numeroReviews <= 10) {
+            $tipoFoodie = 'Foodie nuevo';
+        } elseif ($numeroReviews <= 20) {
+            $tipoFoodie = 'Foodie entusiasta';
+        } elseif ($numeroReviews <= 49) {
+            $tipoFoodie = 'King foodie';
+        } else {
+            $tipoFoodie = 'Foodie Master';
+        }
+
+        $ubicacion = $perfil->city?->nombre_formateado ?? 'Desconocido';
+
+        return view('personas.perfil', compact(
+            'perfil',
+            'description',
+            'edad',
+            'tipoFoodie',
+            'numeroReviews',
+            'ubicacion'
+        ));
+    }
+
+    // public function verPerfil() {
+    //     $user = auth('user')->user(); 
+    //     $perfil = $user->profile; 
+
+    //     if (!$perfil->person) {
+    //         return redirect()->route('dashboard.user')
+    //         ->withErrors('Este usuario aún no ha completado su perfil.');
+    //     }
+
+    //     // Obtención de datos del user persona
+    //     $person =  $perfil->person;
+    //     $description = $person->description; 
+    //     $birthDate = $person->birth_date; 
+        
+    //     // Calcular edad con Carbon
+    //     $edad = Carbon::parse($birthDate)->age; 
+
+    //     $numeroReviews = $perfil->posts()->where('post_type', 'review')->count(); 
+
+    //     // Categorías según el número de reseñas
+    //     if($numeroReviews <= 10) {
+    //         $tipoFoodie = 'Foodie nuevo';
+    //     } elseif ($numeroReviews >= 11) {
+    //         $tipoFoodie = 'Foodie entusiasta';
+    //     } elseif ($numeroReviews >= 21) {
+    //         $tipoFoodie = 'King foodie';
+    //     } elseif ($numeroReviews >= 50) {
+    //         $tipoFoodie = 'Foodie Master';
+    //     }
+
+    //     // Ubicación
+    //     $ubicacion = $perfil->city ? $perfil->city->nombre_formateado : 'Desconocido';
+
+    //     return view('personas.perfil', compact(
+    //         'perfil',
+    //         'description', 
+    //         'edad', 
+    //         'tipoFoodie',
+    //         'numeroReviews',
+    //         'ubicacion'
+    //     ));
+
+    // }
 }
