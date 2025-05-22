@@ -42,9 +42,9 @@ Route::prefix('user')->group(function () {
         Route::post('crear-perfil-restaurante', [PeopleProfileController::class, 'guardarDatos'])->name('crear-perfil.guardar');
 
         Route::get('perfil', fn() => view('personas.perfil'))->name('perfil.user');
-        Route::get('red-de-sabores', fn() => view('personas.perfil'))->name('red.user');
-        Route::get('seguidos', fn() => view('personas.perfil'))->name('seguidos.user');
-        Route::get('eventos-culinarios', fn() => view('personas.perfil'))->name('eventos.user');
+        Route::get('red-de-sabores', fn() => view('personas.red'))->name('red.user');
+        Route::get('seguidos', fn() => view('personas.seguidos'))->name('seguidos.user');
+        Route::get('eventos-culinarios', fn() => view('personas.eventos'))->name('eventos.user');
         Route::get('ajustes', fn() => view('personas.ajustes'))->name('ajustes.user');
         
         ## Logout

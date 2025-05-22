@@ -39,10 +39,18 @@
                         <i class="fa-solid fa-camera"></i>
                         <input type="file" name="cover_photo" accept="image/**" hidden>
                     </label>
+
+                    <div class="picture-header-profile mobile-version">
+                    <img id="profileImage" src="{{ auth('user')->user()->profile->profilePhoto->url ?? asset('images/default-profile.png') }}" alt="Imagen de perfil del usuario">
+                    <label class="upload-profile">
+                        <i class="fa-solid fa-camera"></i>
+                        <input type="file" name="profile_photo" accept="image/**" hidden>
+                    </label>
+                    </div> 
                     
                     {{-- Nombre del usuario--}}
                     <div class="nombre-header-profile">
-                        <h2>Nombre de ejemplo</h2>
+                        <h2>{{ auth('user')->user()->profile->person->first_name }} {{ auth('user')->user()->profile->person->last_name }}</h2>
                     </div>
                 </div>
 
@@ -58,8 +66,7 @@
 
             <div class="contenidos">
                     <p>hola</p>
-               
-                
+                    <p>solo aparece en el perfil</p>
                 @yield('content')
             </div>
         </main>
