@@ -6,16 +6,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\Profile;
 use App\Models\Restaurant;
-// use App\Models\Photo;
+use App\Models\Photo;
 use App\Models\Region;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 // use Illuminate\Support\Facades\Storage;
 
 class RestaurantProfileController extends Controller
 {
     
-   
     // Primer paso de envio de datos 
     public function showStep1() {
          logger( 'Inicia envío de datos');
@@ -47,19 +47,6 @@ class RestaurantProfileController extends Controller
         // Guardar las imágenes temporalmente, y sus paths en la sesión
         $soloDatos = collect($datos)->except(['imagen-perfil', 'imagen-portada'])->toArray();
         $soloDatos['dias_apertura'] = $datos['dias_apertura'] ?? [];
-
-        // Posible movimiento a editar perfil, se descarta la posibilidad de subir imágenes en un formulario de 2 pasos
-        // if ($request->hasFile('imagen-perfil')) {
-        //     $path = $request->file('imagen-perfil')->store('temp/profiles', 'public');
-        //     $soloDatos['imagen_perfil_path'] = $path;
-        // }
-
-        // if ($request->hasFile('imagen-portada')) {
-        //     $path = $request->file('imagen-portada')->store('temp/covers', 'public');
-        //     $soloDatos['imagen_portada_path'] = $path;
-        // }
-
-       // logger('Paso 1 datos:' , $soloDatos);
         Session::put('restaurant_step1', $soloDatos);
 
         return redirect()->route('crear-perfil.restaurante-2');
@@ -70,7 +57,6 @@ class RestaurantProfileController extends Controller
 
         // Doble verificación en ambos pasos
         $user = auth('restaurant')->user();
-
         if ($user->profile) {
             return redirect()->route('dashboard.restaurant');
         }
@@ -85,7 +71,6 @@ class RestaurantProfileController extends Controller
     }
 
     public function saveStep2(Request $request) {
-
 
         if ($request->_action === 'back') {
             Session::put('restaurant_step2', $request->except('_token', '_action'));
@@ -109,20 +94,7 @@ class RestaurantProfileController extends Controller
             // Guardar las imágenes 
             $foto_perfil_id = null;
             $foto_portada_id = null; 
-
-            ## Posible incorporación de fotos en la edición del perfil
-            // if (!empty($datos_paso1['imagen_perfil_path'])) {
-            //     $finalPath = str_replace('temp/', 'profiles/', $datos_paso1['imagen_perfil_path']);
-            //     Storage::disk('public')->move($datos_paso1['imagen_perfil_path'], $finalPath);
-            //     $foto_perfil_id = Photo::create(['url' => $finalPath])->id;
-            // }
-
-            // if (!empty($datos_paso1['imagen_portada_path'])) {
-            //     $finalPath = str_replace('temp/', 'covers/', $datos_paso1['imagen_portada_path']);
-            //     Storage::disk('public')->move($datos_paso1['imagen_portada_path'], $finalPath);
-            //     $foto_portada_id = Photo::create(['url' => $finalPath])->id;
-            // }
-
+        
             // Creación del perfil 
             $perfil = Profile::create([
                 'account_id' => auth('restaurant')->user()->id,
@@ -143,6 +115,8 @@ class RestaurantProfileController extends Controller
                 'website' => $datos_paso1['link-restaurante'],
                 'phone' => $datos['telefono'],
                 'dias_apertura' => $datos_paso1['dias_apertura'] ?? [],
+                'horarios'=> $datos_paso1['horarios'],
+                'tipo' =>  $datos_paso1['tipo'],
             ]);
 
             DB::commit();
@@ -156,4 +130,79 @@ class RestaurantProfileController extends Controller
         }
 
     }
+
+    public function actualizarFotos(Request $request) {
+        $perfil = auth('restaurant')->user()->profile; 
+        $response = []; 
+
+        if (!$perfil) {
+            return response()->json(['error' => 'Perfil no encontrado'], 404); 
+        }
+
+        // Subir la foto de perfil y crear un registro en la tabla "Photos"
+        if ($request->hasFile('profile_photo')) {
+            $path = $request->file('profile_photo')->store('profiles', 'public');
+            $photo = Photo::create(['url' => $path]); 
+
+            $perfil->profile_photo_id = $photo->id; 
+            $perfil->save(); 
+
+            $response['profile_photo_url'] = $photo->url;
+        }
+
+        // Subir la foto de portada
+        if ($request->hasFile('cover_photo')) {
+            $path = $request->file('cover_photo')->store('covers', 'public');
+            $photo = Photo::create(['url' => $path]); 
+
+            $perfil->cover_photo_id = $photo->id; 
+            $perfil->save(); 
+
+            $response['cover_photo_url'] = $photo->url;
+        }
+        return response()->json($response);
+    }
+
+    public function verMiPerfil(){
+        $restaurant = auth('restaurant')->user();
+        $perfil = $restaurant->profile;
+
+        if (!$perfil || !$perfil->restaurant) {
+            return redirect()->route('dashboard.user')
+                ->withErrors('Tu perfil no está completo.');
+        }
+
+        return $this->renderPerfil($perfil);
+    }
+
+    public function verPerfilAjeno(Profile $perfil){
+        if (!$perfil || !$perfil->restaurant) {
+            return redirect()->route('dashboard.user')
+                ->withErrors('Este establecimiento aún no ha completado su perfil.');
+        }
+
+        return $this->renderPerfil($perfil);
+    }
+
+    private function renderPerfil(Profile $perfil){
+        $restaurant = $perfil->restaurant;
+        $horarios = $restaurant->schedules;
+        $diasApertura = $restaurant-> dias_apertura;
+        $ubicacion = $perfil->city?->nombre_formateado ?? 'Desconocido';
+        $direccion = $restaurant->address; 
+        $numeroTelefonico = $restaurant->phone;
+        $description = $restaurant->description;
+    
+
+        return view('restaurantes.perfil', compact(
+            'perfil',
+            'description',
+            'edad',
+            'tipoFoodie',
+            'numeroReviews',
+            'ubicacion'
+        ));
+    }
+
+
 }

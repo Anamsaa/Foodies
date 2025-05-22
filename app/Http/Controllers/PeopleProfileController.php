@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-//use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
-//use Illuminate\Support\Facades\Session;
 use App\Models\Profile;
 use App\Models\Person;
 use App\Models\Region;

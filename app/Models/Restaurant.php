@@ -15,6 +15,8 @@ class Restaurant extends Model
         'website',
         'phone',
         'dias_apertura',
+        'horarios',
+        'tipo',
     ];
 
     protected $casts = [
