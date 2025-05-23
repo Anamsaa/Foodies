@@ -95,16 +95,18 @@
                      <p>{{ $ubicacion }}</p>
                     </div>
                     <div class="direccion-restaurante">
+                        <p class="titulo">Dirección:</p>
                         <p>{{ $direccion }}</p>
                     </div>
                     <div class="numero-telefonico">
                         <p>{{ $numeroTelefonico }}</p>
                     </div>
+
+                     <a class="website-link" href="{{ $website }}" target="_blank">Sitio Oficial</a>
+
                     <div class="texto-descripcion">
                         <p>{{ $descripcion }}</p>
                     </div>
-                    <a href="{{ $website }}" target="_blank">Sitio Oficial</a>
-    
                     {{-- Un usuario de tipo restaurante, puede ser seguido por usuarios tipo 'Persona', pero no que lo sigan --}}
                     @if(!$esPropietario && auth('user')->check()) 
                         <button type="button" id="seguir" class="seguir">Seguir</button>
