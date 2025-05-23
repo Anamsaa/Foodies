@@ -96,10 +96,10 @@
                     </div>
                     <div class="direccion-restaurante">
                         <p class="titulo">Dirección:</p>
-                        <p>{{ $direccion }}</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query={{ rawurlencode($direccion) }}" target="_blank">{{ $direccion }}</a>
                     </div>
                     <div class="numero-telefonico">
-                        <p>{{ $numeroTelefonico }}</p>
+                        <a href="tel:{{ $numeroTelefonico }}">{{ $numeroTelefonico }}</a>
                     </div>
 
                      <a class="website-link" href="{{ $website }}" target="_blank">Sitio Oficial</a>

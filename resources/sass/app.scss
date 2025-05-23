@@ -562,11 +562,30 @@
                         font-size: 20px;
                         font-weight: bold;
                     }
+
+                    a {
+                        text-decoration: none;
+                        color: modulo.$color-primario;
+
+                         &:hover {
+                            color: modulo.$iconos;
+                        }
+
+                    }
                 }
 
                 .numero-telefonico {
                     font-size: 1.2rem;
                     font-weight: bold;
+
+                    a {
+                        text-decoration: none;
+                        color: modulo.$color-primario;
+
+                        &:hover {
+                            color: modulo.$iconos;
+                        }
+                    }
                 }
 
                 .website-link {
