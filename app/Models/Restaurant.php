@@ -31,5 +31,8 @@ class Restaurant extends Model
     public function culinaryEvent() {
         return $this->hasMany(CulinaryEvent::class, 'post_id');
     }
+    public function getDiasAperturaTextoAttribute(): string {
+        return is_array($this->dias_apertura) ? implode(' - ' , $this->dias_apertura) : (string) $this->dias_apertura;
+    }
 
 }

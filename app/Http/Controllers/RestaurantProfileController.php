@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
 use App\Models\Profile;
 use App\Models\Restaurant;
@@ -10,12 +11,11 @@ use App\Models\Photo;
 use App\Models\Region;
 use Exception;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
-// use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class RestaurantProfileController extends Controller
 {
-    
     // Primer paso de envio de datos 
     public function showStep1() {
          logger( 'Inicia envío de datos');
@@ -44,8 +44,7 @@ class RestaurantProfileController extends Controller
             'dias_apertura.*' => 'in:Lunes,Martes,Miércoles,Jueves,Viernes,Sábado,Domingo',
         ]);
 
-        // Guardar las imágenes temporalmente, y sus paths en la sesión
-        $soloDatos = collect($datos)->except(['imagen-perfil', 'imagen-portada'])->toArray();
+        $soloDatos = $datos;
         $soloDatos['dias_apertura'] = $datos['dias_apertura'] ?? [];
         Session::put('restaurant_step1', $soloDatos);
 
@@ -101,7 +100,7 @@ class RestaurantProfileController extends Controller
                 'region_id' => $datos['comunidad-autonoma'],
                 'province_id' => $datos['provincia'],
                 'city_id' => $datos['ciudad'],
-                'profile_photo_id' => $foto_perfil_id,
+                'profile_photo_id' => $foto_perfil_id, 
                 'cover_photo_id' => $foto_portada_id,
                 'user_type' => 'Restaurant',
             ]);
@@ -126,41 +125,55 @@ class RestaurantProfileController extends Controller
 
         } catch (Exception $e) {
             DB::rollBack();
-            return back()->withErrors(['error' => 'Error al crear perfil'])->WithInput();
+
+            // Ver el error específico en los logs 
+            Log::error('Error al crear perfil de restaurante', [
+                'message' => $e->getMessage(), 
+                'trace'=> $e->getTraceAsString(),
+            ]); 
+
+            return back()->withErrors(['error' => 'Error al crear perfil' .$e->getMessage()])->WithInput();
         }
 
     }
 
     public function actualizarFotos(Request $request) {
-        $perfil = auth('restaurant')->user()->profile; 
-        $response = []; 
 
-        if (!$perfil) {
-            return response()->json(['error' => 'Perfil no encontrado'], 404); 
+        try {
+            $profile = auth('restaurant')->user()->profile;
+
+            if (!$profile) {
+                return response()->json(['error' => 'Perfil no encontrado'], 404);
+            }
+
+            if ($request->hasFile('profile_photo')) {
+                $path = $request->file('profile_photo')->store('profiles', 'public');
+                $photo = Photo::create(['url' => $path]);
+
+                $profile->profile_photo_id = $photo->id;
+                $profile->save();
+            }
+
+            if ($request->hasFile('cover_photo')) {
+                $path = $request->file('cover_photo')->store('cover_photos', 'public');
+                $photo = Photo::create(['url' => $path]);
+
+                $profile->cover_photo_id = $photo->id;
+                $profile->save();
+            }
+
+            $profile->load('profilePhoto', 'coverPhoto');
+
+            return response()->json([
+                'profile_photo_url' => optional($profile->profilePhoto)->url,
+                'cover_photo_url' => optional($profile->coverPhoto)->url,
+            ]);
+        } catch (Exception $e) {
+            Log::error('Error al actualizar fotos: ' . $e->getMessage(), [
+                'trace' => $e->getTraceAsString()
+            ]);
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        // Subir la foto de perfil y crear un registro en la tabla "Photos"
-        if ($request->hasFile('profile_photo')) {
-            $path = $request->file('profile_photo')->store('profiles', 'public');
-            $photo = Photo::create(['url' => $path]); 
-
-            $perfil->profile_photo_id = $photo->id; 
-            $perfil->save(); 
-
-            $response['profile_photo_url'] = $photo->url;
-        }
-
-        // Subir la foto de portada
-        if ($request->hasFile('cover_photo')) {
-            $path = $request->file('cover_photo')->store('covers', 'public');
-            $photo = Photo::create(['url' => $path]); 
-
-            $perfil->cover_photo_id = $photo->id; 
-            $perfil->save(); 
-
-            $response['cover_photo_url'] = $photo->url;
-        }
-        return response()->json($response);
     }
 
     public function verMiPerfil(){
@@ -185,24 +198,28 @@ class RestaurantProfileController extends Controller
     }
 
     private function renderPerfil(Profile $perfil){
+        $perfil->load('restaurant', 'profilePhoto', 'coverPhoto');
         $restaurant = $perfil->restaurant;
-        $horarios = $restaurant->schedules;
+        $tipoRestaurante = $restaurant->tipo;
+        $horarios = $restaurant->horarios;
         $diasApertura = $restaurant-> dias_apertura;
         $ubicacion = $perfil->city?->nombre_formateado ?? 'Desconocido';
         $direccion = $restaurant->address; 
         $numeroTelefonico = $restaurant->phone;
-        $description = $restaurant->description;
+        $website = Str::start($restaurant->website, 'https://');
+        $descripcion = $restaurant->description;
     
 
         return view('restaurantes.perfil', compact(
             'perfil',
-            'description',
-            'edad',
-            'tipoFoodie',
-            'numeroReviews',
-            'ubicacion'
+            'descripcion',
+            'tipoRestaurante',
+            'horarios',
+            'diasApertura',
+            'ubicacion',
+            'direccion',
+            'website',
+            'numeroTelefonico'
         ));
     }
-
-
 }

@@ -19,14 +19,13 @@
     <div class="componentes-principales">
         @include('partials.sidebar-restaurante')
         <main>
-            {{-- Verificar si el usuario que ingresa es dueño de ese perfil --}}
             @php 
                 $esPropietario = auth('restaurant')->user()->profile->id === $perfil->id;
             @endphp
-
+            {{-- Verificar si el usuario que ingresa es dueño de ese perfil --}}
             <div class="panel-de-control">
                 <div class="panel-control-ayuda">
-                    <a class="btn-panel" aria-label="Abrir ajustes" href="{{ route('ajustes.restaurant') }}"><i id="panel-ajustes" class="fa-solid fa-gear"></i></a>
+                    <a class="btn-panel" aria-label="Abrir ajustes" href="{{ route('ajustes.restaurante') }}"><i id="panel-ajustes" class="fa-solid fa-gear"></i></a>
                 
                     <button id="panel-control-logout" class="btn-panel" aria-label="Cerrar sesión" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i id="panel-logout" class="fa-solid fa-right-from-bracket"></i>
@@ -47,9 +46,9 @@
                             <input type="file" name="cover_photo" accept="image/**" hidden>
                         </label>
                     @endif
-
+                     {{-- Versión de móvil --}}
                     <div class="picture-header-profile mobile-version">
-                        <img id="profileImage" src="{{ auth('restaurant')->user()->profile->profilePhoto->url ?? asset('images/default-profile.png') }}" alt="Imagen de perfil de restaurante">
+                        <img id="profileImageMobile" src="{{ auth('restaurant')->user()->perfil->profilePhoto->url ?? asset('images/default_image_profile.png') }}" alt="Imagen de perfil de restaurante">
                         @if($esPropietario)
                             <label class="upload-profile">
                                 <i class="fa-solid fa-camera"></i>
@@ -66,7 +65,7 @@
 
                 {{-- Foto de perfil --}}
                 <div class="picture-header-profile">
-                    <img id="profileImage" src="{{ auth('restaurant')->user()->profile->profilePhoto->url ?? asset('images/default-profile.png') }}" alt="Imagen de perfil de restaurante">
+                    <img id="profileImage" src="{{ $perfil->profilePhoto->url ?? asset('images/default_image_profile.png') }}">
                     <label class="upload-profile">
                         <i class="fa-solid fa-camera"></i>
                         <input type="file" name="profile_photo" accept="image/**" hidden>
@@ -88,22 +87,26 @@
                         <p>{{ $horarios }}</p>
                     </div>
                     <div class="dias-apertura">
-                        <h3>Días de apertura:</h3>
-                        <p>{{ $diasApertura }}</p>
+                        <h3>Apertura:</h3>
+                        <p>{{ $perfil->restaurant->dias_apertura_texto }}</p>                       
                     </div>
                     <div class="localizacion-usuario">
                         <i class="fa-solid fa-map-pin"></i>
-                        <p>{{ $ubicacion }}</p>
+                     <p>{{ $ubicacion }}</p>
+                    </div>
+                    <div class="direccion-restaurante">
+                        <p>{{ $direccion }}</p>
                     </div>
                     <div class="numero-telefonico">
                         <p>{{ $numeroTelefonico }}</p>
                     </div>
                     <div class="texto-descripcion">
-                        <p>{{ $invitacion }}</p>
+                        <p>{{ $descripcion }}</p>
                     </div>
+                    <a href="{{ $website }}" target="_blank">Sitio Oficial</a>
     
-                    {{-- Un usuario de tipo restaurante, puede ser seguido, pero no que lo sigan --}}
-                    @if(!$esPropietario && $esPropietario) 
+                    {{-- Un usuario de tipo restaurante, puede ser seguido por usuarios tipo 'Persona', pero no que lo sigan --}}
+                    @if(!$esPropietario && auth('user')->check()) 
                         <button type="button" id="seguir" class="seguir">Seguir</button>
                     @endif
                 </div>

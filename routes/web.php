@@ -9,6 +9,7 @@ use App\Http\Controllers\LogoutPeopleController;
 use App\Http\Controllers\RestaurantProfileController;
 use App\Http\Controllers\PeopleProfileController;
 use App\Http\Controllers\UbicacionController;
+use App\Models\Restaurant;
 use Illuminate\Support\Facades\Route;
 
 // DEFINICIÓN DE RUTAS DE LA RED SOCIAL
@@ -43,18 +44,12 @@ Route::prefix('user')->group(function () {
 
         ## Redirigir al perfil del usuario propietario
         Route::get('perfil', [PeopleProfileController::class, 'verMiPerfil'])->name('perfil.user');
-         ## Redirigir al perfil de otros usuarios
+        ## Redirigir al perfil de otros usuarios
         Route::get('perfil/{profile}', [PeopleProfileController::class, 'verPerfilAjeno'])->name('perfil.ajeno');
 
-        ## Redirigir al perfil del propio usuario
-        // Route::get('perfil', function () {
-        //     $profileId = auth('user')->user()->profile->id; 
-        //     return redirect()->route('perfil.user', ['profile' => $profileId]);
-        // })->name('perfil.user.redirect');
+        // Subir y actualizar fotos de perfil y portada 
+        Route::post('profile/update-photos', [PeopleProfileController::class, 'actualizarFotos'])->name('profile.photos.update');
 
-        //Route::get('perfil', [PeopleProfileController::class, 'cargarDescripcion'])->name('perfil.user');
-        ## Acceder a perfiles de otros usuarios 
-        //Route::get('perfil/{profile}', [PeopleProfileController::class, 'verPerfil'])->name('perfil.user');
         Route::get('red-de-sabores', fn() => view('personas.red'))->name('red.user');
         Route::get('seguidos', fn() => view('personas.seguidos'))->name('seguidos.user');
         Route::get('eventos-culinarios', fn() => view('personas.eventos'))->name('eventos.user');
@@ -91,10 +86,16 @@ Route::prefix('restaurant')->group(function () {
         ### 2 paso 
         Route::get('crear-perfil-restaurante-2', [RestaurantProfileController::class, 'showStep2'])->name('crear-perfil.restaurante-2');
         Route::post('crear-perfil-restaurante-2', [RestaurantProfileController::class, 'saveStep2']);
-        
-        
+
+        ## Redirigir al perfil del usuario propietario
+        Route::get('perfil', [RestaurantProfileController::class, 'verMiPerfil'])->name('perfil.restaurante');
+        ## Redirigir al perfil de otros usuarios
+        Route::get('perfil/{profile}', [RestaurantProfileController::class, 'verPerfilAjeno'])->name('perfil.ajeno');
+
+        ## Subir y actualizar fotos de perfil y portada
+        Route::post('profile/update-photos', [RestaurantProfileController::class, 'actualizarFotos'])->name('profile.photos.update');
+
         Route::get('dashboard', fn() => view('restaurantes.principal'))->name('dashboard.restaurant');
-        Route::get('perfil', fn() => view('restaurantes.perfil'))->name('perfil.restaurante');
         Route::get('ajustes', fn() => view('restaurantes.ajustes'))->name('ajustes.restaurante');
 
         ## Logout
@@ -106,6 +107,6 @@ Route::prefix('restaurant')->group(function () {
 Route::get('/api/provinces/{regionId}', [UbicacionController::class, 'getProvinces']);
 Route::get('/api/cities/{provinceId}', [UbicacionController::class, 'getCities']);
 
-Route::post('profile/update-photos', [PeopleProfileController::class, 'actualizarFotos'])->name('profile.photos.update');
+
 
 

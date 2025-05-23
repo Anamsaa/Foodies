@@ -48,9 +48,9 @@
                             <input type="file" name="cover_photo" accept="image/**" hidden>
                         </label>
                     @endif
-
+                    {{-- Versión de móvil --}}
                     <div class="picture-header-profile mobile-version">
-                        <img id="profileImage" src="{{ auth('user')->user()->profile->profilePhoto->url ?? asset('images/default-profile.png') }}" alt="Imagen de perfil del usuario">
+                        <img id="profileImageMobile" src="{{ auth('user')->user()->profile->profilePhoto->url ?? asset('images/default-profile.png') }}" alt="Imagen de perfil del usuario">
                         @if($esPropietario)
                             <label class="upload-profile">
                                 <i class="fa-solid fa-camera"></i>
@@ -67,7 +67,7 @@
 
                 {{-- Foto de perfil --}}
                 <div class="picture-header-profile">
-                    <img id="profileImage" src="{{ auth('user')->user()->profile->profilePhoto->url ?? asset('images/default-profile.png') }}" alt="Imagen de perfil del usuario">
+                    <img id="profileImage" src="{{ auth('user')->user()->profile->profilePhoto->url ?? asset('images/imagen-default.png') }}" alt="Imagen de perfil del usuario">
                     <label class="upload-profile">
                         <i class="fa-solid fa-camera"></i>
                         <input type="file" name="profile_photo" accept="image/**" hidden>
