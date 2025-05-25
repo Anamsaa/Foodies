@@ -50,7 +50,8 @@
                     @endif
                     {{-- Versión de móvil --}}
                     <div class="picture-header-profile mobile-version">
-                        <img id="profileImageMobile" src="{{ auth('user')->user()->profile->profilePhoto->url ?? asset('images/default-profile.png') }}" alt="Imagen de perfil del usuario">
+                        {{-- <img src="{{ optional($perfil->profilePhoto)->url ? Storage::url($perfil->profilePhoto->url) : asset('images/default_image_profile.png') }}">--}} 
+                        <img id="profileImageMobile" src="{{ optional($perfil->profilePhoto)->url ?? asset('images/default_image_profile.png') }}" alt="Imagen de perfil del usuario">
                         @if($esPropietario)
                             <label class="upload-profile">
                                 <i class="fa-solid fa-camera"></i>
@@ -65,9 +66,11 @@
                     </div>
                 </div>
 
+                {{-- <pre>{{ dd($perfil->profilePhoto)--}}
                 {{-- Foto de perfil --}}
                 <div class="picture-header-profile">
-                    <img id="profileImage" src="{{ auth('user')->user()->profile->profilePhoto->url ?? asset('images/imagen-default.png') }}" alt="Imagen de perfil del usuario">
+                    {{-- <img src="{{ optional($perfil->profilePhoto)->url ? Storage::url($perfil->profilePhoto->url) : asset('images/default_image_profile.png') }}"> --}} 
+                   <img id="profileImage" src="{{ optional($perfil->profilePhoto)->url ?? asset('images/default_image_profile.png') }}" alt="Imagen de perfil del usuario">
                     <label class="upload-profile">
                         <i class="fa-solid fa-camera"></i>
                         <input type="file" name="profile_photo" accept="image/**" hidden>
@@ -77,10 +80,9 @@
 
             <div class="estructura-perfil">
                 <div class="contenidos">
-                        <p>hola</p>
-                        <p>solo aparece en el perfil</p>
+                       
                     {{-- Aquí es donde van los Posts que se generan dinámicamente --}}
-                    @yield('content')2
+                    @yield('content')
                 </div>
                 <div class="descripcion-user">
                     <h3 class="descripcion-foodie-type">{{ $tipoFoodie }}</h3>

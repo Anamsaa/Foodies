@@ -48,7 +48,7 @@
                     @endif
                      {{-- Versión de móvil --}}
                     <div class="picture-header-profile mobile-version">
-                        <img id="profileImageMobile" src="{{ auth('restaurant')->user()->perfil->profilePhoto->url ?? asset('images/default_image_profile.png') }}" alt="Imagen de perfil de restaurante">
+                        <img id="profileImageMobile" src="{{ $perfil->profilePhoto->url ?? asset('images/default_image_profile.png') }}" alt="Imagen de perfil de restaurante">
                         @if($esPropietario)
                             <label class="upload-profile">
                                 <i class="fa-solid fa-camera"></i>
@@ -116,7 +116,7 @@
             
         </main>
         {{--Para procesar la petición de tipo POST al hacer logout, se debe abrir un formulario oculto--}}
-        <form id="logout-form" action="{{ route('logout.user') }}" method="POST" style="display:none;">
+        <form id="logout-form" action="{{ route('logout.restaurant') }}" method="POST" style="display:none;">
             @csrf
         </form>
     </div>

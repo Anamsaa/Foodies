@@ -8,6 +8,7 @@ use App\Http\Controllers\LoginPeopleController;
 use App\Http\Controllers\LogoutPeopleController;
 use App\Http\Controllers\RestaurantProfileController;
 use App\Http\Controllers\PeopleProfileController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UbicacionController;
 use App\Models\Restaurant;
 use Illuminate\Support\Facades\Route;
@@ -36,7 +37,9 @@ Route::prefix('user')->group(function () {
 
     // Rutas privadas (Requieren de autentificación de parte de los usuarios)
     Route::middleware(['auth:user', 'prevent-back-history'])->group(function() {
-        Route::get('dashboard', fn() => view('personas.principal'))->name('dashboard.user');
+
+        ## Dashboard usuarios
+        Route::get('dashboard', [PeopleProfileController::class, 'mostrarDashboard'])->name('dashboard.user');
 
         ## Creación de perfil para usarios 
         Route::get('crear-perfil-restaurante', [PeopleProfileController::class, 'showForm'])->name('crear-perfil.user');
@@ -45,10 +48,30 @@ Route::prefix('user')->group(function () {
         ## Redirigir al perfil del usuario propietario
         Route::get('perfil', [PeopleProfileController::class, 'verMiPerfil'])->name('perfil.user');
         ## Redirigir al perfil de otros usuarios
-        Route::get('perfil/{profile}', [PeopleProfileController::class, 'verPerfilAjeno'])->name('perfil.ajeno');
+        Route::get('perfil/{profile}', [PeopleProfileController::class, 'verPerfilAjeno'])->name('perfil.user.ajeno');
 
         // Subir y actualizar fotos de perfil y portada 
         Route::post('profile/update-photos', [PeopleProfileController::class, 'actualizarFotos'])->name('profile.photos.update');
+
+        //------------------------ PUBLICACIONES---------------------------------------//
+        // POSTS
+        ## Redactar Post Regular 
+        Route::get('redactar-post', fn() => view('compartidas.form-posts'))->name('redactar.post');
+        ## Registrar Post Regular 
+        Route::post('redactar-post', [PostController::class, 'store'])->name('post.store');
+        ## Modificar Post
+        Route::get('post/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
+        Route::put('post/{post}', [PostController::class, 'update'])->name('post.update');  
+        ## Eliminar Post
+        Route::delete('post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
+
+        // RESEÑAS 
+        ## Redactar reseñas
+        Route::get('crear-reseña', fn () => view('personas.formulario-reseña'))->name('redactar.review');
+
+        // EVENTOS CULINARIOS
+        ## Redactar Eventos Culinarios
+        Route::get('crear-evento', fn () => view('personas.formulario-evento'))->name('redactar.evento');
 
         Route::get('red-de-sabores', fn() => view('personas.red'))->name('red.user');
         Route::get('seguidos', fn() => view('personas.seguidos'))->name('seguidos.user');
@@ -77,6 +100,9 @@ Route::prefix('restaurant')->group(function () {
 
     // Rutas privadas (Requieren de autentificación de parte de los usuarios)
     Route::middleware(['auth:restaurant', 'prevent-back-history'])->group(function() {
+
+        ## Dashboard restaurantes
+        Route::get('dashboard', fn() => view('restaurantes.principal'))->name('dashboard.restaurant');
         
         // Creación del perfil de restaurnate en 2 pasos 
         ### 1 paso 
@@ -95,7 +121,18 @@ Route::prefix('restaurant')->group(function () {
         ## Subir y actualizar fotos de perfil y portada
         Route::post('profile/update-photos', [RestaurantProfileController::class, 'actualizarFotos'])->name('profile.photos.update');
 
-        Route::get('dashboard', fn() => view('restaurantes.principal'))->name('dashboard.restaurant');
+        //------------------------ PUBLICACIONES---------------------------------------//
+         // POSTS
+        ## Redactar Post Regular 
+        Route::get('redactar-post', fn() => view('compartidas.form-posts'))->name('redactar.post.restaurant');
+        ## Registrar Post Regular 
+        Route::post('redactar-post', [PostController::class, 'store'])->name('post.store.restaurant');
+        ## Modificar Post
+        Route::get('post/{post}/edit', [PostController::class, 'edit'])->name('post.edit.restaurant');
+        Route::put('post/{post}', [PostController::class, 'update'])->name('post.update.restaurant');  
+        ## Eliminar Post
+        Route::delete('post/{post}', [PostController::class, 'destroy'])->name('post.destroy.restaurant');
+        
         Route::get('ajustes', fn() => view('restaurantes.ajustes'))->name('ajustes.restaurante');
 
         ## Logout

@@ -1,0 +1,238 @@
+@use "modulo";
+@use "mixins";
+@use "media-queries";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+// Estilos de Login y Register
+.layout-login-register {
+    background-image: url(/public/images/background_patron_foodies.png);
+    background-repeat: repeat;
+    background-size: 500px 500px;
+
+    .layout-inicio {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(252, 254, 243, 0.7);
+        min-height: 100vh;
+        font-family: "Nunito", "Arial";
+
+        header {
+            height: 15vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            @include media-queries.tablet {
+                min-height: auto;
+            }
+
+            @include media-queries.mobile {
+                min-height: auto;
+            }
+
+            .image-logo {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                height: 100px;
+                width: 170px;
+
+                img {
+                    width: 100%;
+                }
+
+                .especificacion {
+                    color: modulo.$iconos;
+                    font-weight: 800;
+                    font-size: 13px;
+                    width: 100%;
+                    padding-left: 3.5rem;
+
+                    margin-top: -10px;
+                }
+            }
+        }
+
+        .background-section {
+            background-color: modulo.$color-primario;
+            height: 73vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 2rem 1rem;
+
+            @include media-queries.tablet {
+                flex-direction: column;
+                align-items: center;
+                height: auto;
+            }
+
+            @include media-queries.mobile {
+                flex-direction: column;
+                align-items: center;
+                height: auto;
+            }
+
+            .fondo-formulario {
+                background-color: modulo.$color-fondo-formulario;
+                width: 22%;
+                border-radius: 30px;
+                display: flex;
+                align-items: end;
+                margin-top: 0.5rem;
+                margin-bottom: 0.5rem;
+                margin-right: -40px;
+                padding: 1.5rem;
+
+                @include media-queries.tablet {
+                    background-color: transparent;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                    margin: 0;
+                    padding: 0rem 0.8rem 0.8rem 0.8rem;
+                    width: 55%;
+                }
+
+                @include media-queries.mobile {
+                    background-color: transparent;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                    margin: 0;
+                    padding: 0rem 0.8rem 0.8rem 0.8rem;
+                    width: 55%;
+                }
+
+                .titulo-bienvenida h3 {
+                    font-size: 22px;
+                    width: 40%;
+                    color: modulo.$color-secundario;
+
+                    @include media-queries.tablet {
+                        width: 100%;
+                    }
+
+                    @include media-queries.mobile {
+                        padding: 0;
+                        width: 100%;
+                    }
+                }
+            }
+
+            .contenedor-formulario {
+                background-image: url(/public/images/Fondos-formularios-fd/Fondo_formularios_1.png);
+                background-size: 400px 400px;
+                width: 22%;
+                border-radius: 30px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 1.5rem 2rem;
+
+                @include media-queries.tablet {
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                    width: 50%;
+                }
+
+                @include media-queries.mobile {
+                    flex-direction: column;
+                    align-items: center;
+                    align-items: center;
+                    text-align: center;
+                    width: 70%;
+                }
+
+                .titulo-fondo-formulario {
+                    font-weight: 800;
+                    font-size: 28px;
+                    color: modulo.$iconos;
+                }
+
+                .formulario-lr {
+                    width: 100%;
+                    .formulario-login-users {
+                        display: flex;
+                        flex-direction: column;
+                        padding-bottom: 0.5rem;
+
+                        label {
+                            font-weight: bolder;
+                            color: modulo.$color-texto;
+                            margin-bottom: 0.3rem;
+                            text-align: start;
+                        }
+
+                        input {
+                            border: 0;
+                            border-radius: 5px;
+                            background-color: modulo.$input-background;
+                            width: 100%;
+                            padding: 0.5rem;
+                            height: 2rem;
+                            width: 100%;
+                        }
+                    }
+
+                    .button-formulario {
+                        margin-top: 1rem;
+                        display: flex;
+                        justify-self: center;
+                        @include mixins.botones-formularios;
+                    }
+                }
+            }
+
+            // Configuraciones para los logins
+            .contenedor-login {
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+
+                @include media-queries.tablet {
+                    padding-top: 3rem;
+                    padding-bottom: 3rem;
+                }
+
+                @include media-queries.mobile {
+                    padding-top: 6rem;
+                    padding-bottom: 6rem;
+                }
+            }
+        }
+
+        footer {
+            height: 12vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+
+            .redireccion-restaurantes {
+                p {
+                    font-size: 1rem;
+                }
+
+                .enlace-restaurantes {
+                    text-decoration: none;
+                    color: modulo.$iconos;
+                    font-weight: 800;
+
+                    &:hover {
+                        text-decoration: underline modulo.$iconos 2px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+

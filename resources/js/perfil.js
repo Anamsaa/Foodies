@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const esRestaurante = window.location.pathname.startsWith('/restaurant');
     const subirURL = esRestaurante ? '/restaurant/profile/update-photos' : '/user/profile/update-photos'; 
 
-    // Se hace un selector alt de todos estos inputs, ya que se repite el bloque para mejor adaptación responsive 
+    // Se hace un selector all de todos estos inputs, ya que se repite el bloque para mejor adaptación responsive 
     document.querySelectorAll('input[name="profile_photo"]').forEach(input => {
         input.addEventListener('change', function () {
             uploadImage(this.files[0], 'profile_photo');
@@ -19,8 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
             uploadImage(this.files[0], 'cover_photo');
         });
     }
-
-
+    
     function uploadImage(file, type) {
         if (!file) return; 
 

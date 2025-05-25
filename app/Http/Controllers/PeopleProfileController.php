@@ -7,6 +7,7 @@ use App\Models\Profile;
 use App\Models\Person;
 use App\Models\Region;
 use App\Models\Photo;
+use App\Models\Post;
 use Exception;
 use Illuminate\Support\Facades\DB;
 ## Librería que me permite trabajar con fechas
@@ -127,12 +128,29 @@ class PeopleProfileController extends Controller
     }
 
     private function renderPerfil(Profile $perfil){
+
+        $perfil->load('profilePhoto', 'coverPhoto', 'person');
         $person = $perfil->person;
         $description = $person->description;
         $birthDate = $person->birth_date;
         $edad = Carbon::parse($birthDate)->age;
         $numeroReviews = $perfil->posts()->where('post_type', 'review')->count();
+        // Últimos posts
+        //dd($perfil->posts()->latest()->get());
+        $posts = $perfil->posts()
+            ->latest()
+            ->with([
+            'photo',
+            'likes',
+            'comments',
+            'profile.person',
+            'profile.restaurant',
+            'profile.profilePhoto'
+            ])
+            ->get();
+        //$posts = $perfil->posts()->latest()->get();
 
+        // Categorías de Foodies 
         if ($numeroReviews <= 10) {
             $tipoFoodie = 'Foodie nuevo';
         } elseif ($numeroReviews <= 20) {
@@ -151,7 +169,13 @@ class PeopleProfileController extends Controller
             'edad',
             'tipoFoodie',
             'numeroReviews',
-            'ubicacion'
+            'ubicacion',
+            'posts'
         ));
+    }
+    public function mostrarDashboard() {
+        $perfil = auth('user')->user()->profile;
+        $perfil->load('profilePhoto'); 
+        return view('personas.principal', compact('perfil'));
     }
 }

@@ -25,7 +25,7 @@
                     </button>
                 </div>
             </div>
-            <div class="contenidos">
+            <div class="contenidos styles-form-posts">
                 @yield('content')
             </div>
         </main>

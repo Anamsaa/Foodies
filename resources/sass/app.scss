@@ -1,6 +1,10 @@
 @use "modulo";
 @use "mixins";
 @use "media-queries";
+@use "principal";
+@use "landing";
+@use "login-register";
+@use "posts";
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 
 * {
@@ -181,6 +185,7 @@
                 padding-top: 1rem;
                 li {
                     padding-bottom: 1rem;
+                    overflow: hidden;
                     a {
                         @include mixins.sidebar-enlace;
                         &:hover {
@@ -196,16 +201,32 @@
     }
 
     .sidebar.visible {
-        width: 50%;
+        width: 40%;
         transform: translate(0);
         top: 10vh;
         position: fixed;
+
+        @include media-queries.tablet {
+            width: 50%;
+        }
+        @include media-queries.mobile {
+            width: 65%;
+        }
+
+        .sidebar-parametros {
+            a {
+                display: block;
+                padding-left: 40px;
+            }
+        }
     }
 
     // Estilos del main
     main {
         background-color: modulo.$background;
-        width: 78%;
+        //width: 78%;
+        width: 100%;
+        min-height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -267,6 +288,7 @@
             }
         }
 
+        // Estilos del banner del perfil
         .header-profile {
             background-color: #fae4c6;
             width: 90%;
@@ -276,14 +298,14 @@
             border: 10px modulo.$color-secundario solid;
             display: flex;
             justify-content: space-between;
-
-            box-sizing: border-box;
             overflow: hidden;
+
             // Configuración de la imagen del fondo
-            background-size: cover;
+            background-size: contain;
+            // Antigua configuración
+            // background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            //position: relative;
 
             @include media-queries.mobile {
                 height: 350px;
@@ -328,10 +350,15 @@
                 .mobile-version {
                     display: none;
 
+                   
                     @include media-queries.mobile {
                         display: flex;
+                        align-self: center;
+                        width: 85%;
+                        height: 65%;
+                       
                         //left: 30%;
-                        max-height: 240px;
+                        //max-height: 260px;
                     }
                 }
 
@@ -365,18 +392,13 @@
 
             .picture-header-profile {
                 background-color: modulo.$iconos;
-                //align-self: center;
-                height: auto;
-                width: 255px;
+                max-width: 230px;
+                max-height: 230px;
                 border-radius: 50%;
-                //width: 100px;
-                //padding: 7.5rem 0.5rem;
-                margin: 5px 10px;
+                margin: 5px 30px 5px 10px; 
                 overflow: hidden;
-                // display: flex;
-                // flex-direction: column;
-                // justify-content: center;
                 position: relative;
+                object-fit: cover;
 
                 @include media-queries.mobile {
                     display: none;
@@ -386,7 +408,6 @@
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
-                    display: cover;
                 }
 
                 .upload-profile {
@@ -414,12 +435,13 @@
             }
         }
 
+        // Cuerpo perfil
         .estructura-perfil {
             box-sizing: border-box;
             display: grid;
             grid-template-columns: 68% 31%;
+            grid-template-rows: auto auto;
             width: 90%;
-            gap: 1rem;
 
             @include media-queries.mobile {
                 grid-template-columns: 1fr;
@@ -428,12 +450,9 @@
             .contenidos {
                 margin-top: 1rem;
                 width: 100%;
-                height: auto;
-                background-color: red;
-                font-size: 60px;
                 order: 1;
 
-                 @include media-queries.mobile {
+                @include media-queries.mobile {
                     order: 2;
                 }
             }
@@ -442,14 +461,16 @@
                 margin-top: 1rem;
                 background-color: modulo.$color-secundario;
                 border-radius: 20px;
-                height: auto;
+                align-self: start;
                 display: flex;
                 flex-direction: column;
                 padding: 1.5rem 1rem;
                 align-items: center;
+                margin-left: 1rem;
                 order: 2;
 
                 @include media-queries.mobile {
+                    margin-left: 0;
                     order: 1;
                 }
 
@@ -457,6 +478,7 @@
                     font-size: 28px;
                     color: modulo.$iconos;
                     margin-bottom: 1rem;
+                    text-align: center;
                 }
 
                 .numero-reviews {
@@ -486,9 +508,9 @@
                     display: flex;
                     align-items: end;
                     margin-bottom: 1rem;
-                    
+
                     i {
-                        color: modulo.$iconos; 
+                        color: modulo.$iconos;
                         font-size: 25px;
                         margin-right: 0.2rem;
                     }
@@ -516,7 +538,8 @@
                 button {
                     @include mixins.botones-formularios;
                     margin-top: 1rem;
-                    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+                    transition: color 0.3s ease-in-out,
+                        background-color 0.3s ease-in-out;
 
                     &:hover {
                         background-color: modulo.$iconos;
@@ -529,9 +552,10 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                // Campos de restaurante 
+
+                // Campos de restaurante
                 .restaurant-type {
-                    color: modulo.$iconos; 
+                    color: modulo.$iconos;
                     font-size: 30px;
                     text-align: center;
                     margin-bottom: 0.7rem;
@@ -567,10 +591,9 @@
                         text-decoration: none;
                         color: modulo.$color-primario;
 
-                         &:hover {
+                        &:hover {
                             color: modulo.$iconos;
                         }
-
                     }
                 }
 
@@ -598,536 +621,10 @@
                     transition: color 0.5s ease-out;
                     margin-top: 1rem;
                     margin-bottom: 1rem;
-                    
+
                     &:hover {
                         background-color: modulo.$color-botones;
                         color: modulo.$color-primario;
-                    }
-                }
-
-            }
-        }
-    }
-}
-
-// Estilos de Login y Register
-.layout-login-register {
-    background-image: url(/public/images/background_patron_foodies.png);
-    background-repeat: repeat;
-    background-size: 500px 500px;
-
-    .layout-inicio {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background-color: rgba(252, 254, 243, 0.7);
-        min-height: 100vh;
-        font-family: "Nunito", "Arial";
-
-        header {
-            height: 15vh;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            @include media-queries.tablet {
-                min-height: auto;
-            }
-
-            @include media-queries.mobile {
-                min-height: auto;
-            }
-
-            .image-logo {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                height: 100px;
-                width: 170px;
-
-                img {
-                    width: 100%;
-                }
-
-                .especificacion {
-                    color: modulo.$iconos;
-                    font-weight: 800;
-                    font-size: 13px;
-                    width: 100%;
-                    padding-left: 3.5rem;
-
-                    margin-top: -10px;
-                }
-            }
-        }
-
-        .background-section {
-            background-color: modulo.$color-primario;
-            height: 73vh;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            padding: 2rem 1rem;
-
-            @include media-queries.tablet {
-                flex-direction: column;
-                align-items: center;
-                height: auto;
-            }
-
-            @include media-queries.mobile {
-                flex-direction: column;
-                align-items: center;
-                height: auto;
-            }
-
-            .fondo-formulario {
-                background-color: modulo.$color-fondo-formulario;
-                width: 22%;
-                border-radius: 30px;
-                display: flex;
-                align-items: end;
-                margin-top: 0.5rem;
-                margin-bottom: 0.5rem;
-                margin-right: -40px;
-                padding: 1.5rem;
-
-                @include media-queries.tablet {
-                    background-color: transparent;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    text-align: center;
-                    margin: 0;
-                    padding: 0rem 0.8rem 0.8rem 0.8rem;
-                    width: 55%;
-                }
-
-                @include media-queries.mobile {
-                    background-color: transparent;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    text-align: center;
-                    margin: 0;
-                    padding: 0rem 0.8rem 0.8rem 0.8rem;
-                    width: 55%;
-                }
-
-                .titulo-bienvenida h3 {
-                    font-size: 22px;
-                    width: 40%;
-                    color: modulo.$color-secundario;
-
-                    @include media-queries.tablet {
-                        width: 100%;
-                    }
-
-                    @include media-queries.mobile {
-                        padding: 0;
-                        width: 100%;
-                    }
-                }
-            }
-
-            .contenedor-formulario {
-                background-image: url(/public/images/Fondos-formularios-fd/Fondo_formularios_1.png);
-                background-size: 400px 400px;
-                width: 22%;
-                border-radius: 30px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                padding: 1.5rem 2rem;
-
-                @include media-queries.tablet {
-                    flex-direction: column;
-                    align-items: center;
-                    text-align: center;
-                    width: 50%;
-                }
-
-                @include media-queries.mobile {
-                    flex-direction: column;
-                    align-items: center;
-                    align-items: center;
-                    text-align: center;
-                    width: 70%;
-                }
-
-                .titulo-fondo-formulario {
-                    font-weight: 800;
-                    font-size: 28px;
-                    color: modulo.$iconos;
-                }
-
-                .formulario-lr {
-                    width: 100%;
-                    .formulario-login-users {
-                        display: flex;
-                        flex-direction: column;
-                        padding-bottom: 0.5rem;
-
-                        label {
-                            font-weight: bolder;
-                            color: modulo.$color-texto;
-                            margin-bottom: 0.3rem;
-                            text-align: start;
-                        }
-
-                        input {
-                            border: 0;
-                            border-radius: 5px;
-                            background-color: modulo.$input-background;
-                            width: 100%;
-                            padding: 0.5rem;
-                            height: 2rem;
-                            width: 100%;
-                        }
-                    }
-
-                    .button-formulario {
-                        margin-top: 1rem;
-                        display: flex;
-                        justify-self: center;
-                        @include mixins.botones-formularios;
-                    }
-                }
-            }
-
-            // Configuraciones para los logins
-            .contenedor-login {
-                padding-top: 2rem;
-                padding-bottom: 2rem;
-
-                @include media-queries.tablet {
-                    padding-top: 3rem;
-                    padding-bottom: 3rem;
-                }
-
-                @include media-queries.mobile {
-                    padding-top: 6rem;
-                    padding-bottom: 6rem;
-                }
-            }
-        }
-
-        footer {
-            height: 12vh;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-
-            .redireccion-restaurantes {
-                p {
-                    font-size: 1rem;
-                }
-
-                .enlace-restaurantes {
-                    text-decoration: none;
-                    color: modulo.$iconos;
-                    font-weight: 800;
-
-                    &:hover {
-                        text-decoration: underline modulo.$iconos 2px;
-                    }
-                }
-            }
-        }
-    }
-}
-
-// Diseño Landing
-
-.landing-body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    display: grid;
-    min-height: 100dvh;
-    grid-template-rows: auto 1fr auto;
-    background-color: modulo.$background;
-    font-family: modulo.$tipografia-foodies;
-    position: relative;
-    overflow-x: hidden;
-
-    .landing-bar {
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background-color: modulo.$color-primario;
-        width: 100%;
-        padding: 0.5rem 6rem;
-
-        @include media-queries.tablet {
-            padding: 0.5rem 2rem;
-        }
-
-        @include media-queries.mobile {
-            padding: 0.5rem 1rem;
-        }
-
-        .landing-logo-bar {
-            a {
-                img {
-                    height: 80px;
-                }
-            }
-        }
-        .landing-texto-bar {
-            box-sizing: border-box;
-
-            @include media-queries.mobile {
-                display: none;
-            }
-
-            a {
-                text-decoration: none;
-                font-weight: 700;
-                transition: color 0.5s ease-in-out;
-
-                @include media-queries.tablet {
-                    font-size: 14px;
-                }
-            }
-
-            .inicio-sesion {
-                margin-right: 1.2rem;
-                color: modulo.$color-secundario;
-
-                &:hover {
-                    color: modulo.$iconos;
-                }
-            }
-
-            .registro-negocio {
-                @include mixins.botones-formularios;
-                text-decoration: none;
-                color: modulo.$color-primario;
-
-                @include media-queries.tablet {
-                    font-size: 15px;
-                }
-                @include media-queries.mobile {
-                    padding: 0.8rem;
-                    font-size: 14px;
-                }
-
-                &:hover {
-                    background-color: modulo.$iconos;
-                    color: modulo.$color-secundario;
-                }
-            }
-        }
-
-        .menu-hamburguesa-landing {
-            display: none;
-
-            button {
-                all: unset;
-                cursor: pointer;
-            }
-
-            // position: absolute // para el contenedor que sale con las opciones justo desde la derecha hasta ocupar toda la pantalla
-
-            #hamburguesa-icon-landing {
-                font-size: 35px;
-                color: modulo.$color-botones;
-                background-color: none;
-                background: none;
-            }
-
-            @include media-queries.mobile {
-                display: block;
-            }
-        }
-    }
-
-    // Estilos barra lateral del landing
-    .menu-emergente-landing {
-        display: none;
-
-        @include media-queries.mobile {
-            display: flex;
-            width: 70%;
-            height: 100vh;
-            flex-direction: column;
-            justify-self: flex-end;
-            align-items: end;
-            background-color: rgba(252, 254, 243, 0.95);
-            padding: 1rem;
-            position: absolute;
-            z-index: 1000;
-            transform: translateX(100%);
-            transition: transform 0.3s ease-in-out;
-
-            #boton-cerrar-landing {
-                all: unset;
-                cursor: pointer;
-
-                i {
-                    color: modulo.$color-primario;
-                    font-size: 25px;
-                }
-            }
-
-            .opciones-menu-landing {
-                margin-top: 1.5rem;
-                padding-left: 0.5rem;
-                align-self: flex-start;
-                list-style: none;
-
-                .apartados-landing {
-                    margin: 1rem;
-                    font-weight: 600;
-
-                    a {
-                        text-decoration: none;
-                        font-size: 1.2rem;
-                        color: modulo.$color-texto;
-
-                        &:hover {
-                            color: modulo.$iconos;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    .menu-emergente-landing.visible {
-        transform: translateX(0);
-    }
-
-    .menu-emergente-landing.oculto {
-        transform: translateX(100%);
-    }
-
-    .landing-main {
-        display: flex;
-        flex-direction: row;
-        padding: 0rem 2rem;
-
-        @include media-queries.tablet {
-            flex-direction: column;
-            padding: 0rem 2rem;
-            width: 100%;
-        }
-
-        .texto-main {
-            width: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 3rem;
-
-            @include media-queries.tablet {
-                width: 100%;
-                padding-top: 2rem;
-            }
-
-            .slogan-main {
-                font-family: "Quicksand";
-                font-size: 100px;
-                font-weight: bold;
-                //-webkit-text-stroke: 1px modulo.$iconos;
-                width: 80%;
-                color: modulo.$color-primario;
-
-                @include media-queries.tablet {
-                    font-size: 60px;
-                    width: 100%;
-                    text-align: center;
-                }
-
-                @include media-queries.mobile {
-                    padding: 0.5rem 1rem;
-                }
-
-                .enfasis {
-                    font-family: "Courgette";
-                    color: modulo.$iconos;
-                }
-            }
-
-            .description-main {
-                font-size: 18px;
-                width: 80%;
-                font-weight: 500;
-                color: modulo.$color-primario;
-                font-family: "Quicksand";
-
-                @include media-queries.tablet {
-                    width: 100%;
-                    text-align: center;
-                }
-
-                @include media-queries.mobile {
-                    padding: 0.5rem 1rem;
-                    text-align: center;
-                }
-            }
-
-            .boton-main {
-                @include mixins.botones-formularios;
-                text-decoration: none;
-                color: modulo.$color-primario;
-                align-self: center;
-                margin-top: 2rem;
-                width: 200px;
-                text-align: center;
-                border-radius: 30px;
-                transition: color 0.5s ease-in-out;
-
-                &:hover {
-                    background-color: modulo.$iconos;
-                    color: modulo.$color-secundario;
-                }
-            }
-        }
-        .ilustracion-main {
-            width: 50%;
-            display: flex;
-            align-items: center;
-
-            @include media-queries.tablet {
-                width: 100%;
-                text-align: center;
-            }
-
-            img {
-                max-width: 100%;
-                height: auto;
-            }
-        }
-    }
-
-    .landing-footer {
-        display: flex;
-        width: 100%;
-        justify-content: center;
-        padding: 2rem 2rem;
-        text-align: center;
-        background-color: modulo.$color-primario;
-
-        div {
-            p {
-                color: modulo.$color-secundario;
-                font-size: 15px;
-
-                a {
-                    text-decoration: none;
-                    color: modulo.$color-secundario;
-
-                    &:hover {
-                        color: modulo.$color-botones;
                     }
                 }
             }

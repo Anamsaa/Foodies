@@ -1,0 +1,296 @@
+@use "modulo";
+@use "mixins";
+@use "media-queries";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+// Diseño Landing
+.landing-body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    display: grid;
+    min-height: 100dvh;
+    grid-template-rows: auto 1fr auto;
+    background-color: modulo.$background;
+    font-family: modulo.$tipografia-foodies;
+    position: relative;
+    overflow-x: hidden;
+
+    .landing-bar {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: modulo.$color-primario;
+        width: 100%;
+        padding: 0.5rem 6rem;
+
+        @include media-queries.tablet {
+            padding: 0.5rem 2rem;
+        }
+
+        @include media-queries.mobile {
+            padding: 0.5rem 1rem;
+        }
+
+        .landing-logo-bar {
+            a {
+                img {
+                    height: 80px;
+                }
+            }
+        }
+        .landing-texto-bar {
+            box-sizing: border-box;
+
+            @include media-queries.mobile {
+                display: none;
+            }
+
+            a {
+                text-decoration: none;
+                font-weight: 700;
+                transition: color 0.5s ease-in-out;
+
+                @include media-queries.tablet {
+                    font-size: 14px;
+                }
+            }
+
+            .inicio-sesion {
+                margin-right: 1.2rem;
+                color: modulo.$color-secundario;
+
+                &:hover {
+                    color: modulo.$iconos;
+                }
+            }
+
+            .registro-negocio {
+                @include mixins.botones-formularios;
+                text-decoration: none;
+                color: modulo.$color-primario;
+
+                @include media-queries.tablet {
+                    font-size: 15px;
+                }
+                @include media-queries.mobile {
+                    padding: 0.8rem;
+                    font-size: 14px;
+                }
+
+                &:hover {
+                    background-color: modulo.$iconos;
+                    color: modulo.$color-secundario;
+                }
+            }
+        }
+
+        .menu-hamburguesa-landing {
+            display: none;
+
+            button {
+                all: unset;
+                cursor: pointer;
+            }
+
+            // position: absolute // para el contenedor que sale con las opciones justo desde la derecha hasta ocupar toda la pantalla
+
+            #hamburguesa-icon-landing {
+                font-size: 35px;
+                color: modulo.$color-botones;
+                background-color: none;
+                background: none;
+            }
+
+            @include media-queries.mobile {
+                display: block;
+            }
+        }
+    }
+
+    // Estilos barra lateral del landing
+    .menu-emergente-landing {
+        display: none;
+
+        @include media-queries.mobile {
+            display: flex;
+            width: 70%;
+            height: 100vh;
+            flex-direction: column;
+            justify-self: flex-end;
+            align-items: end;
+            background-color: rgba(252, 254, 243, 0.95);
+            padding: 1rem;
+            position: absolute;
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+
+            #boton-cerrar-landing {
+                all: unset;
+                cursor: pointer;
+
+                i {
+                    color: modulo.$color-primario;
+                    font-size: 25px;
+                }
+            }
+
+            .opciones-menu-landing {
+                margin-top: 1.5rem;
+                padding-left: 0.5rem;
+                align-self: flex-start;
+                list-style: none;
+
+                .apartados-landing {
+                    margin: 1rem;
+                    font-weight: 600;
+
+                    a {
+                        text-decoration: none;
+                        font-size: 1.2rem;
+                        color: modulo.$color-texto;
+
+                        &:hover {
+                            color: modulo.$iconos;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .menu-emergente-landing.visible {
+        transform: translateX(0);
+    }
+
+    .menu-emergente-landing.oculto {
+        transform: translateX(100%);
+    }
+
+    .landing-main {
+        display: flex;
+        flex-direction: row;
+        padding: 0rem 2rem;
+
+        @include media-queries.tablet {
+            flex-direction: column;
+            padding: 0rem 2rem;
+            width: 100%;
+        }
+
+        .texto-main {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 3rem;
+
+            @include media-queries.tablet {
+                width: 100%;
+                padding-top: 2rem;
+            }
+
+            .slogan-main {
+                font-family: "Quicksand";
+                font-size: 100px;
+                font-weight: bold;
+                //-webkit-text-stroke: 1px modulo.$iconos;
+                width: 80%;
+                color: modulo.$color-primario;
+
+                @include media-queries.tablet {
+                    font-size: 60px;
+                    width: 100%;
+                    text-align: center;
+                }
+
+                @include media-queries.mobile {
+                    padding: 0.5rem 1rem;
+                }
+
+                .enfasis {
+                    font-family: "Courgette";
+                    color: modulo.$iconos;
+                }
+            }
+
+            .description-main {
+                font-size: 18px;
+                width: 80%;
+                font-weight: 500;
+                color: modulo.$color-primario;
+                font-family: "Quicksand";
+
+                @include media-queries.tablet {
+                    width: 100%;
+                    text-align: center;
+                }
+
+                @include media-queries.mobile {
+                    padding: 0.5rem 1rem;
+                    text-align: center;
+                }
+            }
+
+            .boton-main {
+                @include mixins.botones-formularios;
+                text-decoration: none;
+                color: modulo.$color-primario;
+                align-self: center;
+                margin-top: 2rem;
+                width: 200px;
+                text-align: center;
+                border-radius: 30px;
+                transition: color 0.5s ease-in-out;
+
+                &:hover {
+                    background-color: modulo.$iconos;
+                    color: modulo.$color-secundario;
+                }
+            }
+        }
+        .ilustracion-main {
+            width: 50%;
+            display: flex;
+            align-items: center;
+
+            @include media-queries.tablet {
+                width: 100%;
+                text-align: center;
+            }
+
+            img {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+    }
+
+    .landing-footer {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        padding: 2rem 2rem;
+        text-align: center;
+        background-color: modulo.$color-primario;
+
+        div {
+            p {
+                color: modulo.$color-secundario;
+                font-size: 15px;
+
+                a {
+                    text-decoration: none;
+                    color: modulo.$color-secundario;
+
+                    &:hover {
+                        color: modulo.$color-botones;
+                    }
+                }
+            }
+        }
+    }
+}

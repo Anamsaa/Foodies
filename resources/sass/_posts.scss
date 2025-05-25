@@ -1,0 +1,259 @@
+@use "modulo";
+@use "mixins";
+@use "media-queries";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+.styles-form-posts {
+    background-color: modulo.$color-secundario;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    height: auto;
+    border-radius: 20px;
+    padding: 1.5rem;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+
+    @include media-queries.tablet {
+        width: 96%;
+        align-self: center;
+    }
+    @include media-queries.mobile {
+        width: 92%;
+    }
+
+    label,
+    .titulo-imagen,
+    p {
+        font-weight: bolder;
+        color: modulo.$color-texto;
+        margin-bottom: 0.6rem;
+        display: block;
+    }
+
+    input,
+    select,
+    textarea {
+        border: 0;
+        border-radius: 5px;
+        background-color: modulo.$input-background;
+        width: 100%;
+
+        @include media-queries.tablet {
+            width: 100%;
+        }
+
+        @include media-queries.mobile {
+            width: 100%;
+        }
+    }
+
+    input[type="text"],
+    input[type="date"],
+    select {
+        padding: 0.5rem;
+        height: 2rem;
+    }
+
+    // Personalización select
+    select {
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+
+    select::-ms-expand {
+        display: none;
+    }
+
+    .select-content {
+        position: relative;
+
+        i {
+            pointer-events: none;
+            display: block;
+            position: absolute;
+            right: 20px;
+            size: 5px;
+            top: 60%;
+        }
+    }
+
+    button {
+        @include mixins.botones-formularios;
+
+        &:hover {
+            color: modulo.$color-secundario;
+            background-color: modulo.$iconos;
+        }
+    }
+
+    .icon-elipsis-form-post {
+        font-size: 1.5rem;
+        color: modulo.$iconos;
+    }
+}
+
+// Estilos de formulario de publicaciones
+
+.form-post-main {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    .encabezado-form-post {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 1rem;
+    }
+
+    .cargar-imagenes {
+        margin-top: 1rem;
+
+        .styles-contenedor-imagen {
+            @include mixins.carga-imagenes;
+        }
+
+        .advice {
+            font-size: 12px;
+            width: 70%;
+            color: rgb(171, 166, 166);
+        }
+    }
+
+    button {
+        justify-self: end;
+        align-self: end;
+        width: 150px;
+
+        @include media-queries.mobile {
+            margin-top: 1.5rem;
+            align-self: center;
+        }
+    }
+}
+// Estilos de formulario de eventos culinarios
+.form-event-main {
+    .encabezado-form-post {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+    }
+
+    .row {
+        display: flex;
+        gap: 1rem;
+
+        .column-row {
+            display: flex;
+            flex-direction: column;
+
+            .contenedor-formulario {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    }
+
+    .r1 {
+        display: flex;
+    }
+}
+
+// Publicaciones Regulares
+.card-post {
+    background-color: modulo.$color-secundario;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+
+    .post-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.8rem;
+
+        .autor-info {
+            display: flex;
+            gap: 1rem;
+
+            .post-avatar {
+                width: 75px;
+                height: 75px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+
+            .autor-meta {
+                display: flex;
+                flex-direction: column;
+
+                .user-name {
+                    font-weight: bold;
+                    font-size: 22px;
+                    color: modulo.$color-texto;
+                }
+
+                .user-post-time {
+                    color: modulo.$color-texto;
+                }
+            }
+
+            .post-options {
+                    //color
+                    width: 100%;
+            }
+        }
+    }
+
+    .post-content {
+        margin-bottom: 0.8rem;
+
+        p {
+            background-color: modulo.$input-background;
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .post-image {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            width: 100%;
+            border-radius: 10px;
+            aspect-ratio: 4 / 3;
+            object-fit: contain;
+
+
+        }
+    }
+
+    .post-footer {
+        display: flex;
+        justify-content: space-between;
+
+        .icons-footer {
+            display: flex;
+            gap: 0.3rem;
+
+            i {
+                color: modulo.$iconos;
+                font-size: 25px;
+
+                &:hover {
+                    color: modulo.$color-primario;
+                }
+            }
+
+            span {
+                background-color: modulo.$color-primario;
+                color: modulo.$color-secundario;
+                font-weight: 700;
+                border-radius: 50%;
+                padding: 0.2rem 0.5rem;
+            }
+            
+        }
+
+       
+    }
+}

@@ -2,7 +2,9 @@
 @section('title', 'Perfil')
 @section('description', 'Configura tu perfil y conecta con otras personas.')
 @section('content')
-  <p>solo aparece en el perfil</p>
-  <p>Aquí van los posts mi reina</p>
-
+    @forelse($posts as $post)
+      @include('components.posts.post', ['post' => $post])
+    @empty
+      <p class="no-post-message">No hay publicaciones todavía.</p>
+    @endforelse
 @endsection

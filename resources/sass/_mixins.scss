@@ -37,3 +37,46 @@
     padding: 0.8rem;
     border-radius: 10px;
 }
+
+@mixin base-contenedor {
+    background-color: modulo.$color-secundario;
+    padding: 1rem;
+    width: 100%;
+    border-radius: 15px;
+    margin-bottom: 1rem;
+}
+
+@mixin carga-imagenes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 180px;
+    min-height: 170px;
+    background-color: modulo.$input-background;
+    padding: 2rem;
+    cursor: pointer;
+
+    @include media-queries.mobile {
+        width: 160px;
+        height: 100px;
+    }
+
+    i {
+        font-size: 2.7rem;
+        cursor: pointer;
+    }
+
+    span {
+        text-align: center;
+        font-size: 15px;
+
+        &:hover {
+            color: modulo.$iconos;
+        }
+    }
+
+    &:hover {
+        background-color: modulo.$color-indice;
+    }
+}

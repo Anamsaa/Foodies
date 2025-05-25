@@ -12,9 +12,9 @@ import Alpine from 'alpinejs';
 window.Alpine = Alpine;
 Alpine.start();
 
-
-
 import './perfil';
+import './principal';
+import './post';
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('entra a la función');
@@ -99,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
             mostrarPreview(this, 'box-portada', 'preview-portada');
         });
     }
-
 });
 
 function incializarMenuLanding() {
@@ -123,165 +122,6 @@ function incializarMenuLanding() {
     }  
 }
 
-// function mostrarPreview(input, contenedorId, previewId) {
-//     const file = input.files[0];
-//     const contenedor = document.getElementById(contenedorId);
-
-//     if(!file || !contenedor) return; 
-
-//     const lector = new FileReader(); 
-//     lector.onload = function (e) {
-//         const previewDiv = document.createElement('div'); 
-//         previewDiv.className = 'preview-imagen';
-//         previewDiv.id = previewId;
-
-//         const img = document.createElement('img');
-//         img.src = e.target.result;
-
-//         const btn = document.createElement('button');
-//         btn.type = 'button';
-//         btn.className = 'btn-eliminar';
-//         btn.textContent = 'X';
-//         btn.onclick = function (event) {
-//             // Detener el comportamiento por defecto del input 
-//             event.preventDefault();
-//             eliminarImagen(input.id, contenedorId, previewId);
-//         };
-
-//         previewDiv.appendChild(img);
-//         previewDiv.appendChild(btn);
-
-//         // Limpiar y agregar
-//         contenedor.innerHTML = '';
-//         contenedor.appendChild(previewDiv);
-//     };
-
-//     lector.readAsDataURL(file);
-// }
-
-// function eliminarImagen(inputId, contenedorId, previewId) {
-//     const contenedor = document.getElementById(contenedorId);
-
-//     // Recrear manualmente todo el HTML original
-//     const nuevoLabel = document.createElement('label');
-//     nuevoLabel.setAttribute('for', inputId);
-//     nuevoLabel.className = 'upload-box';
-//     nuevoLabel.id = contenedorId;
-
-//     nuevoLabel.innerHTML = `
-//         <i class="fa-solid fa-plus"></i>
-//         <span>Haz click para seleccionar una imagen</span>
-//     `;
-
-//     const nuevoInput = document.createElement('input');
-//     nuevoInput.type = 'file';
-//     nuevoInput.name = inputId.replace('imagen-', 'imagen-'); // usa mismo nombre
-//     nuevoInput.id = inputId;
-//     nuevoInput.accept = '.jpg, .jpeg, .png, .webp';
-
-//     // Adjuntar evento para volver a mostrar preview
-//     nuevoInput.addEventListener('change', function () {
-//         mostrarPreview(this, contenedorId, previewId);
-//     });
-
-//     nuevoLabel.appendChild(nuevoInput);
-//     contenedor.innerHTML = ''; // limpiar el contenedor
-//     contenedor.appendChild(nuevoLabel);
-// }
-
-
-
-//Cargar datos de ubicación 
-
-// document.addEventListener('DOMContentLoaded', function () {
-//     const comunidadSelect = document.getElementById('comunidad-autonoma');
-//     const provinciaSelect = document.getElementById('provincia');
-//     const ciudadSelect = document.getElementById('ciudad');
-
-//     if (!comunidadSelect || !provinciaSelect || !ciudadSelect) return;
-
-//     const comunidadSelected = comunidadSelect.dataset.selected;
-//     const provinciaSelected = provinciaSelect.dataset.selected;
-//     const ciudadSelected = ciudadSelect.dataset.selected;
-
-//     // Lógica de carga de provincias
-//     if (comunidadSelected) {
-//         comunidadSelect.value = comunidadSelected;
-
-//         fetch(`/api/provinces/${comunidadSelected}`)
-//             .then(res => res.json())
-//             .then(provinces => {
-//                 provinciaSelect.innerHTML = '<option value="">Seleccione su Provincia</option>';
-//                 provinces.forEach(province => {
-//                     const option = document.createElement('option');
-//                     option.value = province.id;
-//                     option.textContent = province.nombre;
-//                     provinciaSelect.appendChild(option);
-//                 });
-
-//                 if (provinciaSelected) {
-//                     provinciaSelect.value = provinciaSelected;
-
-//                     fetch(`/api/cities/${provinciaSelected}`)
-//                         .then(res => res.json())
-//                         .then(cities => {
-//                             ciudadSelect.innerHTML = '<option value="">Seleccione su Ciudad</option>';
-//                             cities.forEach(city => {
-//                                 const option = document.createElement('option');
-//                                 option.value = city.id;
-//                                 option.textContent = city.nombre;
-//                                 ciudadSelect.appendChild(option);
-//                             });
-
-//                             if (ciudadSelected) {
-//                                 ciudadSelect.value = ciudadSelected;
-//                             }
-//                         });
-//                 }
-//             });
-//     }
-
-//     // Eventos para cambios manuales
-//     comunidadSelect.addEventListener('change', function () {
-//         const regionId = this.value;
-//         provinciaSelect.innerHTML = '<option value=""></option>';
-//         ciudadSelect.innerHTML = '<option value=""></option>';
-
-//         if (!regionId) return;
-
-//         fetch(`/api/provinces/${regionId}`)
-//             .then(res => res.json())
-//             .then(provinces => {
-//                 provinces.forEach(province => {
-//                     const option = document.createElement('option');
-//                     option.value = province.id;
-//                     option.textContent = province.nombre;
-//                     provinciaSelect.appendChild(option);
-//                 });
-//             });
-//     });
-
-//     provinciaSelect.addEventListener('change', function () {
-//         const provinceId = this.value;
-//         ciudadSelect.innerHTML = '<option value=""></option>';
-
-//         if (!provinceId) return;
-
-//         fetch(`/api/cities/${provinceId}`)
-//             .then(res => res.json())
-//             .then(cities => {
-//                 cities.forEach(city => {
-//                     const option = document.createElement('option');
-//                     option.value = city.id;
-//                     option.textContent = city.nombre;
-//                     ciudadSelect.appendChild(option);
-//                 });
-//             });
-//     });
-// });
-
-
-
 document.addEventListener('DOMContentLoaded', function() {
     
     const comunidadSelect = document.getElementById('comunidad-autonoma');
@@ -294,7 +134,6 @@ document.addEventListener('DOMContentLoaded', function() {
     comunidadSelect.addEventListener('change', function () {
         const regionId = this.value;
         //console.log(regionId);
-
         provinciaSelect.innerHTML = '<option value=""></option>';
         ciudadSelect.innerHTML = '<option value=""></option>';
 
