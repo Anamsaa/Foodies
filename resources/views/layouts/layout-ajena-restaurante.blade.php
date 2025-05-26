@@ -11,10 +11,13 @@
     <link rel="icon" type="image/png" href="{{ asset('images/logo-favicon.png') }}">
     {{-- Token CSFR --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    {{-- Habilitar Turbo en todas las vistas --}}
+    {{-- <script type="module" src="{{ asset('js/turbo.js') }}" defer></script> --}}
+
 </head>
 <body>
     <div class="componentes-principales profile-styles-users">
-        @include('partials.sidebar')
+        @include('partials.sidebar-restaurante')
         <main>
             {{-- Verificar si el usuario que ingresa es dueño de ese perfil --}}
             @php 
@@ -123,3 +126,5 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </body>
 </html>
+
+{{-- Esta vista es para que un usuario restaurante pueda ver el perfil de una persona--}}

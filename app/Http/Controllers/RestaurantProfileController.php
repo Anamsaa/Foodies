@@ -181,7 +181,7 @@ class RestaurantProfileController extends Controller
         $perfil = $restaurant->profile;
 
         if (!$perfil || !$perfil->restaurant) {
-            return redirect()->route('dashboard.user')
+            return redirect()->route('dashboard.restaurant')
                 ->withErrors('Tu perfil no está completo.');
         }
 
@@ -189,12 +189,48 @@ class RestaurantProfileController extends Controller
     }
 
     public function verPerfilAjeno(Profile $perfil){
+
+        $perfil->load('restaurant'); 
+         //dd($perfil, $perfil->restaurant); 
+         
         if (!$perfil || !$perfil->restaurant) {
-            return redirect()->route('dashboard.user')
+            return redirect()->route('dashboard.restaurant')
                 ->withErrors('Este establecimiento aún no ha completado su perfil.');
         }
 
         return $this->renderPerfil($perfil);
+    }
+
+    public function verPerfilAjenoDesdePersona(Profile $perfil){
+       $perfil->load('restaurant', 'profilePhoto', 'coverPhoto');
+
+        if (!$perfil || !$perfil->restaurant) {
+        return redirect()->route('dashboard.user')
+            ->withErrors('Este establecimiento aún no ha completado su perfil.');
+        }
+
+        $restaurant = $perfil->restaurant;
+        $tipoRestaurante = $restaurant->tipo;
+        $horarios = $restaurant->horarios;
+        $diasApertura = $restaurant->dias_apertura;
+        $ubicacion = $perfil->city?->nombre_formateado ?? 'Desconocido';
+        $direccion = $restaurant->address;
+        $numeroTelefonico = $restaurant->phone;
+        $website = Str::start($restaurant->website, 'https://');
+        $descripcion = $restaurant->description;
+
+
+        return view('personas.perfil-restaurante', compact(
+        'perfil',
+        'descripcion',
+        'tipoRestaurante',
+        'horarios',
+        'diasApertura',
+        'ubicacion',
+        'direccion',
+        'website',
+        'numeroTelefonico'
+        ));
     }
 
     private function renderPerfil(Profile $perfil){

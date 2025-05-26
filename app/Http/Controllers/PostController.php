@@ -83,4 +83,30 @@ class PostController extends Controller
 
         return redirect('/');
     }
+
+    public function like(Post $post) {
+        $profile = auth('user')->user()?->profile ?? auth('restaurant')->user()?->profile;
+
+        if (!$profile) {
+        return response()->json(['error' => 'Perfil no encontrado.'], 403);
+        }
+        // Evitar duplicados
+        if (!$post->likes()->where('profile_id', $profile->id)->exists()) {
+        $post->likes()->create(['profile_id' => $profile->id]);
+        }
+
+        return response()->json(['likes_count' => $post->likes()->count()]);
+    }
+
+    public function unlike(Post $post) {
+        $profile = auth('user')->user()?->profile ?? auth('restaurant')->user()?->profile;
+
+        if (!$profile) {
+        return response()->json(['error' => 'Perfil no encontrado.'], 403);
+        }
+
+        $post->likes()->where('profile_id', $profile->id)->delete();
+
+        return response()->json(['likes_count' => $post->likes()->count()]);
+    }
 }

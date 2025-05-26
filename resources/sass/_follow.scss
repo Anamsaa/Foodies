@@ -1,0 +1,194 @@
+@use "modulo";
+@use "mixins";
+@use "media-queries";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+.contenido-red-de-sabores,
+.lista-seguidos {
+    .header-red-sabores,
+    .header-seguidos {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        width: 100%;
+
+        @include media-queries.mobile {
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        h2 {
+            display: inline-block;
+            font-size: 30px;
+        }
+
+        .navegation-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: modulo.$input-background;
+            border-radius: 10px;
+            padding-left: 5px;
+            padding-right: 5px;
+
+            @include media-queries.mobile {
+                flex: 1;
+                gap: 1rem;
+                width: auto;
+                justify-content: none;
+                max-width: 100%;
+            }
+
+            input {
+                display: inline-block;
+                outline: none;
+                box-shadow: none;
+                border: none;
+            }
+
+            button {
+                background: none;
+                color: modulo.$color-primario;
+
+                i {
+                    &:hover {
+                        color: modulo.$iconos;
+                    }
+                }
+            }
+        }
+    }
+
+    h3 {
+        font-size: 1.3rem;
+        color: modulo.$color-primario;
+        margin-top: 1.5rem;
+
+        @include media-queries.mobile {
+            text-align: center;
+        }
+    }
+
+    p {
+        @include media-queries.mobile {
+            text-align: center;
+        }
+    }
+
+    .usuarios-sugeridos,
+    .usuarios-seguidos {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 0.5rem;
+
+        @include media-queries.mobile {
+            align-items: center;
+            justify-content: center;
+        }
+
+        .usuario-card {
+            width: 240px;
+            background-color: modulo.$input-background;
+            padding: 2rem 1rem;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            //align-items: center;
+
+            img {
+                width: 130px;
+                max-height: 130px;
+                border-radius: 50%;
+                margin-bottom: 1rem;
+                align-self: center;
+                background-color: rgb(172, 170, 170);
+                object-fit: fill;
+            }
+
+            p {
+                color: modulo.$color-primario;
+                font-size: 1.3rem;
+                align-self: center;
+            }
+
+            .buttons-card {
+                display: flex;
+                gap: 0.8rem;
+
+                a {
+                    text-decoration: none;
+                    @include mixins.botones-formularios;
+                    text-align: center;
+                    color: modulo.$color-primario;
+
+                    &:hover {
+                        background-color: modulo.$iconos;
+                        color: modulo.$color-secundario;
+                    }
+                }
+
+                a,
+                button {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 50%;
+                    font-size: 15px;
+                }
+            }
+        }
+    }
+}
+
+.lista-seguidos {
+    .header-seguidos {
+        margin-bottom: 1.5rem;
+    }
+
+    .usuarios-seguidos {
+        .button-seguidos {
+            display: flex;
+            gap: 0.8rem;
+
+            a {
+                text-decoration: none;
+                @include mixins.botones-formularios;
+                text-align: center;
+                color: modulo.$color-primario;
+
+                &:hover {
+                    background-color: modulo.$iconos;
+                    color: modulo.$color-secundario;
+                }
+            }
+
+            a,
+            button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 50%;
+                font-size: 15px;
+            }
+        }
+    }
+}
+
+// Botón de dejar de seguir
+.follow-button[data-following="true"] {
+    background-color: #f73939; // rojo claro para indicar acción de cancelar
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: #e60000; // rojo más intenso al pasar el mouse
+    }
+}

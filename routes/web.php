@@ -10,6 +10,8 @@ use App\Http\Controllers\RestaurantProfileController;
 use App\Http\Controllers\PeopleProfileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UbicacionController;
+use App\Http\Controllers\FollowController;
+use App\Models\Follow;
 use App\Models\Restaurant;
 use Illuminate\Support\Facades\Route;
 
@@ -19,8 +21,21 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', fn()=>view('landing'))->name('landing');
 # --------------------------------------------------------------------------------------------------------------------------------------------------------
 
-// ACTUAL EDICIÓN DE PLANTILLAS: 
-Route::view('perfil-prueba',('layouts.layout-perfil'))->name('layout-perfil.user');
+## Perfil de usuario (Redirigir al perfil de otros usuarios siendo persona)
+Route::get('user/perfil/{profile}', [PeopleProfileController::class, 'verPerfilAjeno'])->name('perfil.user.ajeno');
+
+## Perfil para que usuarios tipo persona vean perfiles de restaurantes 
+Route::get('user/restaurant/perfil/{perfil}', [RestaurantProfileController::class, 'verPerfilAjenoDesdePersona'])->name('restaurant.perfil.user'); // personas.perfil-restaurante.blade.php
+
+## Perfil de restaurante (Redirigir al perfil de otros usuarios siendo restaurante) 
+Route::get('restaurant/perfil/{perfil}', [RestaurantProfileController::class, 'verPerfilAjeno'])->name('perfil.ajeno.restaurante');
+
+## Perfil para que usuarios de tipo restaurante vean perfiles de personas
+Route::get('restaurant/user/perfil/{profile}', [PeopleProfileController::class, 'verPerfilAjenoDesdeRestaurante'])->name('user.perfil.restaurante'); //restaurantes.perfil-persona.blade.php
+
+// ** NOTA **
+// Al contar con diferentes tipos de interfaz se optó por manejar rutas independientes a perfiles ajenos con roles diferentes, esto debido a que la barra de navegación lateral de ambos es diferente. 
+
 
 // RUTAS DE USUARIO PERSONA
 ### Se realizan con un prefijo diferenciador para evitar incidentes con las rutas
@@ -47,34 +62,61 @@ Route::prefix('user')->group(function () {
 
         ## Redirigir al perfil del usuario propietario
         Route::get('perfil', [PeopleProfileController::class, 'verMiPerfil'])->name('perfil.user');
-        ## Redirigir al perfil de otros usuarios
-        Route::get('perfil/{profile}', [PeopleProfileController::class, 'verPerfilAjeno'])->name('perfil.user.ajeno');
-
+     
         // Subir y actualizar fotos de perfil y portada 
         Route::post('profile/update-photos', [PeopleProfileController::class, 'actualizarFotos'])->name('profile.photos.update');
 
-        //------------------------ PUBLICACIONES---------------------------------------//
+
+        // ------------------------SEGUIR A OTROS USUARIOS---------------------------- //
+        Route::post('/follow/{profile}', [FollowController::class, 'follow'])->name('follow');
+        Route::delete('/unfollow/{profile}', [FollowController::class, 'unfollow'])->name('unfollow');
+
+        // ------------------------ PUBLICACIONES--------------------------------------- //
         // POSTS
         ## Redactar Post Regular 
         Route::get('redactar-post', fn() => view('compartidas.form-posts'))->name('redactar.post');
+
         ## Registrar Post Regular 
         Route::post('redactar-post', [PostController::class, 'store'])->name('post.store');
+
         ## Modificar Post
         Route::get('post/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
         Route::put('post/{post}', [PostController::class, 'update'])->name('post.update');  
+
         ## Eliminar Post
         Route::delete('post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
 
         // RESEÑAS 
-        ## Redactar reseñas
+        ## Redactar Reseñas
         Route::get('crear-reseña', fn () => view('personas.formulario-reseña'))->name('redactar.review');
+        ## Registrar Reseñas
+        Route::post('redactar-reseña', [PostController::class, 'store'])->name('review.store');
+        ## Modificar Reseñas
+        Route::get('reseña/{reseña}/edit', [PostController::class, 'edit'])->name('reviw.edit');
+        Route::put('reseña/{reseña}', [PostController::class, 'update'])->name('review.update');  
+        ## Eliminar Reseñas
+        Route::delete('post/{reseña}', [PostController::class, 'destroy'])->name('review.destroy');
 
         // EVENTOS CULINARIOS
         ## Redactar Eventos Culinarios
         Route::get('crear-evento', fn () => view('personas.formulario-evento'))->name('redactar.evento');
+        ## Registrar Eventos Culinarios
+        Route::post('redactar-evento', [PostController::class, 'store'])->name('evento.store');
+        ## Modificar Eventos Culinarios
+        Route::get('evento/{evento}/edit', [PostController::class, 'edit'])->name('evento.edit');
+        Route::put('evento/{evento}', [PostController::class, 'update'])->name('evento.update');  
+        ## Eliminar Eventos Culinarios
+        Route::delete('evento/{evento}', [PostController::class, 'destroy'])->name('evento.destroy');
 
-        Route::get('red-de-sabores', fn() => view('personas.red'))->name('red.user');
-        Route::get('seguidos', fn() => view('personas.seguidos'))->name('seguidos.user');
+        // Likes 
+        Route::post('/post/{post}/like', [PostController::class, 'like'])->name('post.like');
+        Route::delete('/post/{post}/like', [PostController::class, 'unlike'])->name('post.unlike');
+
+        ## Encontrar nuevos usuarios para seguir
+        Route::get('red-de-sabores', [FollowController::class, 'sugerenciasParaSeguir'])->name('red.user');
+        ## Lista de usuarios seguidos
+        Route::get('seguidos', [FollowController::class, 'verSeguidos'])->name('seguidos.user');
+
         Route::get('eventos-culinarios', fn() => view('personas.eventos'))->name('eventos.user');
         Route::get('ajustes', fn() => view('personas.ajustes'))->name('ajustes.user');
         
@@ -115,8 +157,6 @@ Route::prefix('restaurant')->group(function () {
 
         ## Redirigir al perfil del usuario propietario
         Route::get('perfil', [RestaurantProfileController::class, 'verMiPerfil'])->name('perfil.restaurante');
-        ## Redirigir al perfil de otros usuarios
-        Route::get('perfil/{profile}', [RestaurantProfileController::class, 'verPerfilAjeno'])->name('perfil.ajeno');
 
         ## Subir y actualizar fotos de perfil y portada
         Route::post('profile/update-photos', [RestaurantProfileController::class, 'actualizarFotos'])->name('profile.photos.update');

@@ -21,8 +21,8 @@
 
             $esRestaurante = Auth::guard('restaurant')->check();
 
-            $rutaEdicion = $esRestaurante ? route('post.edit.restuaurant', $post) : route('post.edit', $post);
-            $rutaEliminacion = $esRestaurante ? route('post.destroy.restuaurant', $post) : route('post.destroy', $post);
+            $rutaEdicion = $esRestaurante ? route('post.edit.restaurant', $post) : route('post.edit', $post);
+            $rutaEliminacion = $esRestaurante ? route('post.destroy.restaurant', $post) : route('post.destroy', $post);
         @endphp
 
         @if ($propietario)
@@ -54,8 +54,14 @@
     {{-- Likes y comentarios --}}
     <div class="post-footer">
         <div class="post-like icons-footer">
-            <i class="fa-solid fa-heart"></i>
-            <span>{{ $post->likes->count() }}</span>
+            <button class="btn-like" 
+            data-post-id="{{ $post->id }}" 
+            data-liked="{{ $post->likes->contains('profile_id', auth()->user()?->profile->id ?? null) ? 'true' : 'false' }}">
+            <i class="fa-solid fa-heart {{ $post->likes->contains('profile_id', auth()->user()?->profile->id ?? null) ? 'liked' : '' }}"></i>
+            <span class="like-count">{{ $post->likes->count() }}</span>
+            </button>
+            <!-- <i class="fa-solid fa-heart"></i>
+            <span>{{ $post->likes->count() }}</span> -->
         </div>
         <div class="post-comment icons-footer">
             <i class="fa-solid fa-comment"></i>

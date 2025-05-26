@@ -49,15 +49,14 @@
                 display: flex;
                 @include mixins.base-contenedor;
                 justify-content: space-evenly;
-                padding: 1rem;
-               
+                padding: 1.5rem;
 
                 img {
                     border-radius: 50%;
                     object-fit: cover;
                     margin-right: 1rem;
-                    max-width: 105px;
-                    max-height: 100px;
+                    max-width: 80px;
+                    max-height: 80px;
                     display: block;
 
                     @include media-queries.mobile {
@@ -124,12 +123,108 @@
                 @include mixins.base-contenedor;
                 margin-right: 1rem;
                 width: 100%;
+
+                h2 {
+                    margin-bottom: 0.8rem;
+                }
+
+                .contenedor-novedades {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+
+                    .novedad-item {
+                        display: flex;
+                        justify-content: baseline;
+                        align-items: center;
+                        gap: 0.8rem;
+                        background-color: modulo.$input-background;
+                        border-radius: 15px;
+                        padding: 0.5rem;
+                        margin-bottom: 1rem;
+
+                         img {
+                            width: 65px;
+                            height: 65px;
+                            border-radius: 50%;
+                            aspect-ratio: 1 / 1;
+                            object-fit: cover;
+                        }
+
+                        .novedad-info {
+                            color: modulo.$color-primario;
+
+                            p {
+                                color: modulo.$color-texto;
+                            }
+                        }
+                    }
+                }
             }
 
             .encontrar-amigos {
-                // mirar que falla de contenidos
                 @include mixins.base-contenedor;
-               
+
+                h2 {
+                    margin-bottom: 0.8rem;
+                }
+
+                .seguir-usuarios {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+
+                    .sugerencia-item {
+                        display: flex;
+                        align-items: center;
+                        //justify-content: space-around;
+                        gap: 0.8rem;
+                        background-color: modulo.$input-background;
+                        border-radius: 15px;
+                        padding: 0.5rem;
+                        margin-bottom: 1rem;
+
+                        img {
+                            width: 65px;
+                            height: 65px;
+                            border-radius: 50%;
+                            aspect-ratio: 1 / 1;
+                            object-fit: cover;
+                        }
+
+                        .info {
+                            width: 60%;
+                            .nombre {
+                                color: modulo.$color-primario;
+                                font-weight: bold;
+                                font-size: 17px;
+                                text-decoration: none;
+                                margin-bottom: 1rem;
+                            }
+
+                            .tipo-foodie {
+                                font-size: 15px;
+                            }
+                        }
+
+                        .follow-button {
+                            padding: 1rem;
+                            background-color: modulo.$color-botones;
+                            color: modulo.$color-primario;
+                            font-weight: 800;
+                            width: 30%;
+                            height: auto;
+                            border: none;
+                            border-radius: 10px;
+
+                            &:hover {
+                                color: modulo.$color-secundario;
+                                background-color: modulo.$color-primario;
+                            }
+                        }
+                    }
+                }
+                // mirar que falla de contenidos
 
                 .ver-mas {
                     text-decoration-line: underline;

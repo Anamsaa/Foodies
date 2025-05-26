@@ -8,6 +8,7 @@ use App\Models\Person;
 use App\Models\Region;
 use App\Models\Photo;
 use App\Models\Post;
+use App\Models\Follow;
 use Exception;
 use Illuminate\Support\Facades\DB;
 ## Librería que me permite trabajar con fechas
@@ -127,6 +128,62 @@ class PeopleProfileController extends Controller
         return $this->renderPerfil($profile);
     }
 
+    public function verPerfilAjenoDesdeRestaurante(Profile $profile){
+
+        $profile->load('profilePhoto', 'coverPhoto', 'person');
+
+        if (!$profile || !$profile->person) {
+            return redirect()->route('dashboard.restaurant')
+            ->withErrors('Este usuario aún no ha completado su perfil.');
+        }
+
+        $person = $profile->person;
+        $description = $person->description;
+        $birthDate = $person->birth_date;
+        $edad = Carbon::parse($birthDate)->age;
+        $numeroReviews = $profile->posts()->where('post_type', 'review')->count();
+
+        $posts = $profile->posts()
+            ->latest()
+            ->with([
+            'photo',
+            'likes',
+            'comments',
+            'profile.person',
+            'profile.restaurant',
+            'profile.profilePhoto'
+        ])
+        ->get();
+
+        // Categorías de Foodies
+        if ($numeroReviews <= 10) {
+            $tipoFoodie = 'Foodie nuevo';
+        } 
+        elseif ($numeroReviews <= 20) {
+            $tipoFoodie = 'Foodie entusiasta';
+        } 
+        elseif ($numeroReviews <= 49) {
+            $tipoFoodie = 'King foodie';
+        } 
+        else {
+            $tipoFoodie = 'Foodie Master';
+        }
+
+        $ubicacion = $profile->city?->nombre_formateado ?? 'Desconocido';
+
+
+        return view('restaurantes.perfil-persona', compact(
+            'profile',
+            'description',
+            'edad',
+            'tipoFoodie',
+            'numeroReviews',
+            'ubicacion',
+            'posts'
+        ));
+    }
+
+    // Paso de datos al perfil de usuario
     private function renderPerfil(Profile $perfil){
 
         $perfil->load('profilePhoto', 'coverPhoto', 'person');
@@ -173,9 +230,70 @@ class PeopleProfileController extends Controller
             'posts'
         ));
     }
+
+    // Paso de datos al dashboard de usuarios
     public function mostrarDashboard() {
         $perfil = auth('user')->user()->profile;
         $perfil->load('profilePhoto'); 
-        return view('personas.principal', compact('perfil'));
+        $posts = Post::with([
+            'photo',
+            'likes',
+            'comments',
+            'profile.profilePhoto',
+            'profile.person',
+            'profile.restaurant'
+            ])
+            ->where('visibility', 'Public')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $misNovedades = Follow::with(['follower.person', 'follower.profilePhoto'])
+            ->where('followed_id', $perfil->id)
+            ->latest()
+            ->take(3)
+            ->get()
+            ->map(function ($follow) {
+            return [
+            'nombre' => $follow->follower->person->first_name . ' ' . $follow->follower->person->last_name,
+            'foto' => optional($follow->follower->profilePhoto)->url ?? asset('images/default_image_profile.png'),
+            'tiempo' => Carbon::parse($follow->created_at)->diffForHumans(),
+            ];
+            });
+
+        $sugerencias = Profile::with(['person', 'profilePhoto'])
+            ->where('id', '!=', $perfil->id)
+            ->where('province_id', $perfil->province_id)
+            ->where('user_type', 'Person')
+            ->whereDoesntHave('followers', function ($q) use ($perfil) {
+                $q->where('follower_id', $perfil->id);
+            })
+            ->take(3)
+            ->get();
+
+        $numeroReviews = $perfil->posts()->where('post_type', 'review')->count();
+
+        if ($numeroReviews <= 10) {
+            $tipoFoodie = 'Foodie nuevo';
+        } 
+        elseif ($numeroReviews <= 20) {
+            $tipoFoodie = 'Foodie entusiasta';
+        } 
+        elseif ($numeroReviews <= 49) {
+            $tipoFoodie = 'King foodie';
+        } 
+        else {
+            $tipoFoodie = 'Foodie Master';
+        }
+
+        return view('personas.principal', compact(
+            'perfil', 
+            'posts', 
+            'misNovedades', 
+            'sugerencias', 
+            'numeroReviews',
+            'tipoFoodie',
+        ));
     }
+
+    
 }

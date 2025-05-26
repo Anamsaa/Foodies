@@ -18,24 +18,67 @@
             </div>
         </div>
         <div id="post-usuarios">
-            {{-- @forelse($posts as $post)
+            @forelse($posts as $post)
                 @include('components.posts.post', ['post' => $post])
                 @empty
                 <p class="no-post-message">No hay publicaciones todavía.</p>
-            @endforelse --}}
+            @endforelse
         </div>
     </div>
     <div class="column-2">
         <div class="novedades-container">
             <h2>Últimas Novedades</h2>
-            <div id="contenedor-novedades">
-                {{-- Aquí van notificiaciones de personas que acaban de seguir al usuario --}}
+            <div id="contenedor-novedades" class="contenedor-novedades">
+                @forelse($misNovedades as $novedad)
+                    <div class="novedad-item">
+                        <img src="{{ $novedad['foto'] }}" alt="Avatar">
+                        <div class="novedad-info">
+                            <strong>{{ $novedad['nombre'] }}</strong> ha empezado a seguirte
+                            <p>{{ $novedad['tiempo'] }}</p>
+                        </div>
+                    </div>
+                @empty
+                    <p class="mensaje-vacio">Aún no tienes novedades.</p>
+                @endforelse
             </div>
         </div>
         <div class="encontrar-amigos">
             <h2>Sigue a otros</h2>
-            <div id="seguir-usuarios">
+            <div id="seguir-usuarios" class="seguir-usuarios">
                 {{-- Aquí van recomendaciones de personas a las cuales seguir basados en aspectos de ubicación y seguidos--}}
+                @forelse($sugerencias as $sugerencia)
+                    @php
+                        $isRestaurant = $sugerencia->user_type === 'Restaurant';
+
+                        $perfilRoute = match (true) {
+                        $isRestaurant && auth('user')->check() => route('restaurant.perfil.user', $sugerencia),
+                        !$isRestaurant && auth('user')->check() => route('perfil.user.ajeno', $sugerencia),
+                        $isRestaurant && auth('restaurant')->check() => route('perfil.ajeno.restaurante', $sugerencia),
+                        !$isRestaurant && auth('restaurant')->check() => route('user.perfil.restaurante', $sugerencia),
+                        default => route('landing'),
+                        };
+
+                        $yaSigo = $perfil->followings()->where('followed_id', $sugerencia->id)->exists();
+                    @endphp
+
+                    <div class="sugerencia-item">
+                        <a href="{{ $perfilRoute }}">
+                            <img src="{{ optional($sugerencia->profilePhoto)->url ?? asset('images/default_image_profile.png') }}" alt="Avatar">
+                        </a>
+
+                        <div class="info">
+                            <a href="{{ $perfilRoute }}" class="nombre">
+                                <p>{{ $isRestaurant ? $sugerencia->restaurant->name : $sugerencia->person->first_name . ' ' . $sugerencia->person->last_name }}</p>
+                            </a>
+                            <p class="tipo-foodie">{{ $tipoFoodie }}</p>
+                        </div>
+
+                        <button class="follow-button" data-following="{{ $yaSigo ? 'true' : 'false' }}" data-profile-id="{{ $sugerencia->id }}"> {{ $yaSigo ? 'Dejar de seguir' : 'Seguir' }}</button>
+                    </div>
+                @empty
+                    <p class="mensaje-vacio">No hay sugerencias por ahora.</p>
+                @endforelse
+
             </div>
             <a class="ver-mas" href="{{ route('red.user')}}">Ver más</a>
         </div>

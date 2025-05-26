@@ -9,14 +9,13 @@
     <meta name="description" content="@yield('description', 'Social Network for foodies')">
     {{-- Favicon --}}
     <link rel="icon" type="image/png" href="{{ asset('images/logo-favicon.png') }}">
-    {{-- Token CSRF --}}
+    {{-- Token CSFR --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
     <div class="componentes-principales profile-styles-users">
-        @include('partials.sidebar-restaurante')
-
-        @php
+        @include('partials.sidebar')
+         @php
             $authRestaurant = auth('restaurant')->check() ? auth('restaurant')->user() : null;
             $esPropietario = $authRestaurant && $authRestaurant->profile && $authRestaurant->profile->id === $perfil->id;
             $coverPhotoUrl = $authRestaurant?->profile?->coverPhoto?->url;
@@ -133,9 +132,11 @@
             <form id="logout-form" action="{{ route('logout.restaurant') }}" method="POST" style="display:none;">
                 @csrf
             </form>
-        @endif
+        @endif     
     </div>
-
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </body>
 </html>
+
+{{-- **NOTA** --}}
+{{-- Esta vista es para que un usuario persona pueda ver el perfil de un restaurante--}}
