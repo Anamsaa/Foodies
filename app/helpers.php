@@ -2,6 +2,8 @@
 
 use App\Models\Profile;
 
+ ## Devolver las vistas adecuadas del perfil según el usuario y desde la interfaz que lo realice 
+ ## Evita la repetición de este fragmento de cógigo en todas las redirecciones a perfiles
 if (!function_exists('get_profile_route')) {
     function get_profile_route(?Profile $profile): string
     {

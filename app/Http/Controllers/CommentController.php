@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
+    public function showCommentsForUser(Post $post) {
+        return view('personas.comentarios', ['post' => $post]);
+    }
+
+    public function showCommentsForRestaurant(Post $post) {
+        return view('restaurantes.comentarios', ['post' => $post]);
+    }
+
     public function createComment(Request $request, Post $post){
         $request->validate([
             'content' => 'required|string|max:1000'
@@ -25,7 +33,11 @@ class CommentController extends Controller
             'content' => $request->input('content')
         ]); 
 
-        return redirect()->back();
+        if (auth('restaurant')->check()) {
+            return redirect()->route('comments.restaurant', $post);
+        }
+
+        return redirect()->route('comments.user', $post);
     }
 
     public function deleteComment(Comment $comment) {
@@ -39,6 +51,4 @@ class CommentController extends Controller
 
          return redirect()->back();
     }
-
-    
 }

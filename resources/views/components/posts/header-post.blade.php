@@ -5,9 +5,9 @@
 <div class="post-header">
     <div class="autor-info">
 
-        @php
+        {{-- @php
         ## Devolver las vistas adecuadas del perfil según el usuario y desde la interfaz que lo realice 
-            $isRestaurant = $post->profile->user_type === 'Restaurant';
+           /* $isRestaurant = $post->profile->user_type === 'Restaurant';
 
             $perfilRoute = match (true) {
                 $isRestaurant && auth('user')->check() => route('restaurant.perfil.user', $post->profile),
@@ -15,14 +15,14 @@
                 $isRestaurant && auth('restaurant')->check() => route('perfil.ajeno.restaurante', $$post->profile),
                 !$isRestaurant && auth('restaurant')->check() => route('user.perfil.restaurante', $$post->profile),
                 default => route('landing'),
-            };
-        @endphp
+            }; */
+        @endphp --}}
 
-        <a href="{{ $perfilRoute }}">
+        <a href="{{ get_profile_route($post->profile) }}">
             <img class="post-avatar" src="{{ optional($post->profile->profilePhoto)->url ?? asset('images/default_image_profile.png') }}" alt="Avatar usuario">
         </a>
         <div class="autor-meta">
-            <a href="{{ $perfilRoute }}">
+            <a href="{{ get_profile_route($post->profile)}}">
                 <p class="user-name">
                     {{ $post->profile->restaurant->name 
                     ?? ($post->profile->person->first_name . ' ' . $post->profile->person->last_name) 

@@ -25,7 +25,7 @@
     {{-- Footer del post--}}
     {{-- Likes y comentarios --}}
     @php
-        $rutaComentarios= $esRestaurante ? route('comments.restaurat', $post) : route('comments.user', $post);
+        $rutaComentarios= $esRestaurante ? route('comments.restaurant', $post) : route('comments.user', $post);
     @endphp
 
     {{-- Pasar datos al componente--}}

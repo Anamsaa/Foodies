@@ -11,6 +11,7 @@ use App\Http\Controllers\PeopleProfileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UbicacionController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
 // DEFINICIÓN DE RUTAS DE LA RED SOCIAL
@@ -43,14 +44,14 @@ Route::delete('/post/{post}/like', [PostController::class, 'unlike'])->name('pos
 
 // Comentarios
 ## Vista comentarios Usuarios 'Persona'
-Route::get('/user/comments', fn() => view('personas.comentarios'))->name('comments.user');
+Route::get('/user/comments/{post}', [CommentController::class, 'showCommentsForUser'])->name('comments.user');
 
 ## Vista comentarios Usuarios 'Restaurante'
-Route::get('/restaurant/comments', fn() => view('restaurantes.comentarios'))->name('comments.restaurant');
+Route::get('/restaurant/comments/{post}', [CommentController::class, 'showCommentsForRestaurant'])->name('comments.restaurant');
 
 ## Acciones de comentarios
-Route::post('/post/{post}/comment', [PostController::class, 'createComment'])->name('post.comment');
-Route::delete('/comment/{comment}', [PostController::class, 'deleteComment'])->name('comment.delete');
+Route::post('/post/{post}/comment', [CommentController::class, 'createComment'])->name('post.comment');
+Route::delete('/comment/{comment}', [CommentController::class, 'deleteComment'])->name('comment.delete');
 
 
 // ------------------------SEGUIR A OTROS USUARIOS---------------------------- //
