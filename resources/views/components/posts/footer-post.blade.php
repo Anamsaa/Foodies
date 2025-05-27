@@ -16,10 +16,12 @@
     {{-- Redirección a comentarios --}}
     <div class="post-comment icons-footer">
         @isset($rutaComentarios)
-            <a href="{{ $rutaComentarios }}">
+            <a href="{{ $rutaComentarios }}" class="container-comments-box">
                 <i class="fa-solid fa-comment"></i>
                 <span>{{ $post->comments->count() }}</span>
             </a>
+
+            {{-- Si no existe la ruta a comentarios, se muestra de todas maneras el conteo y el icono --}}
         @else
             <i class="fa-solid fa-comment"></i>
             <span>{{ $post->comments->count() }}</span>

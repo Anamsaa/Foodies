@@ -69,8 +69,6 @@
             </div>
             <div class="button-formulario parte-2">
                 <button class="button-restaurantes-formulario" name="_action" value="back" type="submit">Volver atrás</button>
-                {{-- Pruebas de flujo de actividad --}}
-                {{-- <a class="button-restaurantes-formulario" href="{{ route('crear-perfil.restaurante') }}" type="submit">Volver atrás</a> --}}
                 <button class="button-restaurantes-formulario" name="_action" value="next" type="submit">Siguiente</button>
             </div>
         </form>

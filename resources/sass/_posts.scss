@@ -188,20 +188,54 @@
                 display: flex;
                 flex-direction: column;
 
-                .user-name {
-                    font-weight: bold;
-                    font-size: 22px;
-                    color: modulo.$color-texto;
+                a {
+                    text-decoration: none;
+
+                    .user-name {
+                        font-weight: bold;
+                        font-size: 22px;
+                        color: modulo.$color-texto;
+
+                        &:hover {
+                            color: modulo.$iconos;
+                        }
+                    }
                 }
 
                 .user-post-time {
                     color: modulo.$color-texto;
                 }
             }
+        }
+        .post-options {
+            @include mixins.desplegable-container;
+            position: relative;
 
-            .post-options {
-                    //color
+            i {
+                color: modulo.$iconos;
+                font-size: 1.6rem;
+            }
+
+            .elipsis-menu {
+                z-index: 100;
+                display: none;
+                position: absolute;
+                top: 20px;
+
+                a,
+                button {
                     width: 100%;
+                    text-decoration: none;
+                    border: none;
+                    border-top: 1px solid modulo.$color-secundario;
+                    cursor: pointer;
+                    text-align: center;
+                }
+
+                &.show {
+                    display: flex;
+                    flex-direction: column;
+                }
             }
         }
     }
@@ -222,8 +256,6 @@
             border-radius: 10px;
             aspect-ratio: 4 / 3;
             object-fit: contain;
-
-
         }
     }
 
@@ -235,6 +267,9 @@
             display: flex;
             gap: 0.3rem;
 
+            a {
+                text-decoration: none;
+            }
 
             button {
                 background: none;
@@ -246,11 +281,24 @@
 
             i {
                 color: modulo.$iconos;
-                font-size: 25px;
+                font-size: 28px;
+
+                transition: color 0.5s ease-in;
+
+                &:hover {
+                    color: modulo.$color-primario;
+                }
             }
 
             .fa-heart.liked {
                 color: modulo.$color-primario;
+                cursor: pointer;
+
+                transition: color 0.5s ease-in;
+
+                &:hover {
+                    color: modulo.$color-primario;
+                }
             }
 
             span {
@@ -258,11 +306,18 @@
                 color: modulo.$color-secundario;
                 font-weight: 700;
                 border-radius: 50%;
-                padding: 0.2rem 0.5rem;
+                display: flex;
+                align-items: center;
+                height: 30px;
+                padding-right: 0.7rem;
+                padding-left: 0.7rem;
             }
-            
-        }
 
-       
+            .container-comments-box {
+                display: flex;
+                align-items: center;
+                gap: 0.3rem;
+            }
+        }
     }
 }

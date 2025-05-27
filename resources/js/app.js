@@ -5,8 +5,6 @@
 // window.Turbo = Turbo;
 // Turbo.start();
 
-
-
 import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
@@ -15,6 +13,7 @@ Alpine.start();
 import './perfil';
 import './principal';
 import './post';
+import './toggleMenuforPost';
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('entra a la función');

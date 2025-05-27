@@ -4,20 +4,6 @@
 
 <div class="post-header">
     <div class="autor-info">
-
-        {{-- @php
-        ## Devolver las vistas adecuadas del perfil según el usuario y desde la interfaz que lo realice 
-           /* $isRestaurant = $post->profile->user_type === 'Restaurant';
-
-            $perfilRoute = match (true) {
-                $isRestaurant && auth('user')->check() => route('restaurant.perfil.user', $post->profile),
-                !$isRestaurant && auth('user')->check() => route('perfil.user.ajeno', $post->profile),
-                $isRestaurant && auth('restaurant')->check() => route('perfil.ajeno.restaurante', $$post->profile),
-                !$isRestaurant && auth('restaurant')->check() => route('user.perfil.restaurante', $$post->profile),
-                default => route('landing'),
-            }; */
-        @endphp --}}
-
         <a href="{{ get_profile_route($post->profile) }}">
             <img class="post-avatar" src="{{ optional($post->profile->profilePhoto)->url ?? asset('images/default_image_profile.png') }}" alt="Avatar usuario">
         </a>
@@ -43,10 +29,10 @@
     {{-- Opciones de edición y eliminación de posts solo para usuarios propietarios --}}
     @if ($propietario)
         <div class="post-options">
-            <div class="icon-elipsis" onclick="toggleMenu(this)">
+            <div class="icon-elipsis" data-toggle-menu>
                 <i class="fa-solid fa-ellipsis"></i>
             </div>  
-            <div class="elipsis-mmenu">
+            <div class="elipsis-menu" data-menu>
                 {{-- Comprobar que ambas variables existen--}}
                 @isset($rutaEdicion)
                 {{-- Parámetros $slot para cambiar la ruta según el tipo de usuario y de publicación --}}

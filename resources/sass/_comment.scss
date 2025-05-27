@@ -12,6 +12,11 @@
 
     .comment-box {
         background-color: modulo.$input-background;
+        display: flex;
+        flex-direction: column;
+        border-radius: 5px;
+        //align-items: center;
+
         form {
             display: flex;
             flex-direction: column;
@@ -19,11 +24,23 @@
             textarea {
                 background-color: modulo.$input-background;
                 border: none;
+                outline: none;
+                padding: 1.5rem;
+                resize: none;
+                width: auto;
+                height: auto;
+
+                &::placeholder {
+                    font-style: italic;
+                    font-size: 16px;
+                    opacity: 1;
+                }
             }
 
             button {
                 border: none;
-                border-radius: 15px;
+                border-radius: 30px;
+                margin: 1rem;
                 display: inline-block;
                 padding: 0.8rem;
                 background-color: modulo.$iconos;
@@ -40,7 +57,11 @@
     }
 
     hr {
-        padding: 1.5rem;
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+        width: 100%;
+        color: modulo.$iconos;
+        border-bottom: 2px solid;
     }
 
     .comment-list {
@@ -48,33 +69,55 @@
         flex-direction: column;
 
         h3 {
-            font-size: 18px;
+            font-size: 25px;
             color: modulo.$color-primario;
+            padding-bottom: 1.8rem;
         }
 
         .comments {
+            padding: 0.5rem;
+
             .comment-line {
                 display: flex;
-                flex-direction: column;
+                background-color: modulo.$input-background;
+                margin-bottom: 1rem;
+                padding: 0.7rem;
+                border-radius: 8px;
+                width: 100%;
 
-                .header-comment {
+                img {
+                    width: 75px;
+                    height: 75px;
+                    object-fit: cover;
+                    border-radius: 50%;
+                    justify-self: baseline;
+                    margin-right: 1rem;
+                }
+
+                .content-properties {
                     display: flex;
-                    justify-content: space-around;
+                    flex-direction: column;
+                    justify-content: center;
+                    justify-self: center;
+                    margin-right: 1rem;
 
-                    img {
-                        width: 75px;
-                        height: 75px;
-                        object-fit: cover;
-                        border-radius: 50%;
-                    }
-
-                    .content-properties {
+                    .data {
                         display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
 
-                        .name-account {
-                            font-weight: bold;
-                            font-size: 1.2rem;
-                            color: modulo.$color-primario;
+                        a {
+                            text-decoration: none;
+
+                            .name-account {
+                                font-weight: bold;
+                                font-size: 1.2rem;
+                                color: modulo.$color-primario;
+
+                                &:hover {
+                                    color: modulo.$iconos;
+                                }
+                            }
                         }
 
                         .time {
@@ -83,10 +126,54 @@
                             color: modulo.$color-texto;
                         }
                     }
+
+                    .content {
+                        p {
+                            color: modulo.$color-texto;
+                            font-weight: 600;
+                        }
+                    }
                 }
 
-                .content {
-                    color: modulo.$color-texto;
+                .post-options {
+                    margin-left: auto;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: end;
+                    position: relative;
+
+                    i {
+                        color: modulo.$iconos;
+                        font-size: 1.6rem;
+                    }
+
+                    .elipsis-menu {
+                        z-index: 100;
+                        display: none;
+                        position: absolute;
+                        top: 25px;
+
+                        button,
+                        a {
+                            background-color: modulo.$color-texto;
+                            color: modulo.$color-secundario;
+                            border-radius: 0px;
+                            padding: 0.6rem;
+                            font-size: 15px;
+                            font-weight: 600;
+
+                            transition: background-color 0.2s ease-in-out;
+
+                            &:hover {
+                                background-color: modulo.$iconos;
+                            }
+                        }
+
+                        &.show {
+                            display: flex;
+                            flex-direction: column;
+                        }
+                    }
                 }
             }
         }

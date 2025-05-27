@@ -80,3 +80,33 @@
         background-color: modulo.$color-indice;
     }
 }
+
+@mixin desplegable-container {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+
+    i {
+        color: modulo.$iconos;
+        font-size: 1.2rem;
+    }
+
+    .elipsis-menu {
+        button,
+        a {
+            background-color: modulo.$color-texto;
+            color: modulo.$color-secundario;
+            border-radius: 0px;
+            padding: 0.6rem;
+            font-size: 15px;
+            font-weight: 600;
+
+            transition: background-color 0.2s ease-in-out;
+
+            &:hover {
+                background-color: modulo.$iconos;
+            }
+        }
+    }
+}
