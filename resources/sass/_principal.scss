@@ -55,8 +55,8 @@
                     border-radius: 50%;
                     object-fit: cover;
                     margin-right: 1rem;
-                    max-width: 80px;
-                    max-height: 80px;
+                    width: 80px;
+                    height: 80px;
                     display: block;
 
                     @include media-queries.mobile {
@@ -216,6 +216,7 @@
                             height: auto;
                             border: none;
                             border-radius: 10px;
+                            cursor: pointer;
 
                             &:hover {
                                 color: modulo.$color-secundario;
@@ -224,7 +225,6 @@
                         }
                     }
                 }
-                // mirar que falla de contenidos
 
                 .ver-mas {
                     text-decoration-line: underline;

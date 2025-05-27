@@ -77,7 +77,7 @@ class PostController extends Controller
     public function redireccionarDashboard() {
         if(Auth::guard('user')->check()) {
             return redirect()->route('dashboard.user');
-        } elseif (Auth::guard('restuaurant')->check()) {
+        } elseif (Auth::guard('restaurant')->check()) {
             return redirect()->route('dashboard.restaurant');
         }
 

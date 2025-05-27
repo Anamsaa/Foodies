@@ -11,8 +11,6 @@ use App\Http\Controllers\PeopleProfileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UbicacionController;
 use App\Http\Controllers\FollowController;
-use App\Models\Follow;
-use App\Models\Restaurant;
 use Illuminate\Support\Facades\Route;
 
 // DEFINICIÓN DE RUTAS DE LA RED SOCIAL
@@ -35,6 +33,29 @@ Route::get('restaurant/user/perfil/{profile}', [PeopleProfileController::class, 
 
 // ** NOTA **
 // Al contar con diferentes tipos de interfaz se optó por manejar rutas independientes a perfiles ajenos con roles diferentes, esto debido a que la barra de navegación lateral de ambos es diferente. 
+
+# --------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// ------------------------INTERACCIONES ENTRE USUARIOS---------------------------- //
+// Likes 
+Route::post('/post/{post}/like', [PostController::class, 'like'])->name('post.like');
+Route::delete('/post/{post}/like', [PostController::class, 'unlike'])->name('post.unlike');
+
+// Comentarios
+## Vista comentarios Usuarios 'Persona'
+Route::get('/user/comments', fn() => view('personas.comentarios'))->name('comments.user');
+
+## Vista comentarios Usuarios 'Restaurante'
+Route::get('/restaurant/comments', fn() => view('restaurantes.comentarios'))->name('comments.restaurant');
+
+## Acciones de comentarios
+Route::post('/post/{post}/comment', [PostController::class, 'createComment'])->name('post.comment');
+Route::delete('/comment/{comment}', [PostController::class, 'deleteComment'])->name('comment.delete');
+
+
+// ------------------------SEGUIR A OTROS USUARIOS---------------------------- //
+Route::post('/follow/{profile}', [FollowController::class, 'follow'])->name('follow');
+Route::delete('/unfollow/{profile}', [FollowController::class, 'unfollow'])->name('unfollow');
 
 
 // RUTAS DE USUARIO PERSONA
@@ -66,15 +87,10 @@ Route::prefix('user')->group(function () {
         // Subir y actualizar fotos de perfil y portada 
         Route::post('profile/update-photos', [PeopleProfileController::class, 'actualizarFotos'])->name('profile.photos.update');
 
-
-        // ------------------------SEGUIR A OTROS USUARIOS---------------------------- //
-        Route::post('/follow/{profile}', [FollowController::class, 'follow'])->name('follow');
-        Route::delete('/unfollow/{profile}', [FollowController::class, 'unfollow'])->name('unfollow');
-
-        // ------------------------ PUBLICACIONES--------------------------------------- //
+        // ----------------------------------- PUBLICACIONES --------------------------------------- //
         // POSTS
         ## Redactar Post Regular 
-        Route::get('redactar-post', fn() => view('compartidas.form-posts'))->name('redactar.post');
+        Route::get('redactar-post', fn() => view('publicaciones.form-posts'))->name('redactar.post');
 
         ## Registrar Post Regular 
         Route::post('redactar-post', [PostController::class, 'store'])->name('post.store');
@@ -108,16 +124,16 @@ Route::prefix('user')->group(function () {
         ## Eliminar Eventos Culinarios
         Route::delete('evento/{evento}', [PostController::class, 'destroy'])->name('evento.destroy');
 
-        // Likes 
-        Route::post('/post/{post}/like', [PostController::class, 'like'])->name('post.like');
-        Route::delete('/post/{post}/like', [PostController::class, 'unlike'])->name('post.unlike');
-
         ## Encontrar nuevos usuarios para seguir
         Route::get('red-de-sabores', [FollowController::class, 'sugerenciasParaSeguir'])->name('red.user');
+
         ## Lista de usuarios seguidos
         Route::get('seguidos', [FollowController::class, 'verSeguidos'])->name('seguidos.user');
 
+        ## Eventos culinarios
         Route::get('eventos-culinarios', fn() => view('personas.eventos'))->name('eventos.user');
+
+        ## Ajustes / Edición de datos de creación de perfil y Eliminación de cuenta
         Route::get('ajustes', fn() => view('personas.ajustes'))->name('ajustes.user');
         
         ## Logout
@@ -161,10 +177,10 @@ Route::prefix('restaurant')->group(function () {
         ## Subir y actualizar fotos de perfil y portada
         Route::post('profile/update-photos', [RestaurantProfileController::class, 'actualizarFotos'])->name('profile.photos.update');
 
-        //------------------------ PUBLICACIONES---------------------------------------//
+        //--------------------------------------- PUBLICACIONES---------------------------------------//
          // POSTS
         ## Redactar Post Regular 
-        Route::get('redactar-post', fn() => view('compartidas.form-posts'))->name('redactar.post.restaurant');
+        Route::get('redactar-post', fn() => view('publicaciones.form-posts-restaurant'))->name('redactar.post.restaurant');
         ## Registrar Post Regular 
         Route::post('redactar-post', [PostController::class, 'store'])->name('post.store.restaurant');
         ## Modificar Post
@@ -173,6 +189,7 @@ Route::prefix('restaurant')->group(function () {
         ## Eliminar Post
         Route::delete('post/{post}', [PostController::class, 'destroy'])->name('post.destroy.restaurant');
         
+        ## Ajustes / Edición de datos de creación de perfil y Eliminación de cuenta
         Route::get('ajustes', fn() => view('restaurantes.ajustes'))->name('ajustes.restaurante');
 
         ## Logout

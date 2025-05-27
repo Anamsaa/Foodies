@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+    // Carga de imágenes del header profile
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const coverInput = document.querySelector('input[name="cover_photo"]');
 

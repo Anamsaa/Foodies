@@ -60,7 +60,8 @@ class FollowController extends Controller
             ->whereDoesntHave('followers', function ($q) use ($perfil) {
                 $q->where('follower_id', $perfil->id);
             });
-
+        
+        // Seguir restaurantes de la misma provincia
         $restaurantQuery = Profile::with('restaurant', 'profilePhoto')
             ->where('id', '!=', $perfil->id)
             ->where('province_id', $perfil->province_id)

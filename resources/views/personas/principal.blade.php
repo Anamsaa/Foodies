@@ -51,11 +51,11 @@
                         $isRestaurant = $sugerencia->user_type === 'Restaurant';
 
                         $perfilRoute = match (true) {
-                        $isRestaurant && auth('user')->check() => route('restaurant.perfil.user', $sugerencia),
-                        !$isRestaurant && auth('user')->check() => route('perfil.user.ajeno', $sugerencia),
-                        $isRestaurant && auth('restaurant')->check() => route('perfil.ajeno.restaurante', $sugerencia),
-                        !$isRestaurant && auth('restaurant')->check() => route('user.perfil.restaurante', $sugerencia),
-                        default => route('landing'),
+                            $isRestaurant && auth('user')->check() => route('restaurant.perfil.user', $sugerencia),
+                            !$isRestaurant && auth('user')->check() => route('perfil.user.ajeno', $sugerencia),
+                            $isRestaurant && auth('restaurant')->check() => route('perfil.ajeno.restaurante', $sugerencia),
+                            !$isRestaurant && auth('restaurant')->check() => route('user.perfil.restaurante', $sugerencia),
+                            default => route('landing'),
                         };
 
                         $yaSigo = $perfil->followings()->where('followed_id', $sugerencia->id)->exists();

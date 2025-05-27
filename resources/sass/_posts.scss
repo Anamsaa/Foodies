@@ -235,13 +235,22 @@
             display: flex;
             gap: 0.3rem;
 
+
+            button {
+                background: none;
+                border: none;
+                display: flex;
+                align-items: center;
+                gap: 0.3rem;
+            }
+
             i {
                 color: modulo.$iconos;
                 font-size: 25px;
+            }
 
-                &:hover {
-                    color: modulo.$color-primario;
-                }
+            .fa-heart.liked {
+                color: modulo.$color-primario;
             }
 
             span {

@@ -1,0 +1,66 @@
+{{-- Encabezado del post--}
+{{-- Declaración de variables que recibirá el componente--}}
+@props(['post', 'rutaEdicion', 'rutaEliminacion'])
+
+<div class="post-header">
+    <div class="autor-info">
+
+        @php
+        ## Devolver las vistas adecuadas del perfil según el usuario y desde la interfaz que lo realice 
+            $isRestaurant = $post->profile->user_type === 'Restaurant';
+
+            $perfilRoute = match (true) {
+                $isRestaurant && auth('user')->check() => route('restaurant.perfil.user', $post->profile),
+                !$isRestaurant && auth('user')->check() => route('perfil.user.ajeno', $post->profile),
+                $isRestaurant && auth('restaurant')->check() => route('perfil.ajeno.restaurante', $$post->profile),
+                !$isRestaurant && auth('restaurant')->check() => route('user.perfil.restaurante', $$post->profile),
+                default => route('landing'),
+            };
+        @endphp
+
+        <a href="{{ $perfilRoute }}">
+            <img class="post-avatar" src="{{ optional($post->profile->profilePhoto)->url ?? asset('images/default_image_profile.png') }}" alt="Avatar usuario">
+        </a>
+        <div class="autor-meta">
+            <a href="{{ $perfilRoute }}">
+                <p class="user-name">
+                    {{ $post->profile->restaurant->name 
+                    ?? ($post->profile->person->first_name . ' ' . $post->profile->person->last_name) 
+                    ?? 'Anónimo' }}
+                </p>
+            </a>
+
+             {{-- Utilizo el método de la librería Carbon, para devolver una descripción relativa --}}
+            <span class="user-post-time">{{ $post->created_at->diffForHumans() }}</span>
+        </div>
+    </div>
+
+    @php
+        $authProfile = auth('user')->user()?->profile ?? auth('restaurant')->user()?->profile;
+        $propietario = $authProfile && $authProfile->id === $post->profile_id;
+    @endphp
+
+    {{-- Opciones de edición y eliminación de posts solo para usuarios propietarios --}}
+    @if ($propietario)
+        <div class="post-options">
+            <div class="icon-elipsis" onclick="toggleMenu(this)">
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>  
+            <div class="elipsis-mmenu">
+                {{-- Comprobar que ambas variables existen--}}
+                @isset($rutaEdicion)
+                {{-- Parámetros $slot para cambiar la ruta según el tipo de usuario y de publicación --}}
+                    <a href="{{ $rutaEdicion }}">Editar</a>
+                @endisset
+
+                @isset($rutaEliminacion)
+                    <form action="{{ $rutaEliminacion}}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Eliminar</button>
+                    </form>
+                @endisset
+            </div>
+        </div>
+    @endif
+</div>

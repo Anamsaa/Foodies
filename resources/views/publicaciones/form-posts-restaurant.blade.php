@@ -1,4 +1,4 @@
-@extends('layouts.layout-menu-panel')
+@extends('layouts.rest-menu-panel')
 @section('title', 'Subir publicación')
 @section('description', ' Crear publicaciones permitirá que otros foodies te conozcan, anímate a compartir lo que piensas')
 @section('content')
@@ -35,3 +35,6 @@
         </form>
     </div> 
 @endsection
+
+{{-- ** NOTAS ** --}}
+{{-- Visualización desde la interfaz de un restaurante de la subida de posts --}}

@@ -1,0 +1,94 @@
+@use "modulo";
+@use "mixins";
+@use "media-queries";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+.comment-container {
+    background-color: modulo.$color-secundario;
+    padding: 1rem;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+
+    .comment-box {
+        background-color: modulo.$input-background;
+        form {
+            display: flex;
+            flex-direction: column;
+
+            textarea {
+                background-color: modulo.$input-background;
+                border: none;
+            }
+
+            button {
+                border: none;
+                border-radius: 15px;
+                display: inline-block;
+                padding: 0.8rem;
+                background-color: modulo.$iconos;
+                color: modulo.$color-secundario;
+                cursor: pointer;
+                align-self: end;
+
+                &:hover {
+                    background-color: modulo.$color-primario;
+                    color: modulo.$color-secundario;
+                }
+            }
+        }
+    }
+
+    hr {
+        padding: 1.5rem;
+    }
+
+    .comment-list {
+        display: flex;
+        flex-direction: column;
+
+        h3 {
+            font-size: 18px;
+            color: modulo.$color-primario;
+        }
+
+        .comments {
+            .comment-line {
+                display: flex;
+                flex-direction: column;
+
+                .header-comment {
+                    display: flex;
+                    justify-content: space-around;
+
+                    img {
+                        width: 75px;
+                        height: 75px;
+                        object-fit: cover;
+                        border-radius: 50%;
+                    }
+
+                    .content-properties {
+                        display: flex;
+
+                        .name-account {
+                            font-weight: bold;
+                            font-size: 1.2rem;
+                            color: modulo.$color-primario;
+                        }
+
+                        .time {
+                            font-weight: 500;
+                            font-size: 14px;
+                            color: modulo.$color-texto;
+                        }
+                    }
+                }
+
+                .content {
+                    color: modulo.$color-texto;
+                }
+            }
+        }
+    }
+}
