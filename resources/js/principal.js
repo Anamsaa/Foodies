@@ -20,8 +20,9 @@
             const isFollowing = this.dataset.following === 'true';
             const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             const url = isFollowing
-                ? `/user/unfollow/${profileId}`
-                : `/user/follow/${profileId}`;
+            // Localizado error en las rutas 
+                ? `/unfollow/${profileId}`
+                : `/follow/${profileId}`;
             const method = isFollowing ? 'DELETE' : 'POST';
 
             fetch(url, {

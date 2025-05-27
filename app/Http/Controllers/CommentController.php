@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Profile;
+use App\Models\Restaurant;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -34,10 +35,10 @@ class CommentController extends Controller
         ]); 
 
         if (auth('restaurant')->check()) {
-            return redirect()->route('comments.restaurant', $post);
+            return redirect()->route('dashboard.restaurant', $post);
         }
 
-        return redirect()->route('comments.user', $post);
+        return redirect()->route('dashboard.user')->with('highlight_post', $post->id);;
     }
 
     public function deleteComment(Comment $comment) {

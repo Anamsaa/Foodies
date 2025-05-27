@@ -3,37 +3,60 @@
 @section('description', 'Los eventos culinarios son la nueva forma de conocer personas, ¿Qué esperas para aventurarte a conocer a otros?')
 @section('content')
     <div class="form-event-main post-styles">
-        <form action="">
+        <form action="{{ route('evento.store') }}" method="POST" enctype="multipart/form-data" id="form-crear-evento">
+            @csrf
+
             <div class="encabezado-form-post">
                 <h2 class="titulo-reviww-post">Crear un nuevo evento</h2>
                 <div class="icon-elipsis-form-post">
                      <i class="fa-solid fa-ellipsis"></i>
                 </div>  
             </div>
+
+            {{-- Verficación de errores--}}
+            @if ($errors->any())
+                <div class="alert-error">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <div class="row r1">
                 <div class="column-row">
                     <label for="evento-title">Ingresa el título del evento:</label>
-                    <input type="text" id="evento-title" name="evento-title">
+                    <input type="text" id="evento-title" name="evento-title" value="{{ old('evento-title') }}" required>
                 </div>
                 <div class="column-row">
-                    <label for="evento-title">Ingresa el título del evento:</label>
-                    <input type="text" id="evento-title" name="evento-title">
+                    <label for="cupos-participacion">Cupos máximos:</label>
+                    <input type="number" id="cupos-participacion" name="cupos-participacion" min="1" max="20" value="{{ old('cupos-participacion') }}" required>
                 </div>
             </div>
             <div class="row r2">
-                <dive class="column-row">
+                <div class="column-row">
                     <label for="hora-encuentro">Hora del encuentro:</label>
-                    <input type="time" id="hora-encuentro" name="hora-encuentro">
-                </dive>
+                    <input type="time" id="hora-encuentro" name="hora-encuentro" value="{{ old('horaa-encuentro') }}" required>
+                </div>
                  <div class="column-row">
                     <label for="fecha-encuentro">Fecha encuentro:</label>
-                    <input type="date" id="fecha-encuentro" name="fecha-encuentro">
+                    <input type="date" id="fecha-encuentro" name="fecha-encuentro" value="{{ old('fecha-encuentro') }}" required>
                 </div>
                 <div class="column-row">
                     <div class="contenedor-formulario select-content">
                         <label for="restaurant-option">Escoge el restaurante anfitrión del encuentro: </label>
                             <select name="restaurant-option" id="restaurant-option">
-                            <option value="">Seleccione el restaurante</option>
+                                @if($restaurantesLocales->isEmpty())
+                                    <option value="">No hay restaurantes en tu provincia</option>
+                                @else
+                                    <option value="">Seleccione el restaurante</option>
+                                    @foreach($restaurantesLocales as $restaurante)
+                                        <option value="{{ $restaurante->id }}" {{ old('restaurant-option') == $restaurante->id ? 'selected' : '' }}>
+                                        {{ $restaurante->name }}
+                                        </option>
+                                    @endforeach
+                                @endif
                             </select>
                         <i class="fa-solid fa-caret-down"></i>
                     </div>
@@ -42,7 +65,7 @@
             <div class="row r3">
                 <div class="column-row">
                     <label for="descripcion-evento">Da una breve descripción del evento: </label>
-                    <textarea name="invitacion" id="invitacion" rows="8" cols="50" placeholder="Ej: '¡Bienvenido a nuestro restaurante! Aquí nuestra especialidad son los tacos al Pastor">{{ old('invitacion', session('restaurant_step1.invitacion')) }}</textarea>
+                    <textarea name="invitacion" id="invitacion" rows="8" cols="50" placeholder="Ej: 'Quiero conocer este nuevo restaurante colombiano en el centro de Madrid ¿Me acompañas?">{{ old('invitacion', session('restaurant_step1.invitacion')) }}</textarea>
                 </div>  
             </div>    
         </form>

@@ -14,6 +14,7 @@ import './perfil';
 import './principal';
 import './post';
 import './toggleMenuforPost';
+import './comprobaciones';
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('entra a la función');

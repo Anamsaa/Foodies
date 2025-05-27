@@ -15,7 +15,6 @@
                     ?? 'Anónimo' }}
                 </p>
             </a>
-
              {{-- Utilizo el método de la librería Carbon, para devolver una descripción relativa --}}
             <span class="user-post-time">{{ $post->created_at->diffForHumans() }}</span>
         </div>

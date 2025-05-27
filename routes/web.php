@@ -12,6 +12,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\UbicacionController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CulinaryEventController;
 use Illuminate\Support\Facades\Route;
 
 // DEFINICIÓN DE RUTAS DE LA RED SOCIAL
@@ -115,15 +116,27 @@ Route::prefix('user')->group(function () {
         Route::delete('post/{reseña}', [PostController::class, 'destroy'])->name('review.destroy');
 
         // EVENTOS CULINARIOS
-        ## Redactar Eventos Culinarios
-        Route::get('crear-evento', fn () => view('personas.formulario-evento'))->name('redactar.evento');
-        ## Registrar Eventos Culinarios
-        Route::post('redactar-evento', [PostController::class, 'store'])->name('evento.store');
+        ## Ver formulario de creación de eventos
+        Route::get('crear-evento', [CulinaryEventController::class, 'create'])->name('evento.create');
+
+        ## Enviar datos del formulario y crear evento
+        Route::post('crear-evento', [CulinaryEventController::class, 'store'])->name('evento.store');
+        
         ## Modificar Eventos Culinarios
-        Route::get('evento/{evento}/edit', [PostController::class, 'edit'])->name('evento.edit');
-        Route::put('evento/{evento}', [PostController::class, 'update'])->name('evento.update');  
-        ## Eliminar Eventos Culinarios
-        Route::delete('evento/{evento}', [PostController::class, 'destroy'])->name('evento.destroy');
+        Route::get('/eventos/{event}/edit', [CulinaryEventController::class, 'edit'])->name('evento.edit');
+        Route::put('/eventos/{event}', [CulinaryEventController::class, 'update'])->name('evento.update');
+
+        ## Eliminar evento
+        Route::delete('/eventos/{event}', [CulinaryEventController::class, 'destroy'])->name('evento.destroy');
+
+        // ------------------------------- PARTICIPACIÓN EN LOS EVENTOS-----------------------------------
+        ## Unirse a la participación 
+        Route::post('/eventos/{event}/unirse', [CulinaryEventController::class, 'join'])->name('evento.join');
+        ## Cancelar participación 
+        Route::delete('/eventos/{event}/cancelar', [CulinaryEventController::class, 'leave'])->name('evento.leave');
+
+        // -------------------------------------------------------------------------------------------------------------- //
+
 
         ## Encontrar nuevos usuarios para seguir
         Route::get('red-de-sabores', [FollowController::class, 'sugerenciasParaSeguir'])->name('red.user');

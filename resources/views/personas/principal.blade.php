@@ -3,22 +3,26 @@
 @section('description', 'Únete a la comunidad de apasionados por la cocina. Comparte tus platos, sigue a otros foodies y vive la experiencia gastronómica online.')
 @section('content')
 
+
 <div class="principal-container">
     <div class="column-1">
         <div class="creador-post" id="creador-post">
-            <img  class="imagen-usuario" src="{{ optional($perfil->profilePhoto)->url ?? asset('images/default_image_profile.png') }} " alt="Imagen de perfil usuario">
+            <a href="{{ get_profile_route($perfil) }}"><img  class="imagen-usuario" src="{{ optional($perfil->profilePhoto)->url ?? asset('images/default_image_profile.png') }} " alt="Imagen de perfil usuario"></a>
             <div class="post-writer-container">
                 <div class="simulated-input" id="simulador-input" data-url="{{ route('redactar.post') }}">
                     Cuéntales a tus amigos que se te antoja comer hoy...
                 </div>
                 <div class="botones">
                         <a href="{{ route('redactar.review') }}">Nueva reseña</a>
-                        <a href="{{ route('redactar.evento') }}">Nuevo evento</a>
+                        <a href="{{ route('evento.create') }}">Nuevo evento</a>
                 </div>
             </div>
         </div>
-        <div id="post-usuarios">
+        <div id="post-usuarios" class="post-usuarios">
             @forelse($posts as $post)
+                @if (session('highlight_post') == $post->id)
+                    <div class="nuevo-comentario">Tu comentario fue publicado</div>
+                @endif
                 @include('components.posts.post', ['post' => $post])
                 @empty
                 <p class="no-post-message">No hay publicaciones todavía.</p>
