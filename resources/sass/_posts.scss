@@ -161,8 +161,8 @@
     }
 }
 
-// Publicaciones Regulares
-.card-post {
+// Publicaciones Regulares y Eventos 
+.card-post, .evento-card {
     background-color: modulo.$color-secundario;
     border-radius: 15px;
     padding: 1.5rem;
@@ -214,6 +214,7 @@
             i {
                 color: modulo.$iconos;
                 font-size: 1.6rem;
+                cursor: pointer;
             }
 
             .elipsis-menu {

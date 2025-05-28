@@ -25,7 +25,6 @@
                     <div class="nuevo-comentario">Tu comentario fue publicado</div>
                 @endif
 
-            {{-- Aquí cambia esto --}}
                 @if ($post->post_type === 'Culinary Event' && $post->culinaryEvent)
                     @include('components.posts.event', [
                         'post' => $post,
