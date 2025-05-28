@@ -3,6 +3,11 @@
 @section('description', 'Únete a la comunidad de apasionados por la cocina. Comparte tus platos, sigue a otros foodies y vive la experiencia gastronómica online.')
 @section('content')
 
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 
 <div class="principal-container">
     <div class="column-1">
@@ -13,7 +18,8 @@
                     Cuéntales a tus amigos que se te antoja comer hoy...
                 </div>
                 <div class="botones">
-                        <a href="{{ route('redactar.review') }}">Nueva reseña</a>
+                        {{-- Próxima ampliación a reseñas --}}
+                        {{-- <a href="{{ route('redactar.review') }}">Nueva reseña</a> --}}
                         <a href="{{ route('evento.create') }}">Nuevo evento</a>
                 </div>
             </div>

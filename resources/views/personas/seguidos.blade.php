@@ -2,6 +2,13 @@
 @section('title', 'Seguidos')
 @section('description', 'Sigue a la comunidad de foodies')
 @section('content')
+    
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+    
     <div class="lista-seguidos">
         <div class="header-seguidos">
             <h2>Seguidos (<span id="seguidores-contador">{{ $numeroSeguidos }}</span>)</h2>

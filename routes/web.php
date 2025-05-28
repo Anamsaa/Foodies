@@ -13,6 +13,7 @@ use App\Http\Controllers\UbicacionController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CulinaryEventController;
+use App\Models\Restaurant;
 use Illuminate\Support\Facades\Route;
 
 // DEFINICIÓN DE RUTAS DE LA RED SOCIAL
@@ -59,6 +60,8 @@ Route::delete('/comment/{comment}', [CommentController::class, 'deleteComment'])
 Route::post('/follow/{profile}', [FollowController::class, 'follow'])->name('follow');
 Route::delete('/unfollow/{profile}', [FollowController::class, 'unfollow'])->name('unfollow');
 
+// Participantes de eventos
+//Route::get('/user/eventos/{evento}/participantes', [CulinaryEventController::class, 'saberParticipantes']);
 
 // RUTAS DE USUARIO PERSONA
 ### Se realizan con un prefijo diferenciador para evitar incidentes con las rutas
@@ -125,19 +128,7 @@ Route::prefix('user')->group(function () {
         Route::delete('/eventos/{event}/cancelar', [CulinaryEventController::class, 'leave'])->name('evento.leave');
 
         // -------------------------------------------------------------------------------------------------------------- //
-
-         // RESEÑAS 
-        ## Redactar Reseñas
-        Route::get('crear-reseña', fn () => view('personas.formulario-reseña'))->name('redactar.review');
-        ## Registrar Reseñas
-        Route::post('redactar-reseña', [PostController::class, 'store'])->name('review.store');
-        ## Modificar Reseñas
-        Route::get('reseña/{reseña}/edit', [PostController::class, 'edit'])->name('reviw.edit');
-        Route::put('reseña/{reseña}', [PostController::class, 'update'])->name('review.update');  
-        ## Eliminar Reseñas
-        Route::delete('post/{reseña}', [PostController::class, 'destroy'])->name('review.destroy');
-
-         // -------------------------------------------------------------------------------------------------------------- //
+        
         ## Encontrar nuevos usuarios para seguir
         Route::get('red-de-sabores', [FollowController::class, 'sugerenciasParaSeguir'])->name('red.user');
 
@@ -145,7 +136,7 @@ Route::prefix('user')->group(function () {
         Route::get('seguidos', [FollowController::class, 'verSeguidos'])->name('seguidos.user');
 
         ## Eventos culinarios
-        Route::get('eventos-culinarios', fn() => view('personas.eventos'))->name('eventos.user');
+        Route::get('eventos', [CulinaryEventController::class, 'indexUser'])->name('eventos.index');
 
         ## Ajustes / Edición de datos de creación de perfil y Eliminación de cuenta
         Route::get('ajustes', fn() => view('personas.ajustes'))->name('ajustes.user');
@@ -174,7 +165,7 @@ Route::prefix('restaurant')->group(function () {
     Route::middleware(['auth:restaurant', 'prevent-back-history'])->group(function() {
 
         ## Dashboard restaurantes
-        Route::get('dashboard', fn() => view('restaurantes.principal'))->name('dashboard.restaurant');
+        Route::get('dashboard', [RestaurantProfileController::class, 'mostrarDashboard'])->name('dashboard.restaurant');
         
         // Creación del perfil de restaurnate en 2 pasos 
         ### 1 paso 
@@ -202,6 +193,7 @@ Route::prefix('restaurant')->group(function () {
         Route::put('post/{post}', [PostController::class, 'update'])->name('post.update.restaurant');  
         ## Eliminar Post
         Route::delete('post/{post}', [PostController::class, 'destroy'])->name('post.destroy.restaurant');
+
         
         ## Ajustes / Edición de datos de creación de perfil y Eliminación de cuenta
         Route::get('ajustes', fn() => view('restaurantes.ajustes'))->name('ajustes.restaurante');
@@ -215,6 +207,7 @@ Route::prefix('restaurant')->group(function () {
 Route::get('/api/provinces/{regionId}', [UbicacionController::class, 'getProvinces']);
 Route::get('/api/cities/{provinceId}', [UbicacionController::class, 'getCities']);
 
+// Redordatorio de horarios de restaurante
 Route::get('/api/restaurantes/{id}/horarios', function ($id) {
     $perfil = \App\Models\Profile::with('restaurant')->find($id);
 
@@ -226,6 +219,9 @@ Route::get('/api/restaurantes/{id}/horarios', function ($id) {
         'horarios' => $perfil->restaurant->horarios ?? 'No hay horarios definidos',
     ]);
 });
+
+// Verfiicar la existencia de un evento
+Route::get('/api/verificar-evento', [CulinaryEventController::class, 'verificarEvento']); 
 
 
 

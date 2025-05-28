@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\CulinaryEvent;
-use App\Models\EventParticipation;
-use App\Models\Post;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +13,7 @@ class CulinaryEventController extends Controller
     public function create(){
         $profile = Auth::guard('user')->user()->profile;
 
-        // Restaurantes cuyo perfil esté en la misma provincia
+        // Búsqueda de restaurantes por aquellos que estén en la misma provincia
         $restaurantesLocales = Restaurant::whereHas('profile', function ($query) use ($profile) {
             $query->where('province_id', $profile->province_id);
         })->get();
@@ -68,7 +66,6 @@ class CulinaryEventController extends Controller
                 : back()->withErrors($message);
         }
 
-        // 🚫 Verificación añadida aquí
         if ($event->post->profile_id === $profile->id) {
             $message = 'No puedes unirte a tu propio evento.';
             return request()->ajax()
@@ -101,7 +98,6 @@ class CulinaryEventController extends Controller
                 : back()->with('success', 'Te has unido al evento.');
     }
 
-
     public function leave(CulinaryEvent $event){
         $profile = Auth::guard('user')->user()->profile;
         $person = $profile->person;
@@ -123,22 +119,13 @@ class CulinaryEventController extends Controller
     }
     public function edit(CulinaryEvent $event){
 
-        $profile = Auth::guard('user')->user()->profile;
-        $person = $profile->person;
+        $this->authorizeOwner($event);
 
-        $participation = $event->participations()->where('person_id', $person->id)->first();
-        if (!$participation) {
-            $message = 'No estás inscrito en este evento.';
-            return request()->ajax() 
-                ? response()->json(['error' => $message], 404)
-                : back()->withErrors($message);
-        }
+        $restaurantesLocales = Restaurant::whereHas('profile', function ($query) use ($event) {
+            $query->where('province_id', $event->post->profile->province_id);
+        })->get();
 
-        $participation->delete();
-
-        return request()->ajax()
-            ? response()->json(['message' => 'Has cancelado tu participación.'])
-            : back()->with('success', 'Has cancelado tu participación.');
+        return view('personas.formulario-evento', compact('event', 'restaurantesLocales'));
     }
 
     // Guardar cambios
@@ -174,7 +161,7 @@ class CulinaryEventController extends Controller
     public function destroy(CulinaryEvent $event){
         $this->authorizeOwner($event);
 
-        $event->post->delete(); // Cascada elimina el evento también
+        $event->post->delete(); 
         return redirect()->route('dashboard.user')->with('success', 'Evento eliminado.');
     }
 
@@ -185,4 +172,64 @@ class CulinaryEventController extends Controller
             abort(403, 'No tienes permiso para modificar este evento.');
         }
     }
+
+    public function verificarEvento(Request $request)  {
+        $fecha = $request->input('fecha');
+        $hora = $request->input('hora');
+        $restaurantId = $request->input('restaurante_id');
+
+        $yaExiste = CulinaryEvent::where('event_date', $fecha)
+        ->where('event_time', $hora)
+        ->where('restaurant_id', $restaurantId)
+        ->exists();
+
+        return response()->json(['disponible' => !$yaExiste]);
+    }
+
+    public function indexUser(){
+        $perfil = auth('user')->user()->profile;
+        $persona = $perfil->person;
+
+        // Eventos que creó el usuario
+        $misEventos = CulinaryEvent::with('post.profile')
+            ->whereHas('post', fn($query) => $query->where('profile_id', $perfil->id))
+            ->get();
+
+        // Eventos en los que está inscrito que el usuario no creó
+        $eventosUnidos = CulinaryEvent::with('post.profile')
+            ->whereHas('participations', fn($query) => $query->where('person_id', $persona->id))
+            ->whereHas('post', fn($query) => $query->where('profile_id', '!=', $perfil->id))
+            ->get();
+
+        // Eventos de cada provincia
+        $eventosDisponibles = CulinaryEvent::with(['post.profile', 'restaurant.profile.profilePhoto', 'participations'])
+            ->where('event_date', '>=', now())
+            ->whereHas('post.profile', fn($q) => $q->where('province_id', $perfil->province_id))
+            ->whereDoesntHave('participations', fn($q) => $q->where('person_id', $persona->id))
+            ->whereHas('post', fn($q) => $q->where('profile_id', '!=', $perfil->id))
+            ->get();
+
+        $eventosPropiosYUnidos = $misEventos->merge($eventosUnidos);
+
+        return view('personas.eventos', [
+            'misEventos' => $eventosPropiosYUnidos,
+            'eventosDisponibles' => $eventosDisponibles,
+        ]);
+    }
+
+    // Conocer participantes
+    // public function saberParticipantes(CulinaryEvent $evento){
+    //     $participantes = $evento->participations()
+    //         ->with('person.profile')
+    //         ->get()
+    //         ->map(function ($participation) {
+    //             $profile = $participation->person->profile;
+    //             return [
+    //                 'nombre' => $profile->person->first_name . ' ' . $profile->person->last_name,
+    //                 'url' => get_profile_route($profile),
+    //             ];
+    //         });
+
+    //     return response()->json($participantes);
+    // }
 }

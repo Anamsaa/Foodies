@@ -120,8 +120,18 @@
                     </div>
 
                     {{-- Botón seguir solo para usuarios tipo persona --}}
-                    @if(!$esPropietario && auth('user')->check())
+                    <!-- @if(!$esPropietario && auth('user')->check())
                         <button type="button" id="seguir" class="seguir">Seguir</button>
+                    @endif -->
+                    @if(!$esPropietario)
+                        @php
+                            $yo = auth('user')->user()->profile;
+                            $yaSigo = $perfil->followers()->where('follower_id', $yo->id)->where('status', 'Following')->exists();
+                        @endphp
+
+                        <button class="seguir follow-button" data-following="{{ $yaSigo ? 'true' : 'false' }}"data-profile-id="{{ $perfil->id }}">
+                            {{ $yaSigo ? 'Siguiendo' : 'Seguir' }}
+                        </button>
                     @endif
                 </div>
             </div>

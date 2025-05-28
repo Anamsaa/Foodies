@@ -11,6 +11,7 @@
     <link rel="icon" type="image/png" href="{{ asset('images/logo-favicon.png') }}">
     {{-- Habilitar Turbo en todas las vistas --}}
     {{-- <script type="module" src="{{ asset('js/turbo.js') }}" defer></script> --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
     <div class="componentes-principales">
@@ -25,8 +26,7 @@
                     </button>
                 </div>
             </div>
-            <div class="contenidos">
-                    <p>Hola estoy probando</p>
+            <div class="contenidos rest-main-dashboard">
                     @yield('content')
             </div>
         </main>

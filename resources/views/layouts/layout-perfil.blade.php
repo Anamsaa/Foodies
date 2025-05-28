@@ -80,7 +80,6 @@
 
             <div class="estructura-perfil">
                 <div class="contenidos">
-                       
                     {{-- Aquí es donde van los Posts que se generan dinámicamente --}}
                     @yield('content')
                 </div>
@@ -88,9 +87,9 @@
                     <h3 class="descripcion-foodie-type">{{ $tipoFoodie }}</h3>
                     <div class="numero-reviews">
                         <div class="numero">
-                            <p>{{ $numeroReviews }}</p>
+                            <p>{{ $numeroPosts }}</p>
                         </div>
-                        <p>reseñas</p>
+                        <p>publicaciones</p>
                     </div>
                     <div class="localizacion-usuario">
                         <i class="fa-solid fa-map-pin"></i>

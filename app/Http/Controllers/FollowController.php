@@ -32,6 +32,7 @@ class FollowController extends Controller
             'followed_id' => $profile->id,
             'status' => 'Following',
         ]);
+        
         return response()->json(['message' => 'Seguido correctamente.']);
     }
 

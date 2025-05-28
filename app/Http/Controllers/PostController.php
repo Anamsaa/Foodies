@@ -15,7 +15,13 @@ class PostController extends Controller
             'texto-publicacion-post' => 'nullable|string|max:1000',
         ]);
 
-        $profile = Auth::guard('user')->user()?->profile ?? Auth::guard('restaurant')->user()?->profile;
+        if (Auth::guard('restaurant')->check()) {
+            $profile = Auth::guard('restaurant')->user()->profile;
+        } elseif (Auth::guard('user')->check()) {
+            $profile = Auth::guard('user')->user()->profile;
+        } else {
+            return back()->withErrors(['error' => 'No se pudo identificar el usuario autenticado.']);
+        }
 
         if (!$profile) {
             return back()->withErrors(['error' => 'Perfil no encontrado']);
@@ -40,17 +46,19 @@ class PostController extends Controller
         return $this->redireccionarDashboard();  
     }
 
-    public function edit(Post $post) {
-        if ($post->type === 'Culinary Event' && $post->culinaryEvent) {
-            return redirect()->route('evento.edit', $post->culinaryEvent);
-        }
+        public function edit(Post $post) {
+            if ($post->type === 'Culinary Event' && $post->culinaryEvent) {
+                return redirect()->route('evento.edit', $post->culinaryEvent);
+            }
 
-        if ($post->type === 'reseña') {
-            return view('personas.formulario-reseña', compact('post'));
-        }
+            $profile = $post->profile;
 
-        return view('publicaciones.form-posts', compact('post')); 
-    }
+            if ($profile->user_type === 'Restaurant') {
+                return view('publicaciones.form-posts-restaurant', compact('post'));
+            }
+
+            return view('publicaciones.form-posts', compact('post')); 
+        }
 
     public function update(Request $request, Post $post) {
         $request->validate([
@@ -83,12 +91,11 @@ class PostController extends Controller
 
     // Redirigir a los usuarios según su rol
     public function redireccionarDashboard() {
-        if(Auth::guard('user')->check()) {
-            return redirect()->route('dashboard.user');
-        } elseif (Auth::guard('restaurant')->check()) {
+        if (Auth::guard('restaurant')->check()) {
             return redirect()->route('dashboard.restaurant');
+        } elseif (Auth::guard('user')->check()) {
+            return redirect()->route('dashboard.user');
         }
-
         return redirect('/');
     }
 

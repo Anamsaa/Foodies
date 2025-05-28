@@ -5,24 +5,6 @@ const expresiones = {
     telefono: /(^[\d\s+\-]{7,}$)/, 
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-
-console.log('entra a las comprobaciones')
-
-    // Formulario Evento culinario 
-    const formEvento = document.getElementById('form-crear-evento'); 
-    //pasarFormulario(formEvento);
-    const titulo = document.getElementById('evento-title');
-    pasarEvento(titulo, validarTitulo);
-    const cupos = document.getElementById('cupos-participacion'); 
-    pasarEvento(cupos, validarCuposMaximos);
-    const restauranteSelect = document.getElementById('restaurant-option'); 
-    pasarEvento(restauranteSelect, validarRestaurante);
-    const textarea = document.getElementById('invitacion');
-    pasarEvento(textarea, validarDescripcionEvento);
-
-})
-
 // Evitar el comportamiento por defecto del formulario
 function pasarFormulario(formulario) {
     formulario.addEventListener('submit', function(e) {
@@ -58,12 +40,7 @@ function eliminarError(campo) {
 // Estilo advice
 function mostrarAdvice(campo, mensaje) {
      
-    const next = campo.nextElementSibling;
-    if (next && next.classList.contains('advice')) {
-        eliminarAdvice(campo);
-    };
-
-
+    eliminarAdvice(campo);
     const advice = document.createElement('div');
     advice.className = 'advice'; 
     advice.style.color = 'black';
@@ -74,9 +51,11 @@ function mostrarAdvice(campo, mensaje) {
 
 // Borrar errores 
 function eliminarAdvice(campo) {
-    const advice = campo.nextElementSibling; 
-    if (advice && advice.classList.contains('advice')) {
-        advice.remove();
+    let next = campo.nextElementSibling;
+    while (next && next.classList.contains('advice')) {
+        const toRemove = next;
+        next = next.nextElementSibling;
+        toRemove.remove();
     }
 }
 
@@ -90,8 +69,10 @@ function validarTitulo() {
 
    if (valor === ''){
         mostrarError(titulo, 'Este campo no puede estar vacío'); 
+        return false;
    } else {
         eliminarError(titulo);
+        return true;
    }
 }
 
@@ -99,10 +80,11 @@ function validarTitulo() {
 function validarCuposMaximos() {
     const cupos = document.getElementById('cupos-participacion'); 
     const valor = cupos.value; 
-    console.log(valor)
+    let valido = true;
 
     if (isNaN(valor) || valor === '') {
         mostrarError(cupos, 'Por favor ponga un número válido.'); 
+        valido = false;
     } else {
         eliminarError(cupos);
     }
@@ -112,6 +94,8 @@ function validarCuposMaximos() {
     } else {
         eliminarAdvice(cupos);  
     }
+
+    return valido;
    
 }
 
@@ -135,12 +119,13 @@ function validarRestaurante() {
     const valor = restauranteSelect.value; 
     const campoHora = document.getElementById('hora-encuentro');
 
+    eliminarAdvice(campoHora);
+
     if (valor === ''){
         mostrarError(restauranteSelect, 'Debe seleccionar un restaurante'); 
         return false;
     } else {
         eliminarError(restauranteSelect);
-
         eliminarAdvice(campoHora);
 
         fetch(`/api/restaurantes/${valor}/horarios`)
@@ -185,4 +170,82 @@ function validarDescripcionEvento() {
     return true;
 }
 
+// Validación de disponibilidad 
 
+async function validarDisponibilidad() {
+    //console.log('entra la validación de disponibilidad');
+    const fecha = document.getElementById('fecha-encuentro').value;
+    const hora = document.getElementById('hora-encuentro').value;
+    const restaurantId = document.getElementById('restaurant-option').value;
+    const campoHora = document.getElementById('hora-encuentro');
+
+    //console.log(restaurantId);
+
+    if (fecha && hora && restaurantId) {
+        eliminarAdvice(campoHora);
+        eliminarError(campoHora);
+
+        try {
+            const res = await  fetch(`/api/verificar-evento?fecha=${fecha}&hora=${hora}&restaurante_id=${restaurantId}`);
+            const data = await res.json(); 
+
+            if (!data.disponible) { 
+                mostrarError(campoHora, 'Ya hay un evento registrado en este restaurante a esa hora.');
+                return false;
+            } else {
+                eliminarError(campoHora);
+                return true;
+            }
+
+        } catch (error) {
+            console.error('Error al verificar disponibilidad:', error);
+            return true; 
+
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+
+console.log('entra a las comprobaciones')
+
+    // Formulario Evento culinario 
+    const formEvento = document.getElementById('form-crear-evento'); 
+
+    const titulo = document.getElementById('evento-title');
+    const cupos = document.getElementById('cupos-participacion');
+    const restauranteSelect = document.getElementById('restaurant-option');
+    const horaEncuentro = document.getElementById('hora-encuentro');
+    const fechaEncuentro = document.getElementById('fecha-encuentro');
+    const textarea = document.getElementById('invitacion');
+
+    pasarEvento(titulo, validarTitulo);
+    pasarEvento(cupos, validarCuposMaximos);
+    pasarEvento(restauranteSelect, validarRestaurante);
+    pasarEvento(textarea, validarDescripcionEvento);
+    
+     restauranteSelect.addEventListener('change', () => {
+        validarRestaurante();
+        validarDisponibilidad();
+    });
+
+    horaEncuentro.addEventListener('blur', validarDisponibilidad);
+    fechaEncuentro.addEventListener('blur', validarDisponibilidad);
+
+    formEvento.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const esTituloValido = validarTitulo();
+        const esCuposValido = validarCuposMaximos();
+        const esDescripcionValida = validarDescripcionEvento();
+        const esRestauranteValido = validarRestaurante();
+        const esDisponible = await validarDisponibilidad();
+
+        if (esTituloValido && esCuposValido && esDescripcionValida && esRestauranteValido && esDisponible) {
+            formEvento.submit(); 
+        } else {
+            console.warn('El formulario tiene errores y no se enviará.');
+        }
+    });
+
+})

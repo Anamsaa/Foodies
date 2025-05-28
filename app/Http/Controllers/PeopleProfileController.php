@@ -141,7 +141,7 @@ class PeopleProfileController extends Controller
         $description = $person->description;
         $birthDate = $person->birth_date;
         $edad = Carbon::parse($birthDate)->age;
-        $numeroReviews = $profile->posts()->where('post_type', 'review')->count();
+        $numeroPosts = $profile->posts()->count();
 
         $posts = $profile->posts()
             ->latest()
@@ -157,13 +157,13 @@ class PeopleProfileController extends Controller
         ->get();
 
         // Categorías de Foodies
-        if ($numeroReviews <= 10) {
+        if ($numeroPosts <= 10) {
             $tipoFoodie = 'Foodie nuevo';
         } 
-        elseif ($numeroReviews <= 20) {
+        elseif ($numeroPosts <= 20) {
             $tipoFoodie = 'Foodie entusiasta';
         } 
-        elseif ($numeroReviews <= 49) {
+        elseif ($numeroPosts <= 49) {
             $tipoFoodie = 'King foodie';
         } 
         else {
@@ -178,7 +178,7 @@ class PeopleProfileController extends Controller
             'description',
             'edad',
             'tipoFoodie',
-            'numeroReviews',
+            'numeroPosts',
             'ubicacion',
             'posts'
         ));
@@ -192,7 +192,7 @@ class PeopleProfileController extends Controller
         $description = $person->description;
         $birthDate = $person->birth_date;
         $edad = Carbon::parse($birthDate)->age;
-        $numeroReviews = $perfil->posts()->where('post_type', 'review')->count();
+        $numeroPosts = $perfil->posts()->count();
         // Últimos posts
         //dd($perfil->posts()->latest()->get());
         $posts = $perfil->posts()
@@ -210,11 +210,11 @@ class PeopleProfileController extends Controller
         //$posts = $perfil->posts()->latest()->get();
 
         // Categorías de Foodies 
-        if ($numeroReviews <= 10) {
+        if ($numeroPosts <= 10) {
             $tipoFoodie = 'Foodie nuevo';
-        } elseif ($numeroReviews <= 20) {
+        } elseif ($numeroPosts <= 20) {
             $tipoFoodie = 'Foodie entusiasta';
-        } elseif ($numeroReviews <= 49) {
+        } elseif ($numeroPosts <= 49) {
             $tipoFoodie = 'King foodie';
         } else {
             $tipoFoodie = 'Foodie Master';
@@ -227,16 +227,24 @@ class PeopleProfileController extends Controller
             'description',
             'edad',
             'tipoFoodie',
-            'numeroReviews',
+            'numeroPosts',
             'ubicacion',
             'posts'
         ));
     }
 
-    // Paso de datos al dashboard de usuarios
+    // Paso de datos al dashboard de usuarios "Persona"
     public function mostrarDashboard() {
         $perfil = auth('user')->user()->profile;
         $perfil->load('profilePhoto'); 
+        $perfilesSeguidos = Follow::where('follower_id', $perfil->id)
+        ->where('status', 'Following')
+        ->pluck('followed_id')
+        ->toArray();
+
+        // Mostrar en el Dashboard solo publicaciones de perfiles que sigue el usuario "Persona"
+        $perfilesPermitidos = array_merge([$perfil->id], $perfilesSeguidos);
+
         $posts = Post::with([
             'culinaryEvent',
             'photo',
@@ -245,10 +253,11 @@ class PeopleProfileController extends Controller
             'profile.profilePhoto',
             'profile.person',
             'profile.restaurant'
-            ])
-            ->where('visibility', 'Public')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        ])
+        ->where('visibility', 'Public')
+        ->whereIn('profile_id', $perfilesPermitidos)
+        ->orderBy('created_at', 'desc')
+        ->get();
 
         $misNovedades = Follow::with(['follower.person', 'follower.profilePhoto'])
             ->where('followed_id', $perfil->id)
@@ -273,15 +282,15 @@ class PeopleProfileController extends Controller
             ->take(3)
             ->get();
 
-        $numeroReviews = $perfil->posts()->where('post_type', 'review')->count();
+        $numeroPosts = $perfil->posts()->where('post_type', 'review')->count();
 
-        if ($numeroReviews <= 10) {
+        if ($numeroPosts <= 10) {
             $tipoFoodie = 'Foodie nuevo';
         } 
-        elseif ($numeroReviews <= 20) {
+        elseif ($numeroPosts <= 20) {
             $tipoFoodie = 'Foodie entusiasta';
         } 
-        elseif ($numeroReviews <= 49) {
+        elseif ($numeroPosts <= 49) {
             $tipoFoodie = 'King foodie';
         } 
         else {
@@ -293,10 +302,8 @@ class PeopleProfileController extends Controller
             'posts', 
             'misNovedades', 
             'sugerencias', 
-            'numeroReviews',
+            'numeroPosts',
             'tipoFoodie',
         ));
     }
-
-    
 }

@@ -19,10 +19,7 @@
     <div class="componentes-principales profile-styles-users">
         @include('partials.sidebar-restaurante')
         <main>
-            {{-- Verificar si el usuario que ingresa es dueño de ese perfil --}}
-            @php 
-                $esPropietario = auth('user')->user()->profile->id === $perfil->id;
-            @endphp
+        {{-- Verificar si el usuario que ingresa es dueño de ese perfil --}}
 
             <div class="panel-de-control">
                 <div class="panel-control-ayuda">
@@ -36,40 +33,40 @@
 
              <div class="header-profile" 
 
-                @if($perfil->coverPhoto)
-                    style="background-image: url('{{ $perfil->coverPhoto->url }}');"
+                @if($profile->coverPhoto)
+                    style="background-image: url('{{ $profile->coverPhoto->url }}');"
                 @endif>
 
                 <div class="header-profile-cover-name">
-                     {{-- Foto de portada --}}
-                    @if($esPropietario)
+                     {{-- {{-- Foto de portada --}}
+                     {{-- @if($esPropietario)
                         <label class="upload-cover">
                             <i class="fa-solid fa-camera"></i>
                             <input type="file" name="cover_photo" accept="image/**" hidden>
                         </label>
-                    @endif
+                    @endif --}}
                     {{-- Versión de móvil --}}
                     <div class="picture-header-profile mobile-version">
-                        <img id="profileImageMobile" src="{{ optional($perfil->profilePhoto)->url ?? asset('images/default_image_profile.png') }}" alt="Imagen de perfil del usuario">
-                        @if($esPropietario)
+                        <img id="profileImageMobile" src="{{ optional($profile->profilePhoto)->url ?? asset('images/default_image_profile.png') }}" alt="Imagen de perfil del usuario">
+                            {{--@if($esPropietario)
                             <label class="upload-profile">
                                 <i class="fa-solid fa-camera"></i>
                                 <input type="file" name="profile_photo" accept="image/**" hidden>
                             </label>
-                        @endif
+                        @endif--}}
                     </div> 
                     
                     {{-- Nombre del usuario--}}
                     <div class="nombre-header-profile">
-                        <h2>{{ $perfil->person->first_name }} {{ $perfil->person->last_name }}</h2>
+                        <h2>{{ $profile->person->first_name }} {{ $profile->person->last_name }}</h2>
                     </div>
                 </div>
 
-                {{-- <pre>{{ dd($perfil->profilePhoto)--}}
+                {{-- <pre>{{ dd($profile->profilePhoto)--}}
                 {{-- Foto de perfil --}}
                 <div class="picture-header-profile">
-                   <img id="profileImage" src="{{ optional($perfil->profilePhoto)->url ?? asset('images/default_image_profile.png') }}" alt="Imagen de perfil del usuario">
-                   @if($esPropietario)
+                   <img id="profileImage" src="{{ optional($profile->profilePhoto)->url ?? asset('images/default_image_profile.png') }}" alt="Imagen de perfil del usuario">
+                    {{-- @if($esPropietario)
                         <label class="upload-profile">
                             <i class="fa-solid fa-camera"></i>
                             <input type="file" name="profile_photo" accept="image/**" hidden>
@@ -77,7 +74,7 @@
                     @else 
                         <div class="upload-profile-placeholder">
                         </div>
-                    @endif
+                    @endif--}}
                 </div> 
             </div>
 
@@ -91,9 +88,9 @@
                     <h3 class="descripcion-foodie-type">{{ $tipoFoodie }}</h3>
                     <div class="numero-reviews">
                         <div class="numero">
-                            <p>{{ $numeroReviews }}</p>
+                            <p>{{ $numeroPosts }}</p>
                         </div>
-                        <p>reseñas</p>
+                        <p>publicaciones</p>
                     </div>
                     <div class="localizacion-usuario">
                         <i class="fa-solid fa-map-pin"></i>
@@ -104,16 +101,16 @@
                         <p>{{ $description }}</p>
                     </div>
 
-                    @if(!$esPropietario)
+                    {{-- @if(!$esPropietario)
                         @php
                             $yo = auth('user')->user()->profile;
-                            $yaSigo = $perfil->followers()->where('follower_id', $yo->id)->where('status', 'Following')->exists();
+                            $yaSigo = $profile->followers()->where('follower_id', $yo->id)->where('status', 'Following')->exists();
                         @endphp
 
-                        <button class="seguir follow-button" data-following="{{ $yaSigo ? 'true' : 'false' }}"data-profile-id="{{ $perfil->id }}">
+                     <button class="seguir follow-button" data-following="{{ $yaSigo ? 'true' : 'false' }}"data-profile-id="{{ $profile->id }}">
                             {{ $yaSigo ? 'Siguiendo' : 'Seguir' }}
                         </button>
-                    @endif
+                    @endif --}}
                 </div>
             </div>
             

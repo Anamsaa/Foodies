@@ -4,6 +4,10 @@
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 
 .evento-card {
+
+    .titulo-evento {
+        text-align: center;
+    }
     .event-structure {
         display: flex;
         flex-direction: column;
@@ -93,6 +97,263 @@
 
                 &:hover {
                     color: modulo.$iconos;
+                }
+            }
+        }
+    }
+}
+
+// Estilos formularios de eventos
+
+.form-event-main {
+    input {
+        padding: 0.5rem;
+    }
+
+    .r1 {
+        display: flex;
+
+        .column-row:nth-child(1) {
+            width: 60%;
+        }
+
+        .column-row:nth-child(2) {
+            width: 40%;
+        }
+    }
+
+    .r2 {
+        display: flex;
+        margin-top: 1rem;
+
+        @include media-queries.tablet {
+            flex-direction: column;
+        }
+
+        // Estilos flecha desplegable
+        i {
+            pointer-events: none;
+            display: block;
+            position: absolute;
+            right: 20px;
+            size: 5px;
+            top: 60%;
+
+            @include media-queries.tablet {
+                top: 50%;
+            }
+
+            @include media-queries.mobile {
+                top: 50%;
+            }
+        }
+
+        .column-row:nth-child(1) {
+            width: 40%;
+            label {
+                width: 80%;
+
+                @include media-queries.mobile {
+                    width: 100%;
+                }
+            }
+
+            @include media-queries.tablet {
+                width: 100%;
+            }
+
+            @include media-queries.mobile {
+                width: 100%;
+            }
+        }
+        .column-row:nth-child(2) {
+            width: 30%;
+            label {
+                width: 40%;
+
+                @include media-queries.mobile {
+                    width: 100%;
+                }
+            }
+
+            @include media-queries.tablet {
+                width: 100%;
+            }
+
+            @include media-queries.mobile {
+                width: 100%;
+            }
+        }
+        .column-row:nth-child(3) {
+            width: 30%;
+            label {
+                width: 40%;
+
+                @include media-queries.mobile {
+                    width: 100%;
+                }
+            }
+
+            @include media-queries.tablet {
+                width: 100%;
+            }
+
+            @include media-queries.mobile {
+                width: 100%;
+            }
+        }
+    }
+
+    .r3 {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+
+        .column-row {
+            width: 100%;
+            height: 180px;
+
+            textarea {
+                outline: none;
+                padding: 1rem;
+                resize: none;
+                width: 80%;
+                height: 100%;
+            }
+        }
+    }
+}
+
+.pagina-eventos-culinarios {
+    .titulo-pagina-eventos {
+        font-size: 30px;
+        margin-bottom: 1rem;
+    }
+
+    h3 {
+        font-size: 20px;
+        margin-bottom: 1rem;
+    }
+    
+
+    #contenedor-mis-eventos {
+        display: flex;
+        flex-wrap: wrap;
+
+        .mensaje-vacio {
+            width: 200px;
+            text-align: center;
+            align-self: center;
+
+        }
+
+        .card-evento {
+            background-color: modulo.$input-background;
+            width: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            a {
+                img {
+                    width: 130px;
+                    height: 130px;
+                    background-color: rgb(172, 170, 170);
+                    border-radius: 50%;
+                    aspect-ratio: 1 / 1;
+                    object-fit: cover;
+                    margin-bottom: 0.6rem;
+                }
+            }
+
+
+            form {
+                button {
+                    background-color: rgb(235, 47, 47);
+                    color: modulo.$color-secundario;
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: red;
+                    }
+
+                }
+            }
+        }
+
+        .card-creacion-evento {
+            background-color: modulo.$input-background;
+            width: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            margin-left: 1rem;
+
+            a {
+                text-decoration: none;
+                color: modulo.$color-secundario;
+                font-weight: 700;
+                font-size: 20px;
+                text-align: center;
+                cursor: pointer; 
+                background-color: modulo.$color-primario;
+                border-radius: 15px;
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                i {
+                    font-size: 40px;
+                    font-weight: bold;
+                    margin-top: 0.5rem;
+                    margin-bottom: 0.5rem;
+                }
+            }
+        }
+    }
+
+    #contenedor-eventos-disponibles {
+
+        .card-info-eventos {
+            background-color: modulo.$input-background;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            height: auto;
+            width: 100%;
+
+            .evento-imagen {
+                img {
+                    border-radius: 50%;
+                    width: 180px;
+                    height: 180px;
+                    aspect-ratio: 1 / 1;
+                    object-fit: cover;
+                    background-color: modulo.$color-secundario
+                }
+            }
+
+            .evento-detalles {
+                display: flex;
+                flex-direction: column;
+                padding: 0.5rem;
+
+                a {
+                    text-decoration: none;
+
+                    &:hover {
+                        color: modulo.$iconos;
+                    }
+                }
+
+                .evento-descripcion {
+                    font-style: italic;
+                    font-weight: 600;
                 }
             }
         }

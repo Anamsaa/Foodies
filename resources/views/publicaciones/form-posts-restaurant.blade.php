@@ -2,8 +2,9 @@
 @section('title', 'Subir publicación')
 @section('description', ' Crear publicaciones permitirá que otros foodies te conozcan, anímate a compartir lo que piensas')
 @section('content')
+<div class="styles-form-posts">
     <div class="form-post-main">
-        <form action="{{ isset($post) ? route('post.update', $post) : route('post.store') }}" method="post" id="form-post" enctype="multipart/form-data" id="form-post">
+        <form action="{{ isset($post) ? route('post.update.restaurant', $post) : route('post.store.restaurant') }}" method="post" id="form-post" enctype="multipart/form-data" id="form-post">
             @csrf
             @if (isset($post))
                 @method('PUT')
@@ -13,7 +14,7 @@
                 <h2 class="titulo-reviww-post">Redactar publicación</h2>
             </div>
             <div class="container-texto-publicacion">
-                <label for="texto-publicacion-post">¿En qué estás pensando hoy? </label>
+                <label for="texto-publicacion-post">¿Cuéntanos qué pasa en tu negocio hoy? </label>
                 <textarea name="texto-publicacion-post" id="texto-publicacion-post" rows="8" cols="50" 
                 placeholder="Comenta brevemente lo qué estás pensando hoy..">{{ old('texto-publicacion-post', $post->content ?? '') }}</textarea>
             </div>  
@@ -34,6 +35,8 @@
             </button>
         </form>
     </div> 
+</div>
+    
 @endsection
 
 {{-- ** NOTAS ** --}}

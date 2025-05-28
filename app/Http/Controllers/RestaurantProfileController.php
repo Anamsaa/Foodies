@@ -8,11 +8,15 @@ use Illuminate\Support\Facades\Session;
 use App\Models\Profile;
 use App\Models\Restaurant;
 use App\Models\Photo;
+use App\Models\Post;
 use App\Models\Region;
+use App\Models\Follow;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+## Librería que me permite trabajar con fechas
+use Carbon\Carbon;
 
 class RestaurantProfileController extends Controller
 {
@@ -219,7 +223,19 @@ class RestaurantProfileController extends Controller
         $website = Str::start($restaurant->website, 'https://');
         $descripcion = $restaurant->description;
 
-
+        $posts = Post::with([
+            'culinaryEvent',
+            'photo',
+            'likes',
+            'comments',
+            'profile.profilePhoto',
+            'profile.restaurant'
+        ])
+        ->where('profile_id', $perfil->id)
+        ->where('visibility', 'Public')
+        ->orderBy('created_at', 'desc')
+        ->get();
+    
         return view('personas.perfil-restaurante', compact(
         'perfil',
         'descripcion',
@@ -229,7 +245,8 @@ class RestaurantProfileController extends Controller
         'ubicacion',
         'direccion',
         'website',
-        'numeroTelefonico'
+        'numeroTelefonico',
+        'posts'
         ));
     }
 
@@ -244,8 +261,20 @@ class RestaurantProfileController extends Controller
         $numeroTelefonico = $restaurant->phone;
         $website = Str::start($restaurant->website, 'https://');
         $descripcion = $restaurant->description;
-    
 
+        $posts = Post::with([
+            'culinaryEvent',
+            'photo',
+            'likes',
+            'comments',
+            'profile.profilePhoto',
+            'profile.restaurant'
+        ])
+        ->where('profile_id', $perfil->id)
+        ->where('visibility', 'Public')
+        ->orderBy('created_at', 'desc')
+        ->get();
+    
         return view('restaurantes.perfil', compact(
             'perfil',
             'descripcion',
@@ -255,7 +284,67 @@ class RestaurantProfileController extends Controller
             'ubicacion',
             'direccion',
             'website',
-            'numeroTelefonico'
+            'numeroTelefonico',
+            'posts'
         ));
     }
+
+    public function mostrarDashboard() {
+        $perfil = auth('restaurant')->user()->profile;
+        $perfil->load('profilePhoto');
+
+        $restaurantId = $perfil->restaurant->id;
+
+        // Cargar los post creados por el usuario y los post realizados de Eventos culinarios que se realizarán en el establecimiento
+        $postsNormales = Post::with([
+            'culinaryEvent',
+            'photo',
+            'likes',
+            'comments',
+            'profile.profilePhoto',
+            'profile.restaurant'
+        ])
+        ->where('profile_id', $perfil->id)
+        ->where('visibility', 'Public')
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+        $postsEventos = Post::with([
+            'culinaryEvent',
+            'photo',
+            'likes',
+            'comments',
+            'profile.profilePhoto',
+            'profile.restaurant'
+        ])
+        ->whereHas('culinaryEvent', function ($query) use ($restaurantId) {
+            $query->where('restaurant_id', $restaurantId);
+        })
+        ->where('post_type', 'Culinary Event')
+        ->where('visibility', 'Public')
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+        $posts = $postsNormales->concat($postsEventos)->sortByDesc('created_at');
+
+        $misNovedades = Follow::with(['follower.person', 'follower.profilePhoto'])
+            ->where('followed_id', $perfil->id)
+            ->latest()
+            ->take(3)
+            ->get()
+            ->map(function ($follow) {
+                return [
+                    'nombre' => $follow->follower->person->first_name . ' ' . $follow->follower->person->last_name,
+                    'foto' => optional($follow->follower->profilePhoto)->url ?? asset('images/default_image_profile.png'),
+                    'tiempo' => Carbon::parse($follow->created_at)->diffForHumans(),
+                ];
+            });
+
+        return view('restaurantes.principal', compact(
+            'perfil',
+            'posts',
+            'misNovedades',
+        ));
+    }
+    
 }

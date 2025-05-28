@@ -2,6 +2,13 @@
 @section('title', 'Red de sabores')
 @section('description', 'Encuentra nuevos amigos y explora nuevos restaurantes.')
 @section('content')
+    
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="contenido-red-de-sabores">
         <div class="header-red-sabores">
             <h2>Red de sabores</h2>
@@ -24,12 +31,6 @@
                     <p>{{ $usuario->person->first_name }} {{ $usuario->person->last_name }}</p>
                     
                     <div class="buttons-card">
-                        {{--Tener en cuenta que tipo de usuario hace login para cargar su interfaz--}}
-                        <!-- @php
-                            $perfilRoute = auth('restaurant')->check()
-                                ? route('user.perfil.restaurante', $usuario)
-                                : route('perfil.user.ajeno', $usuario);
-                        @endphp  -->
                         @php
                             if (auth('user')->check()) {
                                 $perfilRoute = route('perfil.user.ajeno', $usuario);

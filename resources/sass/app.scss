@@ -292,11 +292,43 @@
             }
         }
 
-        // Pendiente de contenidos
+        
         // .contenidos {
-        //     //background-color: modulo.$color-secundario;
-        //     //min-height: 100vh;
+        //     width: 100%;
+        //     display: flex;
+        //     justify-content: center;
 
         // }
+
+        .no-post-message {
+            background-color: modulo.$color-secundario;
+            border-radius: 15px;
+            padding: 2rem;
+            height: auto;
+            margin-bottom: 1rem;
+        }
     }
+}
+
+.rest-main-dashboard {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .comment-container {
+        width: 90%;
+        margin-top: 1rem;
+    }
+
+    img {
+        background-color:  rgb(172, 170, 170);
+    }
+}
+
+.post-avatar {
+    background-color:  rgb(172, 170, 170);
+}
+
+#unique-post-message {
+    padding: 1.5rem;
 }

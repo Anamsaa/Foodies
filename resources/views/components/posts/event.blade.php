@@ -50,7 +50,6 @@
         </div>   
     </div>
     
-
     {{-- Footer del post--}}
     {{-- Likes y comentarios --}}
     @php

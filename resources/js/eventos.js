@@ -6,6 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const eventId = form.dataset.eventId;
         let isJoined = form.dataset.isJoined === 'true';
 
+        if (!eventId) {
+            console.error('Falta el ID del evento en el formulario');
+            return;
+        }
+
         button.addEventListener('click', () => {
             const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             const url = isJoined
@@ -24,25 +29,39 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(response => {
                 if (!response.ok) throw new Error('Error en la solicitud');
-                return response.json().catch(() => ({})); // Si no hay JSON
+                return response.json().catch(() => ({}));
             })
             .then(data => {
-                // Alternar estado
                 isJoined = !isJoined;
                 form.dataset.isJoined = isJoined.toString();
                 button.textContent = isJoined ? 'Descartar' : 'Unirse';
 
-                // Opcional: actualizar visualmente los cupos
-                const cupoTexto = form.closest('.evento-card').querySelector('.evento-detalles p strong');
-                if (cupoTexto) {
-                    let currentText = cupoTexto.parentElement.textContent;
-                    const match = currentText.match(/\d+/);
+                const card = form.closest('.evento-card');
+                const destino = isJoined
+                    ? document.getElementById('contenedor-mis-eventos')
+                    : document.getElementById('contenedor-eventos-disponibles');
+
+                if (card && destino) destino.appendChild(card);
+
+
+                const detalles = card.querySelectorAll('.evento-detalles p');
+                let cupoElement = null;
+
+                detalles.forEach(p => {
+                    if (p.textContent.includes('Cupos disponibles')) {
+                        cupoElement = p;
+                    }
+                });
+
+                if (cupoElement) {
+                    const match = cupoElement.textContent.match(/\d+/);
                     if (match) {
                         let current = parseInt(match[0], 10);
                         let nuevo = isJoined ? current - 1 : current + 1;
-                        cupoTexto.parentElement.innerHTML = `<strong>Cupos disponibles:</strong> ${nuevo}`;
+                        cupoElement.innerHTML = `<strong>Cupos disponibles:</strong> ${nuevo}`;
                     }
                 }
+                //actualizarParticipantes(eventId);
             })
             .catch(err => {
                 console.error(err);
@@ -51,3 +70,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// function actualizarParticipantes(eventId) {
+//     fetch(`/user/eventos/${eventId}/participantes`)
+//         .then(response => response.json())
+//         .then(participantes => {
+//             const contenedor = document.querySelector(`.evento-participantes[data-event-id="${eventId}"]`);
+//             if (!contenedor) return;
+
+//             contenedor.innerHTML = '';
+
+//             participantes.forEach(p => {
+//                 const link = document.createElement('a');
+//                 link.href = p.url;
+//                 link.classList.add('participante-link');
+//                 link.textContent = p.nombre;
+//                 contenedor.appendChild(link);
+//             });
+//         })
+//         .catch(err => console.error('Error al cargar participantes:', err));
+// }

@@ -35,7 +35,7 @@ class CommentController extends Controller
         ]); 
 
         if (auth('restaurant')->check()) {
-            return redirect()->route('dashboard.restaurant', $post);
+            return redirect()->route('dashboard.restaurant', $post)->with('highlight_post', $post->id);
         }
 
         return redirect()->route('dashboard.user')->with('highlight_post', $post->id);;
