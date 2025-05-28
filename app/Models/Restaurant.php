@@ -29,7 +29,7 @@ class Restaurant extends Model
         return $this->hasMany(Review::class);
     }
     public function culinaryEvent() {
-        return $this->hasMany(CulinaryEvent::class, 'post_id');
+        return $this->hasMany(CulinaryEvent::class, 'post_id', 'id');
     }
     public function getDiasAperturaTextoAttribute(): string {
         return is_array($this->dias_apertura) ? implode(' - ' , $this->dias_apertura) : (string) $this->dias_apertura;

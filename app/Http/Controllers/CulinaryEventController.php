@@ -38,7 +38,7 @@ class CulinaryEventController extends Controller
 
         // Crear el post
         $post = $profile->posts()->create([
-            'type' => 'evento_culinario',
+            'post_type' => 'Culinary Event',
             'content' => $request->input('invitacion'),
         ]);
 
@@ -57,29 +57,48 @@ class CulinaryEventController extends Controller
         return redirect()->route('dashboard.user')->with('success', 'Evento creado exitosamente.');
     }
 
-  
     public function join(CulinaryEvent $event){
         $profile = Auth::guard('user')->user()->profile;
         $person = $profile->person;
 
         if (!$person) {
-            return back()->withErrors('Solo los usuarios tipo Persona pueden participar.');
+            $message = 'Solo los usuarios tipo Persona pueden participar.';
+            return request()->ajax() 
+                ? response()->json(['error' => $message], 403)
+                : back()->withErrors($message);
+        }
+
+        // 🚫 Verificación añadida aquí
+        if ($event->post->profile_id === $profile->id) {
+            $message = 'No puedes unirte a tu propio evento.';
+            return request()->ajax()
+                ? response()->json(['error' => $message], 403)
+                : back()->withErrors($message);
         }
 
         if ($event->participations()->where('person_id', $person->id)->exists()) {
-            return back()->withErrors('Ya estás inscrito en este evento.');
+            $message = 'Ya estás inscrito en este evento.';
+            return request()->ajax() 
+                ? response()->json(['error' => $message], 409)
+                : back()->withErrors($message);
         }
 
         if ($event->participations()->count() >= $event->max_participants) {
-            return back()->withErrors('Este evento ya está completo.');
+            $message = 'Este evento ya está completo.';
+            return request()->ajax() 
+                ? response()->json(['error' => $message], 400)
+                : back()->withErrors($message);
         }
 
         $event->participations()->create([
             'person_id' => $person->id,
             'registration_date' => now(),
-            'status' => 'confirmado',
-        ]);
-        return back()->with('success', 'Te has unido al evento.');
+            'status' => 'Registered',
+            ]);
+
+            return request()->ajax()
+                ? response()->json(['message' => 'Te has unido al evento.'])
+                : back()->with('success', 'Te has unido al evento.');
     }
 
 
@@ -88,22 +107,38 @@ class CulinaryEventController extends Controller
         $person = $profile->person;
 
         $participation = $event->participations()->where('person_id', $person->id)->first();
-        if (!$participation) {
-            return back()->withErrors('No estás inscrito en este evento.');
-        }
-        $participation->delete();
-        return back()->with('success', 'Has cancelado tu participación.');
-    }
 
+        if (!$participation) {
+            $message = 'No estás inscrito en este evento.';
+            return request()->ajax()
+                ? response()->json(['error' => $message], 404)
+                : back()->withErrors($message);
+        }
+
+        $participation->delete();
+
+        return request()->ajax()
+            ? response()->json(['message' => 'Has cancelado tu participación.'])
+            : back()->with('success', 'Has cancelado tu participación.');
+    }
     public function edit(CulinaryEvent $event){
 
-        $this->authorizeOwner($event); 
-        $profile = auth('user')->user()->profile;
-        $restaurantesLocales = Restaurant::whereHas('profile', fn($q) =>
-            $q->where('province_id', $profile->province_id)
-        )->get();
-        return view('personas.editar-evento', compact('event', 'restaurantesLocales'));
+        $profile = Auth::guard('user')->user()->profile;
+        $person = $profile->person;
 
+        $participation = $event->participations()->where('person_id', $person->id)->first();
+        if (!$participation) {
+            $message = 'No estás inscrito en este evento.';
+            return request()->ajax() 
+                ? response()->json(['error' => $message], 404)
+                : back()->withErrors($message);
+        }
+
+        $participation->delete();
+
+        return request()->ajax()
+            ? response()->json(['message' => 'Has cancelado tu participación.'])
+            : back()->with('success', 'Has cancelado tu participación.');
     }
 
     // Guardar cambios

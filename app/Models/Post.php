@@ -28,7 +28,7 @@ class Post extends Model
         return $this->hasOne(Review::class, 'post_id');
     }
     public function culinaryEvent(): HasOne {
-        return $this->hasOne(culinaryEvent::class, 'post_id');
+        return $this->hasOne(CulinaryEvent::class, 'post_id', 'id');
     }
     public function likes(): HasMany {
         return $this->hasMany(Like::class);

@@ -104,17 +104,6 @@ Route::prefix('user')->group(function () {
         ## Eliminar Post
         Route::delete('post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
 
-        // RESEÑAS 
-        ## Redactar Reseñas
-        Route::get('crear-reseña', fn () => view('personas.formulario-reseña'))->name('redactar.review');
-        ## Registrar Reseñas
-        Route::post('redactar-reseña', [PostController::class, 'store'])->name('review.store');
-        ## Modificar Reseñas
-        Route::get('reseña/{reseña}/edit', [PostController::class, 'edit'])->name('reviw.edit');
-        Route::put('reseña/{reseña}', [PostController::class, 'update'])->name('review.update');  
-        ## Eliminar Reseñas
-        Route::delete('post/{reseña}', [PostController::class, 'destroy'])->name('review.destroy');
-
         // EVENTOS CULINARIOS
         ## Ver formulario de creación de eventos
         Route::get('crear-evento', [CulinaryEventController::class, 'create'])->name('evento.create');
@@ -137,7 +126,18 @@ Route::prefix('user')->group(function () {
 
         // -------------------------------------------------------------------------------------------------------------- //
 
+         // RESEÑAS 
+        ## Redactar Reseñas
+        Route::get('crear-reseña', fn () => view('personas.formulario-reseña'))->name('redactar.review');
+        ## Registrar Reseñas
+        Route::post('redactar-reseña', [PostController::class, 'store'])->name('review.store');
+        ## Modificar Reseñas
+        Route::get('reseña/{reseña}/edit', [PostController::class, 'edit'])->name('reviw.edit');
+        Route::put('reseña/{reseña}', [PostController::class, 'update'])->name('review.update');  
+        ## Eliminar Reseñas
+        Route::delete('post/{reseña}', [PostController::class, 'destroy'])->name('review.destroy');
 
+         // -------------------------------------------------------------------------------------------------------------- //
         ## Encontrar nuevos usuarios para seguir
         Route::get('red-de-sabores', [FollowController::class, 'sugerenciasParaSeguir'])->name('red.user');
 
@@ -214,6 +214,18 @@ Route::prefix('restaurant')->group(function () {
 // Definicion de rutas para establecer conexión con archivos JSON
 Route::get('/api/provinces/{regionId}', [UbicacionController::class, 'getProvinces']);
 Route::get('/api/cities/{provinceId}', [UbicacionController::class, 'getCities']);
+
+Route::get('/api/restaurantes/{id}/horarios', function ($id) {
+    $perfil = \App\Models\Profile::with('restaurant')->find($id);
+
+    if (!$perfil || !$perfil->restaurant) {
+        return response()->json(['error' => 'Restaurante no encontrado'], 404);
+    }
+
+    return response()->json([
+        'horarios' => $perfil->restaurant->horarios ?? 'No hay horarios definidos',
+    ]);
+});
 
 
 

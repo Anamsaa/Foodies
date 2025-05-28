@@ -20,11 +20,21 @@
         </div>
         <div id="post-usuarios" class="post-usuarios">
             @forelse($posts as $post)
+            {{--@dd($post)--}}
                 @if (session('highlight_post') == $post->id)
                     <div class="nuevo-comentario">Tu comentario fue publicado</div>
                 @endif
-                @include('components.posts.post', ['post' => $post])
-                @empty
+
+            {{-- Aquí cambia esto --}}
+                @if ($post->post_type === 'Culinary Event' && $post->culinaryEvent)
+                    @include('components.posts.event', [
+                        'post' => $post,
+                        'evento' => $post->culinaryEvent
+                    ])
+                @else
+                    @include('components.posts.post', ['post' => $post])
+                @endif
+            @empty
                 <p class="no-post-message">No hay publicaciones todavía.</p>
             @endforelse
         </div>

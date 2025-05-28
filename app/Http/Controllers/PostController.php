@@ -41,7 +41,15 @@ class PostController extends Controller
     }
 
     public function edit(Post $post) {
-        return view('compartidas.form-posts', ['post' => $post]);
+        if ($post->type === 'Culinary Event' && $post->culinaryEvent) {
+            return redirect()->route('evento.edit', $post->culinaryEvent);
+        }
+
+        if ($post->type === 'reseña') {
+            return view('personas.formulario-reseña', compact('post'));
+        }
+
+        return view('publicaciones.form-posts', compact('post')); 
     }
 
     public function update(Request $request, Post $post) {

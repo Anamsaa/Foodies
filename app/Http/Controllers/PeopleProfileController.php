@@ -146,6 +146,7 @@ class PeopleProfileController extends Controller
         $posts = $profile->posts()
             ->latest()
             ->with([
+            'culinaryEvent',
             'photo',
             'likes',
             'comments',
@@ -197,6 +198,7 @@ class PeopleProfileController extends Controller
         $posts = $perfil->posts()
             ->latest()
             ->with([
+            'culinaryEvent',
             'photo',
             'likes',
             'comments',
@@ -236,6 +238,7 @@ class PeopleProfileController extends Controller
         $perfil = auth('user')->user()->profile;
         $perfil->load('profilePhoto'); 
         $posts = Post::with([
+            'culinaryEvent',
             'photo',
             'likes',
             'comments',
