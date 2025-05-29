@@ -9,6 +9,7 @@ use App\Models\Region;
 use App\Models\Photo;
 use App\Models\Post;
 use App\Models\Follow;
+use Illuminate\Support\Facades\Hash;
 use Exception;
 use Illuminate\Support\Facades\DB;
 ## Librería que me permite trabajar con fechas
@@ -265,11 +266,12 @@ class PeopleProfileController extends Controller
             ->take(3)
             ->get()
             ->map(function ($follow) {
-            return [
-            'nombre' => $follow->follower->person->first_name . ' ' . $follow->follower->person->last_name,
-            'foto' => optional($follow->follower->profilePhoto)->url ?? asset('images/default_image_profile.png'),
-            'tiempo' => Carbon::parse($follow->created_at)->diffForHumans(),
-            ];
+                return [
+                    'nombre' => $follow->follower->person->first_name . ' ' . $follow->follower->person->last_name,
+                    'foto' => optional($follow->follower->profilePhoto)->url ?? asset('images/default_image_profile.png'),
+                    'tiempo' => Carbon::parse($follow->created_at)->diffForHumans(),
+                    'profile' => $follow->follower,
+                ];
             });
 
         $sugerencias = Profile::with(['person', 'profilePhoto'])
@@ -306,4 +308,90 @@ class PeopleProfileController extends Controller
             'tipoFoodie',
         ));
     }
+
+    public function mostrarFormularioAjustes() {
+        // Cuenta del usuario
+        $user = auth('user')->user(); 
+        // Datos del perfil del usuario
+        $perfil = $user->profile; 
+        // En caso de no tener un perfil creado o que el perfil no sea de una persona retorna al dahsboard
+        if (!$perfil || !$perfil->person) {
+            return redirect()->route('dashboard.user');
+        }
+
+        // Asegurarse de que los datos de perfil estén cargados antes de pasarlos
+        $perfil->load('person');
+        // Cargar las regiones
+        $regions = $regions = Region::all();
+        return view('personas.ajustes', compact('perfil', 'regions', 'user'));
+    }
+
+    // Actualización de datos del perfil a través de ajustes
+//     public function actualizarDatos(Request $request){
+//         $user = auth('user')->user();
+//         $profile = $user->profile;
+//         $person = $profile->person;
+
+//         $request->validate([
+//         'first_name' => 'nullable|string|max:255',
+//         'last_name' => 'nullable|string|max:255',
+//         'email' => 
+//         'password' => 'nullable|min:8|confirmed',
+//         'fnacimiento' => 'nullable|date',
+//         'descripcion-usuario' => 'nullable|string|max:255',
+//         'comunidad-autonoma' => 'nullable|numeric',
+//         'provincia' => 'nullable|numeric',
+//         'ciudad' => 'nullable|numeric',
+//         ]);
+
+//         $userId = auth('user')->id();
+//         $account = \App\Models\Account::findOrFail($userId);
+//         if ($request->filled('password')) {
+//             $account->password_hash = Hash::make($request->password);
+//         }
+        
+//         if ($request->filled('email')) {
+//         $request->validate([
+//         'email' => 'nullable|email|confirmed|unique:accounts,email,' . $user->id,
+//         ]);
+//     $account->email = $request->email;
+// }
+
+//         $account->save();
+
+//         // Actualización de persona
+//         if ($person) {
+//             if ($request->filled('first_name')) {
+//                 $person->first_name = $request->input('first_name');
+//             }
+//             if ($request->filled('last_name')) {
+//                 $person->last_name = $request->input('last_name');
+//             }
+//             if ($request->filled('fnacimiento')) {
+//                 $person->birth_date = $request->fnacimiento;
+//             }
+
+//             if ($request->filled('descripcion-usuario')) {
+//                 $person->description = $request->input('descripcion-usuario');
+//             }
+
+//             $person->save();
+//         }
+
+//         // Actualización de ubicación en el perfil
+//         if ($request->filled('comunidad-autonoma')) {
+//             $profile->region_id = $request->input('comunidad-autonoma');
+//         }
+//         if ($request->filled('provincia')) {
+//             $profile->province_id = $request->input('provincia');
+//         }
+//         if ($request->filled('ciudad')) {
+//             $profile->city_id = $request->input('ciudad');
+//         }
+
+//         $profile->save();
+
+//         return redirect()->back()->with('success', 'Datos actualizados correctamente');
+
+//     }
 }

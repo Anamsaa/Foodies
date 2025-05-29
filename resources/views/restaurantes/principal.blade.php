@@ -53,9 +53,9 @@
                 <div id="contenedor-novedades" class="contenedor-novedades">
                     @forelse($misNovedades as $novedad)
                         <div class="novedad-item">
-                            <img src="{{ $novedad['foto'] }}" alt="Avatar">
+                            <a href="{{ get_profile_route($novedad['profile'])}}"><img src="{{ $novedad['foto'] }}" alt="Avatar"></a>
                             <div class="novedad-info">
-                                <strong>{{ $novedad['nombre'] }}</strong> ha empezado a seguirte
+                                 <a href="{{ get_profile_route($novedad['profile'])}}" style="text-decoration: none; color: black;"><strong>{{ $novedad['nombre'] }}</strong></a> ha empezado a seguirte
                                 <p>{{ $novedad['tiempo'] }}</p>
                             </div>
                         </div>

@@ -337,6 +337,7 @@ class RestaurantProfileController extends Controller
                     'nombre' => $follow->follower->person->first_name . ' ' . $follow->follower->person->last_name,
                     'foto' => optional($follow->follower->profilePhoto)->url ?? asset('images/default_image_profile.png'),
                     'tiempo' => Carbon::parse($follow->created_at)->diffForHumans(),
+                    'profile' => $follow->follower,
                 ];
             });
 

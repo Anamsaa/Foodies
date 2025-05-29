@@ -139,10 +139,17 @@ Route::prefix('user')->group(function () {
         Route::get('eventos', [CulinaryEventController::class, 'indexUser'])->name('eventos.index');
 
         ## Ajustes / Edición de datos de creación de perfil y Eliminación de cuenta
-        Route::get('ajustes', fn() => view('personas.ajustes'))->name('ajustes.user');
+        ## Ver el formulario y pasarle los datos para el value 
+        Route::get('ajustes', [PeopleProfileController::class, 'mostrarFormularioAjustes'])->name('ajustes.user');
+        ## Enviar los datos
+        Route::post('ajustes', [PeopleProfileController::class, 'actualizarDatos'])->name('ajustes.update');
+
+        ## Eliminar la cuenta 
+        Route::delete('eliminar-cuenta', [PeopleProfileController::class, 'eliminarCuenta'])->name('user.delete');
         
         ## Logout
         Route::post('logout', [LogoutPeopleController::class, 'logout'])->name('logout.user');
+        
     });
 });
 

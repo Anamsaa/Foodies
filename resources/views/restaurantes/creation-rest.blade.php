@@ -58,41 +58,6 @@
                         <label for="invitacion">Invita a los foodies a tu negocio: </label>
                         <textarea name="invitacion" id="invitacion" rows="6" cols="50" placeholder="Ej: '¡Bienvenido a nuestro restaurante! Aquí nuestra especialidad son los tacos al Pastor">{{ old('invitacion', session('restaurant_step1.invitacion')) }}</textarea>
                     </div>
-
-                    {{--<div class="contenedor-imagenes">
-                        <div class="contenedor-formulario cargar-imagenes">
-                            <span class="titulo-imagen">Escoge una foto de perfil</span>
-                            <label class="upload-box" id="box-perfil">
-                                <i class="fa-solid fa-plus"></i>
-                                <span>Haz click para seleccionar una imagen</span>
-                            </label>
-
-                            <input type="file" name="imagen-perfil" id="imagen-perfil" accept=".jpg, .jpeg, .png, .webp" style="display: none;">
-
-                            @if(session('restaurant_step1.imagen_perfil_path'))
-                                <div class="preview-imagen" id="preview-perfil">
-                                    <img src="{{ asset('storage/' . session('restaurant_step1.imagen_perfil_path')) }}" alt="Imagen de perfil previa">
-                                    <button type="button" class="btn-eliminar" onclick="eliminarImagen('imagen-perfil','box-perfil', 'preview-perfil')">X</button>
-                                </div>
-                            @endif
-                        </div>
-                        <div class="contenedor-formulario cargar-imagenes">
-                            <span class="titulo-imagen">Escoge una foto de portada</span>
-                            <label class="upload-box" id="box-portada">
-                                <i class="fa-solid fa-plus"></i>
-                                <span>Haz click para seleccionar una imagen</span>
-                            </label>
-
-                            <input type="file" name="imagen-portada" id="imagen-portada" accept=".jpg, .jpeg, .png, .webp" style="display: none;">
-
-                            @if(session('restaurant_step1.imagen_portada_path'))
-                                <div class="preview-imagen" id="preview-portada">
-                                    <img src="{{ asset('storage/' . session('restaurant_step1.imagen_portada_path')) }}" alt="Imagen de portada previa">
-                                    <button type="button" class="btn-eliminar" onclick="eliminarImagen('imagen-portada','box-portada', 'preview-portada')">X</button>
-                                </div>
-                            @endif
-                        </div>
-                    </div>--}}
                 </div>
             </div>
             <div class="button-formulario">

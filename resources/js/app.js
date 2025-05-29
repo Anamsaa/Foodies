@@ -18,10 +18,10 @@ import './comprobaciones';
 import './eventos';
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('entra a la función');
+    //console.log('entra a la función');
     incializarMenuLanding();
     const btnHamburguesa = document.getElementById('boton-hamburguesa');
-    console.log(btnHamburguesa);
+    //console.log(btnHamburguesa);
     const sidebar = document.querySelector('.sidebar');
 
     if (btnHamburguesa && sidebar) {
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(`/api/provinces/${regionId}`)
             .then(res => res.json())
             .then(provinces => {
-                console.log(provinces);
+                //console.log(provinces);
                 provinces.forEach(province => {
                     const option = document.createElement('option');
                     option.value = province.id;

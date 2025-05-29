@@ -22,6 +22,7 @@ class City extends Model
         return $this->hasMany(Profile::class);
     }
 
+    // Obtener el nombre formateado de las ciudades
     public function getNombreFormateadoAttribute() {
         return mb_convert_case(mb_strtolower($this->nombre, 'UTF-8'), MB_CASE_TITLE, 'UTF-8');
     }
