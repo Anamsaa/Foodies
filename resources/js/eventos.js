@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     : document.getElementById('contenedor-eventos-disponibles');
 
                 if (card && destino) destino.appendChild(card);
-
+                location.reload();
 
                 const detalles = card.querySelectorAll('.evento-detalles p');
                 let cupoElement = null;
@@ -61,7 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         cupoElement.innerHTML = `<strong>Cupos disponibles:</strong> ${nuevo}`;
                     }
                 }
-                //actualizarParticipantes(eventId);
             })
             .catch(err => {
                 console.error(err);
@@ -70,23 +69,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-
-// function actualizarParticipantes(eventId) {
-//     fetch(`/user/eventos/${eventId}/participantes`)
-//         .then(response => response.json())
-//         .then(participantes => {
-//             const contenedor = document.querySelector(`.evento-participantes[data-event-id="${eventId}"]`);
-//             if (!contenedor) return;
-
-//             contenedor.innerHTML = '';
-
-//             participantes.forEach(p => {
-//                 const link = document.createElement('a');
-//                 link.href = p.url;
-//                 link.classList.add('participante-link');
-//                 link.textContent = p.nombre;
-//                 contenedor.appendChild(link);
-//             });
-//         })
-//         .catch(err => console.error('Error al cargar participantes:', err));
-// }

@@ -29,7 +29,7 @@
                     <input type="text" id="evento-title" name="experience-title" value="{{ old('experience-title', $event->title ?? '') }}" required>
                 </div>
                 <div class="column-row">
-                    <label for="cupos-participacion">Cupos máximos:</label>
+                    <label for="cupos-participacion">Cupos máximos: </label>
                     <input type="number" id="cupos-participacion" name="max_participants" min="1" max="20" value="{{ old('max_participants', $event->max_participants ?? '') }}" required>
                 </div>
             </div>

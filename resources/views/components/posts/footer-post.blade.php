@@ -8,7 +8,7 @@
         <button class="btn-like"
             data-post-id="{{ $post->id }}"
             data-liked="{{ $post->likes->contains('profile_id', auth('user')->user()?->profile->id ?? auth('restaurant')->user()?->profile->id ?? null) ? 'true' : 'false' }}">
-            <i class="fa-solid fa-heart {{ $post->likes->contains('profile_id', auth('user')->user()?->profile->id ?? auth('restaurant')->user()?->profile->id ?? null) ? 'liked' : '' }}"></i>
+            <i style="cursor: pointer;" class="fa-solid fa-heart {{ $post->likes->contains('profile_id', auth('user')->user()?->profile->id ?? auth('restaurant')->user()?->profile->id ?? null) ? 'liked' : '' }}"></i>
             <span class="like-count">{{ $post->likes->count() }}</span>
         </button>
     </div>
@@ -17,7 +17,7 @@
     <div class="post-comment icons-footer">
         @isset($rutaComentarios)
             <a href="{{ $rutaComentarios }}" class="container-comments-box">
-                <i class="fa-solid fa-comment"></i>
+                <i style="cursor: pointer;" class="fa-solid fa-comment"></i>
                 <span>{{ $post->comments->count() }}</span>
             </a>
 

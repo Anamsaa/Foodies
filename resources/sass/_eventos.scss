@@ -238,6 +238,7 @@
     #contenedor-mis-eventos {
         display: flex;
         flex-wrap: wrap;
+        gap: 1rem;
 
         .mensaje-vacio {
             width: 200px;
@@ -290,7 +291,6 @@
             border-radius: 15px;
             padding: 1rem;
             margin-bottom: 1rem;
-            margin-left: 1rem;
 
             a {
                 text-decoration: none;

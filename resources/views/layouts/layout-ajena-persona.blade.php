@@ -15,70 +15,41 @@
 <body>
     <div class="componentes-principales profile-styles-users">
         @include('partials.sidebar')
-         @php
-            $authRestaurant = auth('restaurant')->check() ? auth('restaurant')->user() : null;
-            $esPropietario = $authRestaurant && $authRestaurant->profile && $authRestaurant->profile->id === $perfil->id;
-            $coverPhotoUrl = $authRestaurant?->profile?->coverPhoto?->url;
-            $restaurantName = $authRestaurant?->profile?->restaurant?->name ?? $perfil->restaurant->name;
-        @endphp
-
+       
         <main>
             {{-- Panel de control solo visible para restaurantes --}}
-            @if($authRestaurant)
-                <div class="panel-de-control">
-                    <div class="panel-control-ayuda">
-                        <a class="btn-panel" aria-label="Abrir ajustes" href="{{ route('ajustes.restaurante') }}">
-                            <i id="panel-ajustes" class="fa-solid fa-gear"></i>
-                        </a>
-
-                        <button id="panel-control-logout" class="btn-panel" aria-label="Cerrar sesión" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i id="panel-logout" class="fa-solid fa-right-from-bracket"></i>
-                        </button>
-                    </div>
+            <div class="panel-de-control">
+                <div class="panel-control-ayuda">
+                    <a class="btn-panel" aria-label="Abrir ajustes" href="{{ route('ajustes.user') }}"><i id="panel-ajustes" class="fa-solid fa-gear"></i></a>
+                
+                    <button id="panel-control-logout" class="btn-panel" aria-label="Cerrar sesión" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i style="cursor: pointer;" id="panel-logout" class="fa-solid fa-right-from-bracket"></i>
+                    </button>
                 </div>
-            @endif
+            </div>
 
             <div class="header-profile" 
-                @if($coverPhotoUrl)
-                    style="background-image: url('{{ $coverPhotoUrl }}');"
+                @if($perfil->photo_cover)
+                    style="background-image: url('{{ $perfil->photo_cover }}');"
                 @endif>
 
                 <div class="header-profile-cover-name">
-                    {{-- Foto de portada --}}
-                    @if($esPropietario)
-                        <label class="upload-cover">
-                            <i class="fa-solid fa-camera"></i>
-                            <input type="file" name="cover_photo" accept="image/**" hidden>
-                        </label>
-                    @endif
-
+                   
                     {{-- Versión móvil --}}
                     <div class="picture-header-profile mobile-version">
                         <img id="profileImageMobile" src="{{ $perfil->profilePhoto->url ?? asset('images/default_image_profile.png') }}" alt="Imagen de perfil de restaurante">
-                        @if($esPropietario)
-                            <label class="upload-profile">
-                                <i class="fa-solid fa-camera"></i>
-                                <input type="file" name="profile_photo" accept="image/**" hidden>
-                            </label>
-                        @endif
                     </div>
 
                     {{-- Nombre del restaurante --}}
                     <div class="nombre-header-profile">
-                        <h2>{{ $restaurantName }}</h2>
+                        <h2>{{ $perfil->restaurant->name }}</h2>
                     </div>
                 </div>
 
                 {{-- Foto de perfil (versión escritorio) --}}
-                <div class="picture-header-profile">
+                 <div class="picture-header-profile">
                     <img id="profileImage" src="{{ $perfil->profilePhoto->url ?? asset('images/default_image_profile.png') }}">
-                    @if($esPropietario)
-                        <label class="upload-profile">
-                            <i class="fa-solid fa-camera"></i>
-                            <input type="file" name="profile_photo" accept="image/**" hidden>
-                        </label>
-                    @endif
-                </div>
+                </div> 
             </div>
 
             <div class="estructura-perfil">
@@ -119,11 +90,7 @@
                         <p>{{ $descripcion }}</p>
                     </div>
 
-                    {{-- Botón seguir solo para usuarios tipo persona --}}
-                    <!-- @if(!$esPropietario && auth('user')->check())
-                        <button type="button" id="seguir" class="seguir">Seguir</button>
-                    @endif -->
-                    @if(!$esPropietario)
+                    @if(auth('user')->check())
                         @php
                             $yo = auth('user')->user()->profile;
                             $yaSigo = $perfil->followers()->where('follower_id', $yo->id)->where('status', 'Following')->exists();
@@ -138,11 +105,9 @@
         </main>
 
         {{-- Logout solo si hay restaurante autenticado --}}
-        @if(auth('restaurant')->check())
-            <form id="logout-form" action="{{ route('logout.restaurant') }}" method="POST" style="display:none;">
-                @csrf
-            </form>
-        @endif     
+        <form id="logout-form" action="{{ route('logout.user') }}" method="POST" style="display:none;">
+            @csrf
+        </form>   
     </div>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </body>

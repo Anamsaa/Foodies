@@ -19,7 +19,7 @@
     --}}
 
     {{-- Manejo y aviso de errores al hacer submit --}}
-    @if ($errors->any())
+    <!-- @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
             @foreach ($errors->all() as $error)
@@ -27,7 +27,7 @@
             @endforeach
             </ul>
         </div>
-    @endif
+    @endif -->
 
     <h2>Ajustes</h2>
     <form action="{{ route('ajustes.update') }}" method="POST" enctype="multipart/form-data" data-contexto="persona">
@@ -39,7 +39,10 @@
             <h2>Configuraciones de cuenta: </h2>
             <div class="contenedor-formulario">
                 <label for="email">Cambiar email</label>
-                <input type="email" name="email" id="email" value="{{ old('email', $user->email ?? '') }}">
+                <input type="email" name="email" id="email" placeholder="{{ old('email', $user->email ?? '') }}">
+                @error('email')
+                    <small class="error-message">{{ $message }}</small>
+                @enderror
             </div>
             <div class="contenedor-formulario">
                 <label for="email_confirmation">Repite el email</label>
@@ -48,6 +51,9 @@
             <div class="contenedor-formulario">
                 <label for="password">Cambiar Contraseña</label>
                 <input type="text" name="password" id="password">
+                @error('password')
+                    <small class="error-message">{{ $message }}</small>
+                @enderror
             </div>
             <div class="contenedor-formulario">
                 <label for="password_confirmation">Repite la contraseña</label>
@@ -63,14 +69,23 @@
             <div class="contenedor-formulario">
                 <label for="first_name">Nombres: </label>
                 <input type="text" id="nombre-ajustes" name="nombre" value="{{ old('first_name', $perfil->person->first_name ?? '') }}">
+                @error('first_name')
+                    <small class="error-message">{{ $message }}</small>
+                @enderror
             </div>
             <div class="contenedor-formulario">
                 <label for="last_name">Apellidos: </label>
                 <input type="text" id="apellidos-ajustes" name="last_name" value="{{old('last_name', $perfil->person->last_name ?? '')}}">
+                @error('last_name')
+                    <small class="error-message">{{ $message }}</small>
+                @enderror
             </div>
             <div class="contenedor-formulario">
                 <label for="fnacimiento">Cambiar fecha de nacimiento: </label>
-                <input type="date" id="fnacimiento-ajustes" name="fnacimiento" value="{{ old('fnacimiento') }}">
+                <input type="date" id="fnacimiento-ajustes" name="fnacimiento">
+                 @error('fnacimiento')
+                    <small class="error-message">{{ $message }}</small>
+                @enderror
             </div>
 
             <div class="contenedor-formulario">
@@ -93,12 +108,18 @@
                 <select name="provincia" id="provincia">
                     <option value="">Seleccione su Provincia</option>
                 </select>
+                @error('provincia')
+                    <small class="error-message">{{ $message }}</small>
+                @enderror
             </div>
             <div class="contenedor-formulario select-content">
                 <label for="ciudad">Ciudad: </label>
                 <select name="ciudad" id="ciudad">
                     <option value="">Seleccione su Ciudad</option>
                 </select>
+                @error('ciudad')
+                    <small class="error-message">{{ $message }}</small>
+                @enderror
             </div>
         </div>
        
@@ -109,7 +130,19 @@
     <div class="change-images">
         {{-- Deberia poner un botón para que genere la opción y actualizar la tabla para que los campos de cover_photo_id y profile_photo_id --}}
         {{-- Tablas afectadas: Profiles y Photos --}}
-        
+        <p>Configurar foto de perfil por defecto</p>
+        <form method="POST" action="{{ route('perfil.eliminar.foto') }}" onsubmit="return confirm('¿Seguro que quieres quitar tu foto de perfil?')">
+            @csrf
+            <input type="hidden" name="tipo" value="perfil">
+            <button type="submit">Quitar foto de perfil</button>
+        </form>
+
+        <p>Configurar foto de portada por defecto</p>
+        <form method="POST" action="{{ route('perfil.eliminar.foto') }}" onsubmit="return confirm('¿Seguro que quieres quitar tu foto de portada?')">
+            @csrf
+            <input type="hidden" name="tipo" value="portada">
+            <button type="submit">Quitar foto de portada</button>
+        </form>      
     </div>
 
     {{-- ** DANGER ** --}}

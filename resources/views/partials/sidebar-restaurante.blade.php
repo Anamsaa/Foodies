@@ -28,4 +28,7 @@
             <li><a href="#" onclick="event.preventDefault(); document.getElementById('logout-form-rest').submit();">Cerrar Sesión</a></li>
         </ul>
     </div>
+    <form id="logout-form-rest" action="{{ route('logout.restaurant') }}" method="POST" style="display:none;">
+        @csrf
+    </form>
 </nav>

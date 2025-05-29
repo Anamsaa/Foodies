@@ -144,6 +144,9 @@ Route::prefix('user')->group(function () {
         ## Enviar los datos
         Route::post('ajustes', [PeopleProfileController::class, 'actualizarDatos'])->name('ajustes.update');
 
+        ## Configurar por defecto la foto de portada y de perfil
+        Route::post('ajustes/foto/eliminar', [PeopleProfileController::class, 'eliminarFotos'])->name('perfil.eliminar.foto');
+
         ## Eliminar la cuenta 
         Route::delete('eliminar-cuenta', [PeopleProfileController::class, 'eliminarCuenta'])->name('user.delete');
         

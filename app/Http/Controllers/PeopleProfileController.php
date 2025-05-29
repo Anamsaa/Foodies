@@ -14,6 +14,7 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 ## Librería que me permite trabajar con fechas
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
 
@@ -326,72 +327,234 @@ class PeopleProfileController extends Controller
         return view('personas.ajustes', compact('perfil', 'regions', 'user'));
     }
 
-    // Actualización de datos del perfil a través de ajustes
-//     public function actualizarDatos(Request $request){
-//         $user = auth('user')->user();
-//         $profile = $user->profile;
-//         $person = $profile->person;
+    //Actualización de datos del perfil a través de ajustes
+    public function actualizarDatos(Request $request){
+        $user = auth('user')->user();
+        $profile = $user->profile;
+        $person = $profile->person;
+        $userId = $user->id;
+        $fechaMinima = now()->subYears(16)->format('Y-m-d');
 
-//         $request->validate([
-//         'first_name' => 'nullable|string|max:255',
-//         'last_name' => 'nullable|string|max:255',
-//         'email' => 
-//         'password' => 'nullable|min:8|confirmed',
-//         'fnacimiento' => 'nullable|date',
-//         'descripcion-usuario' => 'nullable|string|max:255',
-//         'comunidad-autonoma' => 'nullable|numeric',
-//         'provincia' => 'nullable|numeric',
-//         'ciudad' => 'nullable|numeric',
-//         ]);
+        $rules = [
+            'first_name' => 'nullable|string|max:255|regex:/^[\pL\s\-]+$/u',
+            'last_name' => 'nullable|string|max:255|regex:/^[\pL\s\-]+$/u',
+            'descripcion-usuario' => 'nullable|string|max:255',
+            'comunidad-autonoma' => 'nullable|numeric',
+        ];
 
-//         $userId = auth('user')->id();
-//         $account = \App\Models\Account::findOrFail($userId);
-//         if ($request->filled('password')) {
-//             $account->password_hash = Hash::make($request->password);
-//         }
+        // ** EMAIL **
+        // Validación si se llena el campo email
+        if ($request->filled('email') && $request->email !== $user->email) {
+            $rules['email'] = [
+                'required', 
+                'email', 
+                'confirmed', 
+                'regex:/^[a-zA-Z][a-zA-Z0-9.\-_]+@[a-zA-Z0-9.\-_]+\.[a-zA-Z]{2,6}$/', 
+                'unique:accounts,email,' . $userId,
+            ]; 
+        } elseif ($request->filled('email') && $request->email === $user->email) {
+            // Si el correo actual se repite envía esto
+            return back()->withErrors(['email' => 'Ya estás usando este correo electrónico. Intenta con otro.'])->withInput();
+        }
+
+        // ** CONTRASEÑA ** 
+        // Validación si se llena el campo contraseña
+        // Si la contraseña actual es la misma 
+        if ($request->filled('password')) {
+            if (Hash::check($request->password, $user->password_hash)) {
+                return back()->withErrors(['password' => 'La nueva contraseña debe ser diferente a la actual'])->withInput();
+            }
+
+            $rules['password'] = [
+                'required',
+                'confirmed',
+                'regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&-_]).{8,}$/',
+            ];
+        }
+
+        // ** FECHA DE NACIMIENTO ** 
+        // Validación de fecha de nacimiento 
+        if ($request->filled('fnacimiento')) {
+            $rules['fnacimiento'] = [
+                'nullable',
+                'date', 
+                'before_or_equal:' . $fechaMinima
+            ];
+        }
+
+        // ** VALIDACIÓN PROVINCIA **
+        if ($request->filled('provincia')) {
+            $rules['provincia'] = [
+                'nullable',
+                'numeric',
+                'required_with:comunidad-autonoma'
+            ];
+        }
+
+        // ** VALIDACIÓN CIUDAD **
+        if ($request->filled('ciudad')) {
+            $rules['ciudad'] = [
+                'nullable',
+                'numeric',
+                'required_with:provincia'
+            ];
+        }
+
+        // Mensajes personalizados según el campo que se esté validando 
+        $messages = [
+            'email.regex' => 'Nuevo correo inválido. Intenta con otro',
+            'email.confirmed' => 'Los correos no coinciden',
+            'email.unique' => 'Este correo ya está en uso.',
+            'password.confirmed' => 'Las contraseñas no coinciden',
+            'password.regex' => 'La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un carácter especial (@$!%*#?&-_)',
+            'first_name.regex' => 'El nombre debe contener sólo letras',
+            'last_name.regex' => 'El apellido debe contener sólo letras',
+            'fnacimiento.before_or_equal' => 'Debes tener al menos 16 años para registrarte',
+            'provincia.required_with' => 'Selecciona una comunidad autónoma antes de la provincia.',
+            'ciudad.required_with' => 'Selecciona una provincia antes de la ciudad.',
+        ]; 
+
+        // Lanzar errores de validación
+        $validated = $request->validate($rules, $messages);
+        $account = \App\Models\Account::findOrFail($userId);
+
+
+        // **CUENTA**
+
+        $requiereLogout = false; 
+        // Actualizar datos de la cuenta
+        // email
+        if ($request->filled('email') && $request->email !== $user->email) {
+            $account->email = $request->email;
+            $requiereLogout = true;
+        }
         
-//         if ($request->filled('email')) {
-//         $request->validate([
-//         'email' => 'nullable|email|confirmed|unique:accounts,email,' . $user->id,
-//         ]);
-//     $account->email = $request->email;
-// }
+        //contraseña
+        if ($request->filled('password')) {
+            $account->password_hash = Hash::make($request->password);
+            $requiereLogout = true;
+        }
+        
+        $account->save();
 
-//         $account->save();
+        if ($requiereLogout) {
+            auth('user')->logout(); 
+            return redirect()->route('login.user')->with('success', 'Datos actualizados, vuelve a iniciar sesión');
+        }
 
-//         // Actualización de persona
-//         if ($person) {
-//             if ($request->filled('first_name')) {
-//                 $person->first_name = $request->input('first_name');
-//             }
-//             if ($request->filled('last_name')) {
-//                 $person->last_name = $request->input('last_name');
-//             }
-//             if ($request->filled('fnacimiento')) {
-//                 $person->birth_date = $request->fnacimiento;
-//             }
+        // **DATOS DE PERFIL**
+        // Actualización de persona
+        if ($person) {
+            if ($request->filled('first_name')) {
+                $person->first_name = $request->input('first_name');
+            }
+            if ($request->filled('last_name')) {
+                $person->last_name = $request->input('last_name');
+            }
+            if ($request->filled('fnacimiento')) {
+                $person->birth_date = $request->input('fnacimiento');
+            }
 
-//             if ($request->filled('descripcion-usuario')) {
-//                 $person->description = $request->input('descripcion-usuario');
-//             }
+            if ($request->filled('descripcion-usuario')) {
+                $person->description = $request->input('descripcion-usuario');
+            }
 
-//             $person->save();
-//         }
+            $person->save();
+        }
 
-//         // Actualización de ubicación en el perfil
-//         if ($request->filled('comunidad-autonoma')) {
-//             $profile->region_id = $request->input('comunidad-autonoma');
-//         }
-//         if ($request->filled('provincia')) {
-//             $profile->province_id = $request->input('provincia');
-//         }
-//         if ($request->filled('ciudad')) {
-//             $profile->city_id = $request->input('ciudad');
-//         }
+        // Actualización de ubicación en el perfil
+        if ($request->filled('comunidad-autonoma')) {
+            $profile->region_id = $request->input('comunidad-autonoma');
+        }
+        if ($request->filled('provincia')) {
+            $profile->province_id = $request->input('provincia');
+        }
+        if ($request->filled('ciudad')) {
+            $profile->city_id = $request->input('ciudad');
+        }
 
-//         $profile->save();
+        $profile->save();
 
-//         return redirect()->back()->with('success', 'Datos actualizados correctamente');
+        return redirect()->back()->with('success', 'Datos actualizados correctamente');
 
-//     }
+    }
+
+    public function eliminarFotos(Request $request) {
+
+        $request->validate([
+            'tipo' => 'required|in:perfil,portada',
+        ]); 
+
+        $perfil = auth('user')->user()->profile; 
+
+        if ($request->tipo === 'perfil') {
+            $perfil->profile_photo_id = null; 
+        } elseif ($request->tipo === 'portada') {
+            $perfil->cover_photo_id = null; 
+        }
+
+        $tipo = $request->tipo;
+
+        $perfil->save();
+
+        return back()->with('sucess', 'Ahora tu foto de' . ucfirst($tipo) . 'se ha cambiado a una predeterminada.');
+
+    }
+
+    public function eliminarCuenta(Request $request){
+        $user = auth('user')->user();
+
+        DB::beginTransaction();
+            try {
+                $profile = $user->profile;
+
+                if ($profile) {
+                    foreach ($profile->posts as $post) {
+                        if ($post->photo) {
+                            Storage::disk('public')->delete($post->photo->url);
+                            $post->photo->delete();
+                        }
+                        $post->delete();
+                    }
+
+                    $profile->comments()->delete();
+                    $profile->likes()->delete();
+
+                    $profile->followers()->delete();
+                    $profile->followings()->delete();
+
+                    $profile->sentNotifications()->delete();
+                    $profile->receivedNotifications()->delete();
+
+                    // Eliminar fotos de perfil y portada
+                    if ($profile->profilePhoto) {
+                        Storage::disk('public')->delete($profile->profilePhoto->url);
+                        $profile->profilePhoto->delete();
+                    }
+
+                    if ($profile->coverPhoto) {
+                        Storage::disk('public')->delete($profile->coverPhoto->url);
+                        $profile->coverPhoto->delete();
+                    }
+
+                    // Eliminar entidad Person
+                    if ($profile->person) {
+                        $profile->person->delete();
+                    }
+                     // Eliminar perfil
+                    $profile->delete();
+                }
+
+                auth('user')->logout();
+
+                $user->delete();
+                            
+                DB::commit();
+
+                return redirect()->route('landing')->with('success', 'Tu cuenta ha sido eliminada correctamente.');
+            } catch (Exception $e) {
+                DB::rollBack();
+                return back()->withErrors(['error' => 'Ocurrió un error al eliminar tu cuenta.'])->withInput();
+            }       
+    }
 }

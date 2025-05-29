@@ -32,9 +32,11 @@
                 @php
                     $perfil = auth('user')->user()?->profile;
                     $persona = $perfil?->person;
+                    // Si no hay cupos, no aparece el botón. Si alguien lo descarta se reactiva
+                    $cuposDisponibles = $evento->max_participants - $evento->participations->count();
                 @endphp
 
-                @if ($persona && $post->profile_id !== $perfil->id)
+                @if ($persona && $post->profile_id !== $perfil->id && $cuposDisponibles > 0)
                 @php
                     $yaInscrito = $evento->participations->contains('person_id', $persona->id);
                 @endphp

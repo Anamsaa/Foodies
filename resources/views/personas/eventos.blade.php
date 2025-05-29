@@ -92,10 +92,12 @@
                             $perfil = auth('user')->user()?->profile;
                             $persona = $perfil?->person;
                             $yaInscrito = $evento->participations->contains('person_id', $persona->id ?? null);
+                            $cuposDisponibles = $evento->max_participants - $evento->participations->count();
                         @endphp
-
-                        @if ($persona && $evento->post->profile_id !== $perfil->id)
-                            <form method="POST" class="form-unirse-evento" data-event-id="{{ $evento->id }}" data-is-joined="{{ $yaInscrito ? 'true' : 'false' }}">
+                       
+                        @if ($persona && $evento->post->profile_id !== $perfil->id  && $cuposDisponibles > 0)
+                            
+                            <form method="POST" class="form-unirse-evento" data-event-id="{{ $evento->post_id}}" data-is-joined="{{ $yaInscrito ? 'true' : 'false' }}">
                                 @csrf
                                 <button type="button" class="btn-unirse">
                                     {{ $yaInscrito ? 'Descartar' : 'Unirse' }}
