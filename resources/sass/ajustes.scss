@@ -1,0 +1,105 @@
+@use "modulo";
+@use "mixins";
+@use "media-queries";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+.formulario-ajustes-user {
+    h2 {
+        font-size: 30px;
+        margin-bottom: 2rem;
+    }
+    input {
+        padding: 0.5rem;
+    }
+
+    .edit-profile-settings {
+        margin-bottom: 2rem;
+        .conf-cuenta {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .conf-perfil {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1rem;
+
+            .contenedor-formulario {
+                textarea {
+                    height: 130px;
+                    outline: none;
+                    resize: none;
+                    padding: 1rem;
+                }
+            }
+
+            .select-content {
+                cursor: pointer;
+
+                select {
+                    appearance: auto;
+                    -webkit-appearance: auto;
+                    -moz-appearance: auto;
+                }
+            }
+        }
+
+        button {
+            padding: 0.8rem;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    }
+
+    .change-images {
+        display: flex;
+        width: 50%;
+        gap: 2rem;
+
+        @include media-queries.tablet {
+            width: 70%;
+        }
+
+        @include media-queries.mobile {
+            width: 90%;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 2rem;
+
+            button {
+                background-color: rgb(215, 53, 53);
+                color: modulo.$color-secundario;
+                font-size: 16px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: rgb(220, 4, 4);
+                }
+            }
+        }
+    }
+
+    .eliminar-cuenta {
+        margin-bottom: 2rem;
+
+        h3 {
+            margin-bottom: 1rem;
+        }
+        .btn-danger {
+            cursor: pointer;
+            color: red;
+             background: none; 
+             font-size: 25px;
+             text-decoration: underline;
+             text-decoration-line: solid 2px red;
+             margin: 0;
+             padding: 0;
+        }
+    }
+}

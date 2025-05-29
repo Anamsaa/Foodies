@@ -30,13 +30,13 @@
     @endif -->
 
     <h2>Ajustes</h2>
-    <form action="{{ route('ajustes.update') }}" method="POST" enctype="multipart/form-data" data-contexto="persona">
+    <form class="edit-profile-settings" action="{{ route('ajustes.update') }}" method="POST" enctype="multipart/form-data" data-contexto="persona">
         @csrf
 
         <div class="conf-cuenta">
             {{-- Configuración de nuevo email o contraseña de la cuenta --}}
             {{-- Tabla afectada: Accounts --}}
-            <h2>Configuraciones de cuenta: </h2>
+            <h3>Configuraciones de cuenta: </h3>
             <div class="contenedor-formulario">
                 <label for="email">Cambiar email</label>
                 <input type="email" name="email" id="email" placeholder="{{ old('email', $user->email ?? '') }}">
@@ -64,8 +64,7 @@
         <div class="conf-perfil">
              {{-- Edición de los datos  del perfil restaurante --}}
             {{-- Tablas afectadas: Profiles y People --}}
-            <h2>Configuraciones de cuenta: </h2>
-            <h2>Edición de perfil</h2>
+            <h3>Edición de perfil</h3>
             <div class="contenedor-formulario">
                 <label for="first_name">Nombres: </label>
                 <input type="text" id="nombre-ajustes" name="nombre" value="{{ old('first_name', $perfil->person->first_name ?? '') }}">
@@ -93,7 +92,7 @@
                 <textarea name="descripcion-usuario" id="descripcion-usuario-ajustes" >{{ old('descripcion-usuario', $perfil->person->description) }}</textarea>
             </div>  
 
-            <h2>Cambiar datos de ubicación: </h2>
+            <h3>Cambiar datos de ubicación: </h3>
             <div class="contenedor-formulario select-content">
                 <label for="comunidad-autonoma">Comunidad Autónoma: </label>
                 <select name="comunidad-autonoma" id="comunidad-autonoma">
@@ -130,15 +129,15 @@
     <div class="change-images">
         {{-- Deberia poner un botón para que genere la opción y actualizar la tabla para que los campos de cover_photo_id y profile_photo_id --}}
         {{-- Tablas afectadas: Profiles y Photos --}}
-        <p>Configurar foto de perfil por defecto</p>
         <form method="POST" action="{{ route('perfil.eliminar.foto') }}" onsubmit="return confirm('¿Seguro que quieres quitar tu foto de perfil?')">
+            <p>Configurar foto de perfil por defecto</p>
             @csrf
             <input type="hidden" name="tipo" value="perfil">
             <button type="submit">Quitar foto de perfil</button>
         </form>
-
-        <p>Configurar foto de portada por defecto</p>
+       
         <form method="POST" action="{{ route('perfil.eliminar.foto') }}" onsubmit="return confirm('¿Seguro que quieres quitar tu foto de portada?')">
+             <p>Configurar foto de portada por defecto</p>
             @csrf
             <input type="hidden" name="tipo" value="portada">
             <button type="submit">Quitar foto de portada</button>
@@ -147,9 +146,10 @@
 
     {{-- ** DANGER ** --}}
     {{-- Eliminación de la cuenta --}}
-    <form method="POST" action="{{ route('user.delete') }}" onsubmit="return confirm('¿Estás seguro de eliminar tu cuenta? Esta acción no se puede deshacer.')">
+    <form class="eliminar-cuenta" method="POST" action="{{ route('user.delete') }}" onsubmit="return confirm('¿Estás seguro de eliminar tu cuenta? Esta acción no se puede deshacer.')">
         @csrf
         @method('DELETE')
+         <h3>Eliminar cuenta y registros: </h3>
         <button class="btn-danger" id="eliminar-cuenta-user">Eliminar cuenta</button>
     </form>
 </div>
