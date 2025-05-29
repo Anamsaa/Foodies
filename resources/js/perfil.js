@@ -24,6 +24,14 @@ document.addEventListener('DOMContentLoaded', function() {
     function uploadImage(file, type) {
         if (!file) return; 
 
+        const MAX_SIZE_MB = 10; 
+        const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
+
+        if (file.size > MAX_SIZE_BYTES) {
+            alert(`La imagen elegida supera el límite de ${MAX_SIZE_MB}MB`);
+            return;
+        }
+
         const formData = new FormData(); 
         formData.append(type, file); 
 
