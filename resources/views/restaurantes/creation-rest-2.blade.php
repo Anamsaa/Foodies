@@ -3,15 +3,7 @@
 @section('description', 'Registra tu restaurante en Foodies y atrae a nuevos clientes a tu negocio.')
 
 @section('contenido-formulario')
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+
     <div class="contenedor-registro-restaurante">
         <div class="titulo-formulario-restaurante">
             <h1>Creación de perfil - 2 parte</h1>
@@ -29,10 +21,16 @@
                     <div class="contenedor-formulario">
                         <label for="telefono">Número de contacto </label>
                         <input type="text" id="telefono" name="telefono"  value="{{ old('telefono', session('restaurant_step2.telefono')) }}"placeholder="Ej: +34 600 123 456" required>
+                        @error('telefono')
+                            <small class="error-message">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div class="contenedor-formulario">
                         <label for="direccion">Dirección </label>
                         <input type="text" id="direccion" name="direccion"  value="{{ old('direccion', session('restaurant_step2.direccion')) }}"placeholder="Ej: Av. Las Palmas, 7" required>
+                        @error('direccion')
+                            <small class="error-message">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div class="contenedor-formulario">
                         <label for="direccion_confirmacion">Repite la dirección </label>
@@ -48,6 +46,9 @@
                             @endforeach
                         </select>
                         <i class="fa-solid fa-caret-down"></i>
+                        @error('comunidad-autonoma')
+                            <small class="error-message">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div class="contenedor-formulario select-content">
                         <label for="provincia">Provincia: </label>
@@ -55,6 +56,9 @@
                             <option value="">Seleccione su Provincia</option>
                         </select>
                         <i class="fa-solid fa-caret-down"></i>
+                        @error('provincia')
+                            <small class="error-message">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div class="contenedor-formulario select-content">
                         <label for="ciudad">Ciudad: </label>
@@ -62,6 +66,9 @@
                             <option value="">Seleccione su Ciudad</option>
                         </select>
                         <i class="fa-solid fa-caret-down"></i>
+                         @error('ciudad')
+                            <small class="error-message">{{ $message }}</small>
+                        @enderror
                     </div>
                 </div>
                 <div class="column">

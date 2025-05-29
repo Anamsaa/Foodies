@@ -12,6 +12,7 @@ use App\Models\Post;
 use App\Models\Region;
 use App\Models\Follow;
 use Exception;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -81,12 +82,18 @@ class RestaurantProfileController extends Controller
         }
 
         $datos = $request->validate([
-            'telefono' => 'required|string|max:20',
+            'telefono' => 'required|string|max:20|regex:/^[\+0-9\s\-\(\)]+$/u',
             'direccion' => 'required|string|max:255',
             'direccion_confirmacion' => 'required|string|same:direccion',
             'comunidad-autonoma' => 'required|numeric',
             'provincia' => 'required|numeric',
             'ciudad' => 'required|numeric',
+        ], [
+            'direccion.confirmed' => 'Las direcciones no coinciden, verifique de nuevo',
+            'telefono.regex' => 'Número de teléfono inválido. Número máx. de digitos: 20',
+            'comunidad-autonoma.required' => 'Selecciona una comunidad autónoma.',
+            'provincia.required' => 'Selecciona una provincia.',
+            'ciudad.required' => 'Selecciona una ciudad.',
         ]); 
 
         $datos_paso1 = Session::get('restaurant_step1');
@@ -136,7 +143,7 @@ class RestaurantProfileController extends Controller
                 'trace'=> $e->getTraceAsString(),
             ]); 
 
-            return back()->withErrors(['error' => 'Error al crear perfil' .$e->getMessage()])->WithInput();
+            //return back()->withErrors(['error' => 'Error al crear perfil' .$e->getMessage()])->WithInput();
         }
 
     }
@@ -347,5 +354,256 @@ class RestaurantProfileController extends Controller
             'misNovedades',
         ));
     }
+
+     public function mostrarFormularioAjustes() {
+        // Cuenta del usuario
+        $user = auth('restaurant')->user(); 
+        // Datos del perfil del usuario
+        $perfil = $user->profile; 
+        // En caso de no tener un perfil creado o que el perfil no sea de una persona retorna al dahsboard
+        if (!$perfil || !$perfil->restaurant) {
+            return redirect()->route('dashboard.user');
+        }
+
+        // Asegurarse de que los datos de perfil estén cargados antes de pasarlos
+        $perfil->load('restaurant');
+        // Cargar las regioness
+        $regions = $regions = Region::all();
+        return view('restaurantes.ajustes', compact('perfil', 'regions', 'user'));
+    }
+
+    public function actualizarDatos(Request $request){
+        $user = auth('restaurant')->user();
+        $profile = $user->profile;
+        $restaurant = $profile->restaurant;
+        $userId = $user->id;
     
+        $rules = [
+            'nombre' => 'nullable|string|max:255|regex:/^[\pL\s\-]+$/u',
+            'horarios' => 'nullable|string|max:255',
+            'invitacion' => 'nullable|string|max:255',
+            'direccion' => 'nullable|string|max:255',
+            'direccion_confirmacion' => 'nullable|string|same:direccion',
+            'comunidad-autonoma' => 'nullable|numeric',
+            'dias_apertura' => 'nullable|array',
+            'dias_apertura.*' => 'in:Lunes,Martes,Miércoles,Jueves,Viernes,Sábado,Domingo',
+            'link-restaurante' => 'nullable|string|max:255',
+        ];
+
+        // ** EMAIL **
+        // Validación si se llena el campo email
+        if ($request->filled('email') && $request->email !== $user->email) {
+            $rules['email'] = [
+                'required', 
+                'email', 
+                'confirmed', 
+                'regex:/^[a-zA-Z][a-zA-Z0-9.\-_]+@[a-zA-Z0-9.\-_]+\.[a-zA-Z]{2,6}$/', 
+                'unique:accounts,email,' . $userId,
+            ]; 
+        } elseif ($request->filled('email') && $request->email === $user->email) {
+            // Si el correo actual se repite envía esto
+            return back()->withErrors(['email' => 'Ya estás usando este correo electrónico. Intenta con otro.'])->withInput();
+        }
+
+        // ** CONTRASEÑA ** 
+        // Validación si se llena el campo contraseña
+        // Si la contraseña actual es la misma 
+        if ($request->filled('password')) {
+            if (Hash::check($request->password, $user->password_hash)) {
+                return back()->withErrors(['password' => 'La nueva contraseña debe ser diferente a la actual'])->withInput();
+            }
+
+            $rules['password'] = [
+                'required',
+                'confirmed',
+                'regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&-_]).{8,}$/',
+            ];
+        }
+
+        // ** TELÉFONO **
+        if ($request->filled('telefono')) {
+            $rules['telefono'] = [
+                'nullable',
+                'string',
+                'max:20', 
+                'regex:/^[\+0-9\s\-\(\)]+$/u'
+            ];
+        }
+
+        // ** VALIDACIÓN PROVINCIA **
+        if ($request->filled('provincia')) {
+            $rules['provincia'] = [
+                'nullable',
+                'numeric',
+                'required_with:comunidad-autonoma'
+            ];
+        }
+
+        // ** VALIDACIÓN CIUDAD **
+        if ($request->filled('ciudad')) {
+            $rules['ciudad'] = [
+                'nullable',
+                'numeric',
+                'required_with:provincia'
+            ];
+        }
+
+        // Mensajes personalizados según el campo que se esté validando 
+        $messages = [
+            'direccion.confirmed' => 'Las direcciones no coinciden, verifique de nuevo',
+            'email.regex' => 'Nuevo correo inválido. Intenta con otro',
+            'email.confirmed' => 'Los correos no coinciden',
+            'email.unique' => 'Este correo ya está en uso.',
+            'password.confirmed' => 'Las contraseñas no coinciden',
+            'password.regex' => 'La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un carácter especial (@$!%*#?&-_)',
+            'telefono.regex' => 'Número de teléfono inválido. Número máx. de digitos: 20',
+            'provincia.required_with' => 'Selecciona una comunidad autónoma antes de la provincia.',
+            'ciudad.required_with' => 'Selecciona una provincia antes de la ciudad.',
+        ]; 
+
+        // Lanzar errores de validación
+        $validated = $request->validate($rules, $messages);
+        $account = \App\Models\Account::findOrFail($userId);
+
+
+        // **CUENTA**
+        $requiereLogout = false; 
+        // Actualizar datos de la cuenta
+        // email
+        if ($request->filled('email') && $request->email !== $user->email) {
+            $account->email = $request->email;
+            $requiereLogout = true;
+        }
+        
+        //contraseña
+        if ($request->filled('password')) {
+            $account->password_hash = Hash::make($request->password);
+            $requiereLogout = true;
+        }
+        
+        $account->save();
+
+        if ($requiereLogout) {
+            auth('restaurant')->logout(); 
+            return redirect()->route('login.restaurant')->with('success', 'Datos actualizados, vuelve a iniciar sesión');
+        }
+
+        // **DATOS DE PERFIL**
+        // Actualización de persona
+        if ($restaurant) {
+            $campos = [
+                'nombre' => 'name',
+                'horarios' => 'horarios',
+                'link-restaurante' => 'website',
+                'invitacion' => 'description',
+                'telefono' => 'phone',
+                'direccion' => 'address',
+                'dias_apertura' => 'dias_apertura',
+                'tipo' => 'tipo',
+            ];
+
+            foreach ($campos as $input => $campoModelo) {
+                if ($request->filled($input)) {
+                    $restaurant->{$campoModelo} = $request->input($input);
+                }
+            }
+
+            $restaurant->save();
+        }
+
+        // Actualización de ubicación en el perfil
+        if ($request->filled('comunidad-autonoma')) {
+            $profile->region_id = $request->input('comunidad-autonoma');
+        }
+        if ($request->filled('provincia')) {
+            $profile->province_id = $request->input('provincia');
+        }
+        if ($request->filled('ciudad')) {
+            $profile->city_id = $request->input('ciudad');
+        }
+
+        $profile->save();
+
+        return redirect()->back()->with('success', 'Datos actualizados correctamente');
+
+    }
+
+    public function eliminarFotos(Request $request) {
+
+        $request->validate([
+            'tipo' => 'required|in:perfil,portada',
+        ]); 
+
+        $perfil = auth('restaurant')->user()->profile; 
+
+        if ($request->tipo === 'perfil') {
+            $perfil->profile_photo_id = null; 
+        } elseif ($request->tipo === 'portada') {
+            $perfil->cover_photo_id = null; 
+        }
+
+        $tipo = $request->tipo;
+
+        $perfil->save();
+
+        return back()->with('sucess', 'Ahora tu foto de' . ucfirst($tipo) . 'se ha cambiado a una predeterminada.');
+
+    }
+
+    public function eliminarCuenta(){
+        $user = auth('restaurant')->user();
+
+        DB::beginTransaction();
+            try {
+                $profile = $user->profile;
+
+                if ($profile) {
+                    foreach ($profile->posts as $post) {
+                        if ($post->photo) {
+                            Storage::disk('public')->delete($post->photo->url);
+                            $post->photo->delete();
+                        }
+                        $post->delete();
+                    }
+
+                    $profile->comments()->delete();
+                    $profile->likes()->delete();
+
+                    $profile->followers()->delete();
+                    $profile->followings()->delete();
+
+                    $profile->sentNotifications()->delete();
+                    $profile->receivedNotifications()->delete();
+
+                    // Eliminar fotos de perfil y portada
+                    if ($profile->profilePhoto) {
+                        Storage::disk('public')->delete($profile->profilePhoto->url);
+                        $profile->profilePhoto->delete();
+                    }
+
+                    if ($profile->coverPhoto) {
+                        Storage::disk('public')->delete($profile->coverPhoto->url);
+                        $profile->coverPhoto->delete();
+                    }
+
+                    // Eliminar entidad Person
+                    if ($profile->person) {
+                        $profile->person->delete();
+                    }
+                     // Eliminar perfil
+                    $profile->delete();
+                }
+
+                auth('restaurant')->logout();
+
+                $user->delete();
+                            
+                DB::commit();
+
+                return redirect()->route('login.restaurant')->with('success', 'Tu cuenta ha sido eliminada correctamente.');
+            } catch (Exception $e) {
+                DB::rollBack();
+                return back()->withErrors(['error' => 'Ocurrió un error al eliminar tu cuenta.'])->withInput();
+            }       
+    } 
 }

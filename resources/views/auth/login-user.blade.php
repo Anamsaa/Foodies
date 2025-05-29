@@ -16,10 +16,16 @@
     <div class="formulario-login-users">
         <label for="email">Email</label>
         <input type="email" name="email" id="email">
+        @error('email')
+            <small class="error-message">{{ $message }}</small>
+        @enderror
     </div>
     <div class="formulario-login-users">
         <label for="password">Contraseña</label>
         <input type="password" name="password" id="password">
+        @error('password')
+            <small class="error-message">{{ $message }}</small>
+        @enderror
     </div>
     <button type="submit" class="button-formulario">Iniciar Sesión</button>
 </form>

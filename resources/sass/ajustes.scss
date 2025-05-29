@@ -3,7 +3,8 @@
 @use "media-queries";
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 
-.formulario-ajustes-user {
+.formulario-ajustes-user,
+.formulario-ajustes-restaurant {
     h2 {
         font-size: 30px;
         margin-bottom: 2rem;
@@ -45,6 +46,22 @@
                     -moz-appearance: auto;
                 }
             }
+
+            .choose-days {
+                display: flex;
+                margin-bottom: 0.2rem;
+
+                input {
+                    display: inline-block;
+                    width: 10%;
+                }
+
+                label {
+                    @include media-queries.pantalla-grande {
+                        padding-left: 0.5rem;
+                    }
+                }
+            }
         }
 
         button {
@@ -71,11 +88,12 @@
             display: flex;
             flex-direction: column;
             margin-bottom: 2rem;
+            gap: 1rem;
 
             button {
                 background-color: rgb(215, 53, 53);
                 color: modulo.$color-secundario;
-                font-size: 16px;
+                font-size: 17px;
                 cursor: pointer;
 
                 &:hover {
@@ -94,12 +112,12 @@
         .btn-danger {
             cursor: pointer;
             color: red;
-             background: none; 
-             font-size: 25px;
-             text-decoration: underline;
-             text-decoration-line: solid 2px red;
-             margin: 0;
-             padding: 0;
+            background: none;
+            font-size: 25px;
+            text-decoration: underline;
+            text-decoration-line: solid 2px red;
+            margin: 0;
+            padding: 0;
         }
     }
 }

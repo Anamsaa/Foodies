@@ -21,14 +21,15 @@ class LoginPeopleController extends Controller
                              ->where('type', 'user')
                              ->first();
 
+        if (!$user || $user->type !== 'user') {
+            return redirect()->route('register.user')->with('error', 'Esta cuenta no pertenece a una persona o no está registrada.');
+        }
+
         if (!Hash::check($request->password, $user->password_hash)) {
              return back()->withErrors(['password' => 'Contraseña incorrecta.']);
         }
 
         Auth::guard('user')->login($user);
-        //Usuario Persona - prueba 
-        //hola@prueba.test
-        //12345678
 
         $request->session()->regenerate();
 

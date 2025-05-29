@@ -19,15 +19,16 @@ class LoginRestaurantController extends Controller
         $restaurant = Account::where('email', $request->email)
                              ->where('type', 'restaurant')
                              ->first();
+        
+        if (!$restaurant || $restaurant->type !== 'restaurant') {
+            return redirect()->route('register.restaurant')->with('error', 'Esta cuenta no pertenece a un negocio o no está registrada.');
+        }
 
         if (!Hash::check($request->password, $restaurant->password_hash)) {
              return back()->withErrors(['password' => 'Contraseña incorrecta.']);
         }
 
         Auth::guard('restaurant')->login($restaurant);
-        //Usuario Persona - prueba 
-        //hola@prueba.test
-        //12345678
 
         $request->session()->regenerate();
 

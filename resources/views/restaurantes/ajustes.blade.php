@@ -2,69 +2,55 @@
 @section('title', 'Ajustes')
 @section('description', 'Configuración de datos en Foodies')
 @section('content')
+
+<div class="styles-form-posts">
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="formulario-ajustes-restaurant">
-        <h2>Ajustes</h2>
-        <form action="{{ route('.store') }}" method="POST" enctype="multipart/form-data" data-contexto="restaurante" class="formulario-ajustes-rest" id="form-settings-rest">
-            @csrf
-
-            {{-- Detalles:  --}}
-            {{-- Los atributos values corresponden al ultimo valor configurado por el usuario y que está registrado en la BBBDD --}}
-
-            {{-- Pasos: --}}
-            {{-- 
-            1. El formulario le muestra al usuario sus el valor de sus úlltimos datos configurados a través del método de renderizado de Perfil del ResturantProfilleController
-            2. El usuario envía los datos a través del método POST, es decir, guarda los datos.
-            3. Se actualizan los datos en las tablas correspondientes.
-            
-            Opcional:
-            Eliminación de cuenta a través de delete, se borra el resgistro de datos asignados a un perfil 
-            
-            --}}
-            
-            {{-- Manejo y aviso de errores --}}
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                    @foreach ($errors->all() as $error)
-                        <p>{{ $error }}</p>
-                    @endforeach
-                    </ul>
-                </div>
-            @endif
-
-            {{-- Para la configuración de nuevos datos se realiza la validación desde el servidor --}}
-            <div class="conf-cuenta">
-                {{-- Configuración de nuevo email o contraseña de la cuenta --}}
-                <h2>Configuraciones de cuenta: </h2>
-                <div class="formulario-login-users">
-                    <label for="email">Cambiar email</label>
-                    <input type="email" name="email" id="email">
-                </div>
-                <div class="formulario-login-users">
-                    <label for="email_confirmation">Repite el email</label>
-                    <input type="email" name="email_confirmation" id="email_confirmation">
-                </div>
-                <div class="formulario-login-users">
-                    <label for="password">Cambiar Contraseña</label>
-                    <input type="password" name="password" id="password">
-                </div>
-                <div class="formulario-login-users">
-                    <label for="password_confirmation">Repite la contraseña</label>
-                    <input type="password" name="password_confirmation" id="password_confirmation">
-                </div>
-            </div>
-            
-            <div class="conf-perfil">
-                {{-- Edición de los datos  del perfil restaurante --}}
-                <h2>Edición de perfil</h2>
-                <div class="column">
+            <h2>Ajustes</h2>
+            <form  class="edit-profile-settings" action="{{ route('ajustes.update.rest') }}" method="POST" enctype="multipart/form-data" data-contexto="restaurante" class="formulario-ajustes-rest" id="form-settings-rest">
+                @csrf
+                {{-- Para la configuración de nuevos datos se realiza la validación desde el servidor --}}
+                <div class="conf-cuenta">
+                    {{-- Configuración de nuevo email o contraseña de la cuenta --}}
+                    <h3>Configuraciones de cuenta: </h3>
                     <div class="contenedor-formulario">
-                        <label for="nombre">Nombre del establecimiento </label>
-                        <input type="text" id="nombre" name="nombre" value="{{}}">
+                        <label for="email">Cambiar email</label>
+                        <input type="email" name="email" id="email">
+                        @error('email')
+                            <small class="error-message">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="contenedor-formulario">
+                        <label for="email_confirmation">Repite el email</label>
+                        <input type="email" name="email_confirmation" id="email_confirmation" onpaste="return false" oncopy="return false">
+                    </div>
+                    <div class="contenedor-formulario">
+                        <label for="password">Cambiar Contraseña</label>
+                        <input type="password" name="password" id="password">
+                        @error('password')
+                            <small class="error-message">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="contenedor-formulario">
+                        <label for="password_confirmation">Repite la contraseña</label>
+                        <input type="password" name="password_confirmation" id="password_confirmation" onpaste="return false" oncopy="return false">
+                    </div>
+                </div>
+                
+                <div class="conf-perfil">
+                    {{-- Edición de los datos  del perfil restaurante --}}
+                    <h3>Edición de perfil</h3>
+                    <div class="contenedor-formulario">
+                        <label for="nombre">Nombre del establecimiento: </label>
+                        <input type="text" id="nombre" name="nombre" value="{{ old('nombre', $restaurant->name ?? '')}}">
                     </div>
                     <div class="contenedor-formulario">
                         <label for="horarios">Comenta brevemente los horarios que maneja tu negocio: </label>
-                        <textarea name="horarios" id="horarios">{{}}</textarea>
+                        <textarea name="horarios" id="horarios">{{ old('horarios', $restaurant->horarios ?? '') }}</textarea>
                     </div>
                     <div class="contenedor-formulario">
                         <p>Días de apertura:</p>
@@ -81,36 +67,46 @@
                             </div>
                         @endforeach
                     </div>
-                </div>
-                <div class="column">
+                    
                     <div class="contenedor-formulario">
                         <label for="link-restaurante">Cambiar el link de la web: </label>
-                        <input type="text" id="link-restaurante" name="link-restaurante" value="{{ }}">
+                        <input type="text" id="link-restaurante" name="link-restaurante" value="{{ old('link-restaurante', $restaurant->website ?? '') }}">
+                            @error('link-restaurante')
+                            <small class="error-message">{{ $message }}</small>
+                        @enderror
                     </div>
 
                     <div class="contenedor-formulario select-content">
                         <label for="tipo-restaurante">Cambiar el tipo de restaurante: </label>
-                        <select name="tipo" id="tipo-restaurante" data-old-value="{{}}">
+                        <select name="tipo" id="tipo-restaurante">
                             <option value="">Tipos de restaurante</option>
                         </select>
                     </div>
+
                     <div class="contenedor-formulario">
                         <label for="invitacion">Modificar invitación: </label>
-                        <textarea name="invitacion" id="invitacion">{{ }}</textarea>
+                        <textarea name="invitacion" id="invitacion">{{ old('invitacion', $restaurant->description ?? '') }}</textarea>
                     </div>
-                </div>
-                <div class="column">
+                
                     <div class="contenedor-formulario">
                         <label for="telefono">Cambiar número de contacto</label>
-                        <input type="text" id="telefono" name="telefono"  value="{{  }}">
+                        <input type="text" id="telefono" name="telefono"   value="{{ old('telefono', $restaurant->description ?? '' )}}">
+                        @error('telefono')
+                            <small class="error-message">{{ $message }}</small>
+                        @enderror
                     </div>
+                    
                     <div class="contenedor-formulario">
                         <label for="direccion"> Cambiar dirección </label>
-                        <input type="text" id="direccion" name="direccion"  value="{{  }}">
+                        <input type="text" id="direccion" name="direccion"  value="{{ old('direccion', $restaurant->address ?? '') }}">
+                        @error('direccion')
+                            <small class="error-message">{{ $message }}</small>
+                        @enderror
                     </div>
+
                     <div class="contenedor-formulario">
                         <label for="direccion_confirmacion">Repite la dirección </label>
-                        <input type="text" id="direccion_confirmacion" name="direccion_confirmacion" value="">
+                        <input type="text" id="direccion_confirmacion" name="direccion_confirmacion">
                     </div>
 
                     <div class="contenedor-formulario select-content">
@@ -121,39 +117,57 @@
                                 <option value="{{ $region->id }}">{{ $region->nombre }}</option>
                             @endforeach
                         </select>
-                        <i class="fa-solid fa-caret-down"></i>
                     </div>
+
                     <div class="contenedor-formulario select-content">
                         <label for="provincia">Provincia: </label>
                         <select name="provincia" id="provincia" class="select-provincia" data-selected="{{ old('provincia') }}">
                             <option value="">Seleccione su Provincia</option>
                         </select>
-                        <i class="fa-solid fa-caret-down"></i>
+                        @error('provincia')
+                            <small class="error-message">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div class="contenedor-formulario select-content">
                         <label for="ciudad">Ciudad: </label>
                         <select name="ciudad" id="ciudad" class="select-ciudad" data-selected="{{ old('ciudad') }}">
                             <option value="">Seleccione su Ciudad</option>
                         </select>
-                        <i class="fa-solid fa-caret-down"></i>
+                        @error('ciudad')
+                            <small class="error-message">{{ $message }}</small>
+                        @enderror
                     </div>
+                
                 </div>
-            </div>
+                <button class="button-usuarios-formulario" type="submit">Actualizar cambios</button>
+            </form>
 
             {{-- Cambio de imagenes para dejar fotos de perfil y portada en null y que el usuario pueda quedarse con la default en profile y el fondo de color en el background --}}
             <div class="change-images">
-
+                {{-- Tablas afectadas: Profiles y Photos --}}
+                <form method="POST" action="{{ route('rest.eliminar.foto') }}" onsubmit="return confirm('¿Seguro que quieres quitar tu foto de perfil?')">
+                    <h3>Configurar foto de perfil por defecto</h3>
+                    @csrf
+                    <input type="hidden" name="tipo" value="perfil">
+                    <button type="submit">Quitar foto de perfil</button>
+                </form>
+            
+                <form method="POST" action="{{ route('rest.eliminar.foto') }}" onsubmit="return confirm('¿Seguro que quieres quitar tu foto de portada?')">
+                    <h3>Configurar foto de portada por defecto</h3>
+                    @csrf
+                    <input type="hidden" name="tipo" value="portada">
+                    <button type="submit">Quitar foto de portada</button>
+                </form>      
             </div>
-        
-            <button class="button-usuarios-formulario" type="submit">Actualizar cambios</button>
-        </form>
 
-        {{-- ** DANGER ** --}}
-        {{-- Eliminación de la cuenta --}}
-        <form method="POST" action="{{ route('restaurant.delete') }}" onsubmit="return confirm('¿Estás seguro de eliminar tu cuenta? Esta acción no se puede deshacer.')">
-            @csrf
-            @method('DELETE')
-            <button class="btn-danger" id="eliminar-cuenta-user">Eliminar cuenta</button>
-        </form>
+            {{-- ** DANGER ** --}}
+            {{-- Eliminación de la cuenta --}}
+            <form class="eliminar-cuenta" method="POST" action="{{ route('rest.delete') }}" onsubmit="return confirm('¿Estás seguro de eliminar tu cuenta? Esta acción no se puede deshacer.')">
+                @csrf
+                @method('DELETE')
+                <h3>Eliminar cuenta y registros: </h3>
+                <button class="btn-danger" id="eliminar-cuenta-user">Eliminar cuenta</button>
+            </form>
+        </div>
     </div>
 @endsection

@@ -35,15 +35,29 @@ class PeopleProfileController extends Controller
 
     public function guardarDatos(Request $request) {
 
+
+        $fechaMinima = now()->subYears(16)->format('Y-m-d');
+
         // Validar los datos antes de ser enviados
         $datos = $request->validate([
-            'nombre' => 'required|string|max:255',
-            'apellidos' => 'required|string|max:255',
-            'fnacimiento' => 'required|date',
+            'nombre' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
+            'apellidos' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
+            'fnacimiento' => 'required|date|before_or_equal:' . $fechaMinima,
             'comunidad-autonoma' => 'required|numeric',
             'provincia' => 'required|numeric',
             'ciudad' => 'required|numeric',
             'descripcion-usuario' => 'required|string|max:255',
+            ], [
+            'nombre.required' => 'El nombre es obligatorio.',
+            'nombre.regex' => 'El nombre solo puede contener letras y espacios.',
+            'apellidos.required' => 'Los apellidos son obligatorios.',
+            'apellidos.regex' => 'Los apellidos solo pueden contener letras y espacios.',
+            'fnacimiento.required' => 'La fecha de nacimiento es obligatoria.',
+            'fnacimiento.before_or_equal' => 'Debes tener al menos 16 años para registrarte.',
+            'comunidad-autonoma.required' => 'Selecciona una comunidad autónoma.',
+            'provincia.required' => 'Selecciona una provincia.',
+            'ciudad.required' => 'Selecciona una ciudad.',
+            'descripcion-usuario.required' => 'La descripción es obligatoria.',
         ]); 
 
         DB::beginTransaction();
@@ -70,9 +84,6 @@ class PeopleProfileController extends Controller
             return redirect()->route('dashboard.user')->with('success', 'Perfil creado correctamente');
         } catch (Exception $e) {
             DB::rollBack();
-
-            //Log::error('Error al crear perfil: ' . $e->getMessage());
-            return back()->withErrors(['error' => 'No se pudo crear el perfil'.  $e->getMessage()])->withInput();
         }
     }
 

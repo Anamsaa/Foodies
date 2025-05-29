@@ -6,33 +6,34 @@
 
 @section('formulario')
 
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <p>{{ $error }}</p>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
 <form action="{{ route('register.user') }}" method="POST" class="formulario-lr">
     @csrf
     <div class="formulario-login-users">
         <label for="email">Email</label>
-        <input type="email" name="email" id="email">
+        <input type="email" name="email" id="email" required>
+        @error('email')
+            <small class="error-message">{{ $message }}</small>
+        @enderror
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
     </div>
     <div class="formulario-login-users">
         <label for="email_confirmation">Repite el email</label>
-        <input type="email" name="email_confirmation" id="email_confirmation">
+        <input type="email" name="email_confirmation" id="email_confirmation" required onpaste="return false" oncopy="return false">
     </div>
     <div class="formulario-login-users">
         <label for="password">Contraseña</label>
-        <input type="password" name="password" id="password">
+        <input type="password" name="password" id="password" required>
+        @error('password')
+            <small class="error-message">{{ $message }}</small>
+        @enderror
     </div>
     <div class="formulario-login-users">
         <label for="password_confirmation">Repite la contraseña</label>
-        <input type="password" name="password_confirmation" id="password_confirmation">
+        <input type="password" name="password_confirmation" id="password_confirmation" required onpaste="return false" oncopy="return false">
     </div>
     <button type="submit" class="button-formulario">Regístrate</button>
 </form>

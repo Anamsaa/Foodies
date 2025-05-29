@@ -206,7 +206,14 @@ Route::prefix('restaurant')->group(function () {
 
         
         ## Ajustes / Edición de datos de creación de perfil y Eliminación de cuenta
-        Route::get('ajustes', fn() => view('restaurantes.ajustes'))->name('ajustes.restaurante');
+        ## Ver el formulario y pasarle los datos para el value 
+        Route::get('ajustes', [RestaurantProfileController::class, 'mostrarFormularioAjustes'])->name('ajustes.restaurante');
+        ## Enviar los datos
+        Route::post('ajustes', [RestaurantProfileController::class, 'actualizarDatos'])->name('ajustes.update.rest');
+        ## Configurar por defecto la foto de portada y de perfil
+        Route::post('ajustes/foto/eliminar', [RestaurantProfileController::class, 'eliminarFotos'])->name('rest.eliminar.foto');
+        ## Eliminar la cuenta 
+        Route::delete('eliminar-cuenta', [RestaurantProfileController::class, 'eliminarCuenta'])->name('rest.delete');
 
         ## Logout
         Route::post('logout', [LogoutRestaurantController::class, 'logout'])->name('logout.restaurant');
