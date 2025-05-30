@@ -190,7 +190,7 @@ Route::prefix('restaurant')->group(function () {
         Route::get('perfil', [RestaurantProfileController::class, 'verMiPerfil'])->name('perfil.restaurante');
 
         ## Subir y actualizar fotos de perfil y portada
-        Route::post('profile/update-photos', [RestaurantProfileController::class, 'actualizarFotos'])->name('profile.photos.update');
+        Route::post('profile/update-photos', [RestaurantProfileController::class, 'actualizarFotos'])->name('profile.photos.update.rest');
 
         //--------------------------------------- PUBLICACIONES---------------------------------------//
          // POSTS

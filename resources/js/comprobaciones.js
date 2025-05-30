@@ -1,9 +1,3 @@
-const expresiones = {
-    nombre: /(^[a-zA-ZÀ-ÿ]{1,30}$)/,
-    apellido: /(^[a-zA-ZÀ-ÿ]{1,30}$)/,
-    correo: /(^[a-zA-Z][a-zA-Z0-9.-_]+@[a-zA-Z0-9.-_]+\.[a-zA-Z0-9]{2,6}$)/, 
-    telefono: /(^[\d\s+\-]{7,}$)/, 
-}
 
 // Evitar el comportamiento por defecto del formulario
 function pasarFormulario(formulario) {
