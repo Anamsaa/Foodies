@@ -70,11 +70,11 @@ Route::prefix('user')->group(function () {
     // Rutas públicas 
     ## Registro de restaurantes
     Route::get('register', fn() => view('auth.register-user'))->name('register.user');
-    Route::post('register', [RegisterPeopleController::class, 'store'])->name('register.user');
+    Route::post('register', [RegisterPeopleController::class, 'store'])->name('register.user.guardar');
 
     ## Login de restaurantes 
     Route::get('login', fn() => view('auth.login-user'))->name('login.user');
-    Route::post('login', [LoginPeopleController::class, 'login'])->name('login.user');
+    Route::post('login', [LoginPeopleController::class, 'login'])->name('login.user.guardar');
 
     // Rutas privadas (Requieren de autentificación de parte de los usuarios)
     Route::middleware(['auth:user', 'prevent-back-history'])->group(function() {
@@ -165,11 +165,11 @@ Route::prefix('restaurant')->group(function () {
     // Rutas públicas 
     ## Registro de restaurantes
     Route::get('register', fn() => view('auth.register-rest'))->name('register.restaurant');
-    Route::post('register', [RegisterRestaurantController::class, 'store'])->name('register.restaurant');
+    Route::post('register', [RegisterRestaurantController::class, 'store'])->name('register.restaurant.guardar');
 
     ## Login de restaurantes 
     Route::get('login', fn() => view('auth.login-rest'))->name('login.restaurant');
-    Route::post('login', [LoginRestaurantController::class, 'login'])->name('login.restaurant');
+    Route::post('login', [LoginRestaurantController::class, 'login'])->name('login.restaurant.guardar');
 
     // Rutas privadas (Requieren de autentificación de parte de los usuarios)
     Route::middleware(['auth:restaurant', 'prevent-back-history'])->group(function() {

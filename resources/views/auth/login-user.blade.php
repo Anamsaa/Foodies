@@ -11,7 +11,7 @@
     </div>
 @endif
 
-<form action="{{ route('login.user') }}" method="POST" class="formulario-lr">
+<form action="{{ route('login.user.guardar') }}" method="POST" class="formulario-lr">
     @csrf
     <div class="formulario-login-users">
         <label for="email">Email</label>

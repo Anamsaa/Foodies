@@ -8,7 +8,7 @@
 @endsection
 @section('formulario')
 
-<form action="{{ route('register.restaurant') }}" method="POST" class="formulario-lr">
+<form action="{{ route('register.restaurant.guardar') }}" method="POST" class="formulario-lr">
 
     {{-- @php dd('Este es el formulario de restaurante') @endphp --}}
     @csrf
