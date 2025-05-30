@@ -2,7 +2,7 @@
   "services": {
     "web": {
       "buildCommand": "composer install --no-dev --optimize-autoloader && npm install && npm run build && php artisan config:cache && php artisan migrate --force",
-      "startCommand": "php -S 0.0.0.0:$PORT -t public"
+      "startCommand": "php -S 0.0.0.0:9000 -t public"
     }
   }
 }
