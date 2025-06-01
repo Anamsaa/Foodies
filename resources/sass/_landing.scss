@@ -164,11 +164,13 @@
 
     .menu-emergente-landing.visible {
         transform: translateX(0);
+        display: block;
     }
 
     .menu-emergente-landing.oculto {
         transform: translateX(100%);
-        visibility: hidden;
+        display: none;
+        //visibility: hidden;
     }
 
     .landing-main {
