@@ -428,7 +428,7 @@ Estilos específicos por vista o componente que se importan con _@use_, lo que m
 #### Diagrama UML 
 ![Diagrama UML](/assets%20readme/Nueva_bbdd.png)
 
-Actualizado a las tablas utilizadas a día de hoy*
+**Actualizado a las tablas utilizadas a día de hoy**
 
 ### Migraciones reservadas para uso futuro: 
 * **user_sessions:** Esta tabla se encarga de llevar el registro personalizada de sesiones de usuario, separadas del sistema de autentificación "Auth" de Laravel.
