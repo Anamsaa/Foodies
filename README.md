@@ -156,7 +156,7 @@ El diseño visual de la plataforma se basa en CSS,  un lenguaje de hojas de esti
 Para la interfaz de Foodies se optó por un diseño a medida realizado por su autora, con el objetivo de mantener una identidad visual propia y tener control sobre la apariencia.  La decisión también va respaldada por el sistema de layouts y componentes reutilizables que ofrece Laravel Blade. 
 
 ### Mockups
-[Mockups](https://miro.com/app/board/uXjVI0krxWw=/?share_link_id=806314527171)
+[Vista a los Mockups](https://miro.com/app/board/uXjVI0krxWw=/?share_link_id=806314527171)
 
 ### Resultados finales y comparaciones
 ![Vista móvil Foodies](/assets%20readme/Casos_de_uso.drawio.png)
