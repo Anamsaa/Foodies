@@ -113,18 +113,22 @@
     // Estilos barra lateral del landing
     .menu-emergente-landing {
         display: none;
+        top: 0;
+        right: 0;
 
         @include media-queries.mobile {
             display: flex;
             width: 70%;
-            height: 100vh;
+            height: 100dvh;
             flex-direction: column;
             justify-self: flex-end;
             align-items: end;
             background-color: rgba(252, 254, 243, 0.95);
-            padding: 1rem;
+            box-sizing: border-box;
+
             position: absolute;
-            z-index: 1000;
+            //z-index: 1000;
+
             transform: translateX(100%);
             transition: transform 0.3s ease-in-out;
 
@@ -164,7 +168,7 @@
 
     .menu-emergente-landing.visible {
         transform: translateX(0);
-        display: block;
+        padding: 1rem;
     }
 
     .menu-emergente-landing.oculto {
