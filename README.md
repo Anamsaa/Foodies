@@ -310,12 +310,12 @@ En lugar de separar rutas en múltiples archivos como api.php o definir rutas ba
 2. Agrupar rutas por tipo de usuario (persona o restaurante) usando prefix() y middleware().
 3. Controlar claramente los flujos de navegación y proteger rutas según roles y sesiones activas.
 
-**Rutas generales**
-Página principal (landing).
-Visualización de perfiles ajenos (usuario - restaurante).
-Rutas de interacción: likes, comentarios, seguimiento.
+##### Rutas generales
+- Página principal (landing).
+- Visualización de perfiles ajenos (usuario - restaurante).
+- Rutas de interacción: likes, comentarios, seguimiento.
 
-**Rutas de usuario persona**
+##### Rutas de usuario persona
 Agrupadas con:
 
 `Route::prefix('user')->group(function () {`
@@ -324,7 +324,7 @@ Organizadas en:
 **Públicas:** registro, login.
 **Privadas:** dashboard, creación de perfil, publicaciones, eventos culinarios, ajustes, logout.
 
-**Rutas de usuario restaurante**
+##### Rutas de usuario restaurante
 Agrupadas con:
 `Route::prefix('restaurant')->group(function () {`
 División parecida a la del usuario persona, pero adaptada al flujo de creación de perfil en dos pasos, y con vistas adaptadas a ese tipo de cuenta.
