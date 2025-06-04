@@ -9,6 +9,7 @@
     <meta name="description" content="@yield('description', 'Social Network for foodies')">
     {{-- Favicon --}}
     <link rel="icon" type="image/png" href="{{ asset('../images/logo-favicon.png') }}">
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body class="layout-inicio">
     <header>
@@ -34,6 +35,5 @@
             <p>Haz click<a class="enlace-restaurantes" href="@yield('enlace-creacion-perfil')"> aquí</a></p>
         </div>
     </footer>
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </body>
 </html>
