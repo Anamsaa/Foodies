@@ -12,6 +12,7 @@
     {{-- Habilitar Turbo en todas las vistas --}}
     {{-- <script type="module" src="{{ asset('js/turbo.js') }}" defer></script> --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
     <div class="componentes-principales">
@@ -34,7 +35,6 @@
         <form id="logout-form" action="{{ route('logout.user') }}" method="POST" style="display:none;">
             @csrf
         </form>
-    </div>
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    </div> 
 </body>
 </html>

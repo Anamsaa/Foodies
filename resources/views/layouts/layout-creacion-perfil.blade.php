@@ -9,6 +9,7 @@
     <meta name="description" content="@yield('description', 'Social Network for foodies')">
     {{-- Favicon --}}
     <link rel="icon" type="image/png" href="{{ asset('images/logo-favicon.png') }}">
+    @vite(['resources/sass/formularios/formularios.scss', 'resources/js/app.js'])
     {{-- Habilitar Turbo en todas las vistas --}}
     {{-- <script type="module" src="{{ asset('js/turbo.js') }}" defer></script> --}}
 </head>
@@ -20,6 +21,5 @@
             </div>
          <!-- </turbo-frame> -->
     </div>
-    @vite(['resources/sass/formularios/formularios.scss', 'resources/js/app.js'])
 </body>
 </html>

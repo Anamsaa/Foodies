@@ -11,6 +11,7 @@
     <link rel="icon" type="image/png" href="{{ asset('images/logo-favicon.png') }}">
     {{-- Token CSFR --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
     <div class="componentes-principales profile-styles-users">
@@ -109,7 +110,6 @@
             @csrf
         </form>   
     </div>
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </body>
 </html>
 

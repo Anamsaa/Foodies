@@ -10,6 +10,7 @@
     <meta name="description" content="Foodies is a Social Netwotk for eat and make new friends, what are you waiting for trying?">
     {{-- Favicon --}}
     <link rel="icon" type="image/png" href="{{ asset('images/logo-favicon.png') }}">
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body class="landing-body">
     <nav class="landing-bar">
@@ -61,6 +62,5 @@
             <p>TFG DAW</p>
         </div>
     </footer>
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </body>
 </html>

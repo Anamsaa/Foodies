@@ -11,6 +11,7 @@
     <link rel="icon" type="image/png" href="{{ asset('images/logo-favicon.png') }}">
     {{-- Token CSRF --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
     <div class="componentes-principales profile-styles-users">
@@ -135,7 +136,5 @@
             </form>
         @endif
     </div>
-
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </body>
 </html>

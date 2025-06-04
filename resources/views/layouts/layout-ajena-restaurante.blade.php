@@ -13,7 +13,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {{-- Habilitar Turbo en todas las vistas --}}
     {{-- <script type="module" src="{{ asset('js/turbo.js') }}" defer></script> --}}
-
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
     <div class="componentes-principales profile-styles-users">
@@ -98,7 +98,6 @@
             </form>
         @endif     
     </div>
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </body>
 </html>
 
