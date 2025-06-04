@@ -27,7 +27,7 @@ Foodies es una red social diseñada para la exploración de restaurantes y la co
 
 ---
 
-## Ruta privada 
+## Ruta pública
 [Link a Foodies proporcionado por Railway](https://foodies-production-ed5b.up.railway.app/)
 
 ---
@@ -122,8 +122,8 @@ Proporcionan estructura visual y separan secciones. También se usan en formular
 Color que aporta sensación de hogar y autenticidad.
 - Inputs: **#e6e8df**
 Un gris claro similar al fondo, pensado para no distraer pero mantener contraste suficiente con el texto. 
-- Formularios Login/Register: **#5D616B**
-- Creación de perfil / índice: **#E9EAE1**
+- Formularios Login/Register: **#5d616b**
+- Creación de perfil / índice: **#e9eae1**
 Color suave, casi crema, perfecto para interfaces de perfil o administración. Comunica tranquilidad y neutralidad.
 - Fondo con transparencia: **rgba(252, 254, 243, 0.7)**
 Ideal para overlays, modales o tarjetas flotantes. La transparencia genera una sensación de suavidad y elegancia.
@@ -132,7 +132,7 @@ Ideal para overlays, modales o tarjetas flotantes. La transparencia genera una s
 Definen la legibilidad y jerarquía textual.
 - Texto general: **#4e515a**
 - Títulos formularios: **#28313c**
-- Títulos en login: **#FFFFFF**
+- Títulos en login: **#ffffff**
 Blanco sobre fondos oscuros genera alto contraste, esto resalta los títulos y mejora la accesibilidad visual en pantallas pequeñas.
 
 #### Pruebas de contraste
@@ -159,8 +159,8 @@ Para la interfaz de Foodies se optó por un diseño a medida realizado por su au
 [Vista a los Mockups](https://miro.com/app/board/uXjVI0krxWw=/?share_link_id=806314527171)
 
 ### Resultados finales y comparaciones
-![Vista móvil Foodies](/assets%20readme/Casos_de_uso.drawio.png)
-![Vista tablet Foodies](/assets%20readme/Casos_de_uso.drawio.png)
+![Vista Ordenador Foodies](/assets%20readme/Casos_de_uso.drawio.png)
+![Vista Ordenador Foodies](/assets%20readme/Casos_de_uso.drawio.png)
 ![Vista Ordenador Foodies](/assets%20readme/Casos_de_uso.drawio.png)
 ![Vista Ordenador Foodies](/assets%20readme/Casos_de_uso.drawio.png)
 ![Vista Ordenador Foodies](/assets%20readme/Casos_de_uso.drawio.png)
@@ -248,9 +248,9 @@ config/auth.php
 #### Backend 
 En el backend se utilizó el framework Laravel, estructurado en base a los principios MVC. La aplicación está organizada en:
 
-Controladores: Encargados de gestionar las peticiones HTTP, validar datos, orquestar llamadas a modelos y devolver vistas o redirecciones.
-Modelos: Representan las entidades de la base de datos. Incluyen relaciones Eloquent para conectar entidades como usuarios, publicaciones, perfiles, eventos, etc.
-Migraciones: Se usaron para definir y versionar la estructura de las tablas de la base de datos, permitiendo control de versiones en el esquema de forma automatizada y segura.
+- Controladores: Encargados de gestionar las peticiones HTTP, validar datos, orquestar llamadas a modelos y devolver vistas o redirecciones.
+- Modelos: Representan las entidades de la base de datos. Incluyen relaciones Eloquent para conectar entidades como usuarios, publicaciones, perfiles, eventos, etc.
+- Migraciones: Se usaron para definir y versionar la estructura de las tablas de la base de datos, permitiendo control de versiones en el esquema de forma automatizada y segura.
 
 ```text
 app/
