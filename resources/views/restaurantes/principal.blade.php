@@ -5,12 +5,6 @@
 @section('icono-logout', route('logout.restaurant'))
 @section('content')
 
-@if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
-
 <div class="contenidos-principal">
     <div class="principal-container">
         <div class="column-1">

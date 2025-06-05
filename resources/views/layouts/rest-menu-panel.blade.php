@@ -27,6 +27,11 @@
                     </button>
                 </div>
             </div>
+            @if (session('success'))
+                <div class="alert alert-success">
+                {{ session('success') }}
+                </div>
+            @endif
             <div class="contenidos rest-main-dashboard">
                     @yield('content')
             </div>
