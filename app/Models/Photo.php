@@ -19,6 +19,6 @@ class Photo extends Model
         return $this->hasMany(Post::class, 'photo_id');
     }
     public function getUrlAttribute($value) {
-        return Storage::url($value);
+        return asset(Storage::url($value));
     }
 }
