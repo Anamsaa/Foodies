@@ -329,6 +329,8 @@
 
             @include media-queries.mobile {
                 flex-direction: column;
+                justify-content: center;
+                align-items: center;
             }
 
             .evento-imagen {
