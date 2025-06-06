@@ -1,5 +1,4 @@
-<div class="evento-card">
-
+  <div class="evento-card">
     {{-- Encabezado del post--}}
     {{-- Comprobación del tipo de usuario para redirección según el rol --}}
     @php

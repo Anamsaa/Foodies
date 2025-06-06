@@ -327,6 +327,10 @@
             height: auto;
             width: 100%;
 
+            @include media-queries.mobile {
+                flex-direction: column;
+            }
+
             .evento-imagen {
                 img {
                     border-radius: 50%;
