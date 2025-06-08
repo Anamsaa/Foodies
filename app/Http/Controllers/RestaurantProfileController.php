@@ -47,6 +47,9 @@ class RestaurantProfileController extends Controller
             'imagen-portada' => 'nullable|image',
             'dias_apertura' => 'nullable|array',
             'dias_apertura.*' => 'in:Lunes,Martes,Miércoles,Jueves,Viernes,Sábado,Domingo',
+        ], [
+            'nombre.required' => 'Escriba un nombre por favor',
+            'tipo.required' => 'Seleccione un tipo de restaurante',
         ]);
 
         $soloDatos = $datos;

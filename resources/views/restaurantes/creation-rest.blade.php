@@ -20,6 +20,9 @@
                         <label for="nombre">Nombre del establecimiento </label>
                         <input type="text" id="nombre" name="nombre" placeholder="Ej: Tacos XtremeFusion" value="{{ old('nombre', session('restaurant_step1.nombre')) }}" required>
                     </div>
+                    @error('nombre')
+                        <small class="error-message">{{ $message }}</small>
+                    @enderror
                     <div class="contenedor-formulario">
                         <label for="horarios">Comenta brevemente los horarios que maneja tu negocio: </label>
                         <textarea name="horarios" id="horarios" rows="6" cols="50" placeholder="Ej: Jueves y Viernes 18:00 a 22:00 | Domingos y Sábados de 18:00 a 23:00">{{ old('horarios', session('restaurant_step1.horarios')) }}</textarea>
@@ -54,6 +57,9 @@
                         </select>
                         <i class="fa-solid fa-caret-down"></i>
                     </div>
+                    @error('tipo')
+                            <small class="error-message">{{ $message }}</small>
+                    @enderror
                     <div class="contenedor-formulario">
                         <label for="invitacion">Invita a los foodies a tu negocio: </label>
                         <textarea name="invitacion" id="invitacion" rows="6" cols="50" placeholder="Ej: '¡Bienvenido a nuestro restaurante! Aquí nuestra especialidad son los tacos al Pastor">{{ old('invitacion', session('restaurant_step1.invitacion')) }}</textarea>

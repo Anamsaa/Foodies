@@ -30,8 +30,8 @@
             </div>
 
             <div class="header-profile" 
-                @if($perfil->photo_cover)
-                    style="background-image: url('{{ $perfil->photo_cover }}');"
+                @if($perfil->coverPhoto)
+                    style="background-image: url('{{ $perfil->coverPhoto->url }}');"
                 @endif>
 
                 <div class="header-profile-cover-name">

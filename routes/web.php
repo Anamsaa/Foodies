@@ -83,8 +83,8 @@ Route::prefix('user')->group(function () {
         Route::get('dashboard', [PeopleProfileController::class, 'mostrarDashboard'])->name('dashboard.user');
 
         ## Creación de perfil para usarios 
-        Route::get('crear-perfil-restaurante', [PeopleProfileController::class, 'showForm'])->name('crear-perfil.user');
-        Route::post('crear-perfil-restaurante', [PeopleProfileController::class, 'guardarDatos'])->name('crear-perfil.guardar');
+        Route::get('crear-perfil', [PeopleProfileController::class, 'showForm'])->name('crear-perfil.user');
+        Route::post('crear-perfil', [PeopleProfileController::class, 'guardarDatos'])->name('crear-perfil.guardar');
 
         ## Redirigir al perfil del usuario propietario
         Route::get('perfil', [PeopleProfileController::class, 'verMiPerfil'])->name('perfil.user');
