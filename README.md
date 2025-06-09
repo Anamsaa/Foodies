@@ -159,11 +159,22 @@ Para la interfaz de Foodies se optó por un diseño a medida realizado por su au
 [Vista a los Mockups](https://miro.com/app/board/uXjVI0krxWw=/?share_link_id=806314527171)
 
 ### Resultados finales y comparaciones
-![Vista Ordenador Foodies](/assets%20readme/Casos_de_uso.drawio.png)
-![Vista Ordenador Foodies](/assets%20readme/Casos_de_uso.drawio.png)
-![Vista Ordenador Foodies](/assets%20readme/Casos_de_uso.drawio.png)
-![Vista Ordenador Foodies](/assets%20readme/Casos_de_uso.drawio.png)
-![Vista Ordenador Foodies](/assets%20readme/Casos_de_uso.drawio.png)
+#### Login
+![Vista Ordenador Foodies](/assets%20readme/login.png)
+Diseño planteado
+![Vista Ordenador Foodies](/assets%20readme/mockup_login.jpg)
+#### Perfil
+![Vista Ordenador Foodies](/assets%20readme/perfil.png)
+Diseño planteado
+![Vista Ordenador Foodies](/assets%20readme/mockup_perfil.jpg)
+#### Seguidos
+![Vista Ordenador Foodies](/assets%20readme/seguidos.png)
+Diseño planteado
+![Vista Ordenador Foodies](/assets%20readme/mockup_seguidos.jpg)
+#### Ajustes
+![Vista Ordenador Foodies](/assets%20readme/ajustes.png)
+Diseño planteado
+![Vista Ordenador Foodies](/assets%20readme/mockup_ajustes.jpg)
 
 ---
 
