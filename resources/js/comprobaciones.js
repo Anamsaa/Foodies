@@ -201,7 +201,7 @@ async function validarDisponibilidad() {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-console.log('entra a las comprobaciones')
+//console.log('entra a las comprobaciones')
 
     // Formulario Evento culinario 
     const formEvento = document.getElementById('form-crear-evento'); 
